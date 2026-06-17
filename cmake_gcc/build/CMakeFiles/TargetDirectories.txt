@@ -1,0 +1,4 @@
+C:/Users/jishu/SimplicityStudio/v6_workspace/bt_soc_throughput_log_single_BGM220/cmake_gcc/build/CMakeFiles/slc.dir
+C:/Users/jishu/SimplicityStudio/v6_workspace/bt_soc_throughput_log_single_BGM220/cmake_gcc/build/CMakeFiles/bt_soc_throughput_log_single_BGM220.dir
+C:/Users/jishu/SimplicityStudio/v6_workspace/bt_soc_throughput_log_single_BGM220/cmake_gcc/build/CMakeFiles/edit_cache.dir
+C:/Users/jishu/SimplicityStudio/v6_workspace/bt_soc_throughput_log_single_BGM220/cmake_gcc/build/CMakeFiles/rebuild_cache.dir
