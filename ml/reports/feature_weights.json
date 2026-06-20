@@ -1,0 +1,13 @@
+{
+  "pct_brady": 0.4829,
+  "baseline_fhr": 0.3032,
+  "accel_per_min": 0.2934,
+  "stv": -0.2098,
+  "pct_tachy": 0.1927,
+  "overall_std": 0.1756,
+  "late_decel_per_min": 0.1316,
+  "ltv": -0.0594,
+  "contractions_per_min": 0.0436,
+  "late_decel_ratio": -0.0151,
+  "decel_per_min": 0.0069
+}

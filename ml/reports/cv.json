@@ -1,0 +1,7 @@
+{
+  "per_record_auc_mean": 0.6907,
+  "per_record_auc_ci95": 0.0154,
+  "per_record_auc_std": 0.0554,
+  "n_estimates": 50,
+  "protocol": "5-fold x 10 repeats, patient-level"
+}

@@ -1,0 +1,8 @@
+{
+  "float_auc": 0.7298,
+  "int8_auc": 0.729,
+  "mean_abs_score_delta": 0.0019,
+  "max_abs_score_delta": 0.00819,
+  "tflite_bytes": 1456,
+  "auc_delta": -0.0008
+}
