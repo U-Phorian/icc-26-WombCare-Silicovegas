@@ -1,0 +1,44 @@
+# WombCare -- ML Pipeline (v2: FHR + UC)
+
+End-to-end fetal-wellness model: CTU-UHB CTG data -> 11 FHR+UC features
+(incl. late decelerations) -> a tiny int8 logistic-regression model that outputs
+a **Wellness Score**, exported for the EFR32MG26.
+
+> Awareness, not diagnosis. See [reports/model_card.md](reports/model_card.md).
+
+## Layout
+| File | Role | PRD |
+|---|---|---|
+| `config.py` | paths, label threshold, windowing, seed (single source of truth) | FR-ML-1/2 |
+| `features_v2.py` | raw FHR+UC -> 11-feature vector (contractions, late decels) | v2 S3 |
+| `features.py` | v1 FHR-only extractor (kept for reference / ablation) | FR-ML-3 |
+| `dataset.py` | read raw `../code/dat/`, clean+window FHR/UC, patient-level split | FR-ML-1/2/C |
+| `train.py` | fit logistic regression, CV, transplant to Keras for export | FR-ML-A/C/D |
+| `evaluate.py` | ROC/PR-AUC, sensitivity, calibration, figures (per-record) | FR-ML-D |
+| `quantize_export.py` | int8 TFLite + C array + parity report + firmware note | FR-ML-G/H |
+| `wellness.py` | score, tiers, alert rule, 8-byte BLE packet (shared contract) | FR-ML-E/F, S10 |
+
+## Run
+```bash
+pip install -r requirements.txt     # includes wfdb (raw-record reading)
+python run_all.py                   # train -> evaluate -> quantize/export
+```
+
+## Outputs
+- `artifacts/` -- `mlp.keras`, `scaler.npz`, `split.npz`, `wombcare_int8.tflite`,
+  `firmware/{model_data.c,model_data.h,scaler.npz,feature_order.txt,INTEGRATION.md}`
+- `reports/` -- `cv.json`, `metrics.json`, `parity.json`, `feature_weights.json`,
+  `eval_curves.png`, `model_card.md`
+
+## Headline
+**Repeated patient-level CV** (5-fold x 10 repeats) per-record ROC-AUC
+**0.691 ± 0.015** (95% CI). Out-of-fold (all 545 records, no single split):
+AUC **0.694**, PR-AUC **0.368**, sensitivity-first **0.80 / spec 0.43**.
+int8 model **1.4 KB**, quantization parity Δ-AUC **−0.0008**.
+Logistic ties a small MLP and gradient boosting within CI (`reports/model_comparison.json`).
+(v1 FHR-only was 0.62; UC + late-decels lift it to ~0.69.)
+
+## Data dependency
+Reads the **raw** WFDB records in `../code/dat/` (FHR + UC) and labels in
+`../code/outcomes.csv`. The v2 pipeline does *not* use `processed_dat/` (FHR-only,
+time-axis broken by segment concatenation).

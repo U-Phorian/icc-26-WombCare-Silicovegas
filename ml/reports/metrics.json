@@ -1,0 +1,61 @@
+{
+  "label": "pH < 7.15",
+  "eval": "out-of-fold (all records)",
+  "n_records": 545,
+  "n_windows": 1635,
+  "prevalence": 0.1871559633027523,
+  "per_window": {
+    "roc_auc": 0.6525,
+    "pr_auc": 0.3347,
+    "brier": 0.2274,
+    "balanced_operating_point": {
+      "threshold": 0.5153,
+      "sensitivity": 0.5588,
+      "specificity": 0.6922,
+      "confusion": {
+        "tn": 920,
+        "fp": 409,
+        "fn": 135,
+        "tp": 171
+      }
+    },
+    "sensitivity_first_point": {
+      "threshold": 0.3729,
+      "sensitivity": 0.8007,
+      "specificity": 0.3461,
+      "confusion": {
+        "tn": 460,
+        "fp": 869,
+        "fn": 61,
+        "tp": 245
+      }
+    }
+  },
+  "per_record": {
+    "roc_auc": 0.6936,
+    "pr_auc": 0.3676,
+    "brier": 0.2191,
+    "balanced_operating_point": {
+      "threshold": 0.51,
+      "sensitivity": 0.6176,
+      "specificity": 0.7223,
+      "confusion": {
+        "tn": 320,
+        "fp": 123,
+        "fn": 39,
+        "tp": 63
+      }
+    },
+    "sensitivity_first_point": {
+      "threshold": 0.4173,
+      "sensitivity": 0.8039,
+      "specificity": 0.4312,
+      "confusion": {
+        "tn": 191,
+        "fp": 252,
+        "fn": 20,
+        "tp": 82
+      }
+    }
+  }
+}

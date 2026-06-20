@@ -1,0 +1,11 @@
+baseline_fhr
+overall_std
+stv
+ltv
+accel_per_min
+decel_per_min
+pct_brady
+pct_tachy
+contractions_per_min
+late_decel_per_min
+late_decel_ratio
