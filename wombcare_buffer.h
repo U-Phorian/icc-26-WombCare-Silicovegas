@@ -3,39 +3,38 @@
 
 #include <stdint.h>
 #include <stdbool.h>
-#include "wombcare_sensors.h" // Inherit SAMPLES_PER_SECOND and NUM_CHANNELS
+#include "wombcare_dsp.h"
 
 // ---------------------------------------------------------
-// RING BUFFER CONFIGURATION
+// BUFFER CONFIGURATION
 // ---------------------------------------------------------
-#define HISTORY_WINDOW_SECONDS  60
-#define RING_BUFFER_CAPACITY    (SAMPLES_PER_SECOND * HISTORY_WINDOW_SECONDS) // 15,000
+#define RING_BUFFER_CAPACITY  1024  // 60 seconds at 17.07 Hz effective
+#define SAMPLES_PER_SECOND    1000  // Expected samples per DMA transfer
 
 // ---------------------------------------------------------
-// TRACKING STRUCTURE
+// RING BUFFER TRACKER STRUCTURE
 // ---------------------------------------------------------
 typedef struct {
-    uint32_t head;      // Write pointer for incoming samples
-    uint32_t tail;      // Read pointer (useful for Phase 5 DSP extraction)
-    bool is_primed;     // Transitions to true once the buffer hits 60s for the first time
-} wombcare_ring_t;
+    bool is_primed;
+    uint32_t head;
+} RingBufferTracker_t;
 
 // ---------------------------------------------------------
-// GLOBAL STATIC ARRAYS (180 KB Total Footprint)
+// EXTERNAL BUFFER TRACKERS (for cross-module access)
 // ---------------------------------------------------------
+extern RingBufferTracker_t tracker_mother;
+extern RingBufferTracker_t tracker_fetal;
+extern RingBufferTracker_t tracker_pvdf;
+
 extern float ring_mother_ecg[RING_BUFFER_CAPACITY];
 extern float ring_fetal_ecg[RING_BUFFER_CAPACITY];
 extern float ring_pvdf_kick[RING_BUFFER_CAPACITY];
 
-// State trackers for each channel
-extern wombcare_ring_t tracker_mother;
-extern wombcare_ring_t tracker_fetal;
-extern wombcare_ring_t tracker_pvdf;
-
 // ---------------------------------------------------------
-// PROTOTYPES
+// FUNCTION PROTOTYPES
 // ---------------------------------------------------------
 void wombcare_buffer_init(void);
+void wombcare_buffer_reset(void);
 void wombcare_buffer_ingest(uint16_t *dma_source_buffer);
 
-#endif // WOMBCARE_BUFFER_H
+#endif  // WOMBCARE_BUFFER_H

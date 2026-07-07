@@ -68,4 +68,3 @@
 #endif /* SL_DRIVER_MVP_CONFIG_H */
 
 // <<< end of configuration section >>>
-
