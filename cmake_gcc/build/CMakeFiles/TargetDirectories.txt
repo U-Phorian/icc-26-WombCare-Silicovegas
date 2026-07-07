@@ -1,0 +1,4 @@
+C:/Users/jishu/SimplicityStudio/v6_workspace/WombCare_Firmwire/cmake_gcc/build/CMakeFiles/slc.dir
+C:/Users/jishu/SimplicityStudio/v6_workspace/WombCare_Firmwire/cmake_gcc/build/CMakeFiles/WombCare_Firmwire.dir
+C:/Users/jishu/SimplicityStudio/v6_workspace/WombCare_Firmwire/cmake_gcc/build/CMakeFiles/edit_cache.dir
+C:/Users/jishu/SimplicityStudio/v6_workspace/WombCare_Firmwire/cmake_gcc/build/CMakeFiles/rebuild_cache.dir
