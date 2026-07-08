@@ -9,7 +9,7 @@
 # Use the SLT tooling to find the install paths so the tools are
 # found across multiple machines. This requires placing the 'slt'
 # tool on PATH
-execute_process(COMMAND slt where gcc-arm-none-eabi/12.2.rel1
+execute_process(COMMAND slt where gcc-arm-none-eabi/14.2.rel1
                 OUTPUT_VARIABLE "TOOLCHAIN_SLT_PATH"
                 OUTPUT_STRIP_TRAILING_WHITESPACE)
 

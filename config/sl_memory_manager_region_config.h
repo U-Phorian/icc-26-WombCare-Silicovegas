@@ -49,4 +49,3 @@
 // <<< end of configuration section >>>
 
 #endif /* SL_MEMORY_MANAGER_REGION_CONFIG_H */
-
