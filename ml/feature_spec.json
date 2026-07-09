@@ -1,0 +1,24 @@
+{
+  "spec_version": 1,
+  "description": "WombCare feature contract. Order = TFLite input order = WombCareFeatures_t. See FEATURE_SPEC.md.",
+  "label": {"column": "NSP", "classes": {"1": "Normal", "2": "Suspect", "3": "Pathologic"}},
+  "group_column": "FileName",
+  "duration": {"begin_col": "b", "end_col": "e", "fs_hz": 4, "comment": "dur_min = (e-b)/fs/60"},
+  "window_seconds_device_default": 60,
+  "window_seconds_recommended": 240,
+  "features": [
+    {"name": "LB",       "unit": "bpm",     "uci_col": "LB",       "normalize": "none",     "parity": "high",   "device": "median(FHR_valid)"},
+    {"name": "MSTV",     "unit": "bpm",     "uci_col": "MSTV",     "normalize": "none",     "parity": "medium", "device": "mean(|dFHR|)", "calibrate": true},
+    {"name": "MLTV",     "unit": "bpm",     "uci_col": "MLTV",     "normalize": "none",     "parity": "medium", "device": "mean over 60s blocks of (maxFHR-minFHR)", "calibrate": true},
+    {"name": "AC_rate",  "unit": "per_min", "uci_col": "AC",       "normalize": "per_min",  "parity": "high",   "device": "accel_episodes(>=15bpm,>=15s)/W_min"},
+    {"name": "DEC_rate", "unit": "per_min", "uci_col": "DL+DS",    "normalize": "per_min",  "parity": "high",   "device": "decel_episodes(>=15bpm,>=15s)/W_min"},
+    {"name": "FM_rate",  "unit": "per_min", "uci_col": "FM",       "normalize": "per_min",  "parity": "low",    "device": "pvdf_kicks/W_min"},
+    {"name": "MeanHR",   "unit": "bpm",     "uci_col": "Mean",     "normalize": "none",     "parity": "high",   "device": "mean(FHR_valid)"},
+    {"name": "Variance", "unit": "bpm2",    "uci_col": "Variance", "normalize": "none",     "parity": "medium", "device": "var(FHR_valid)"}
+  ],
+  "feature_sets": {
+    "A_all8": ["LB","MSTV","MLTV","AC_rate","DEC_rate","FM_rate","MeanHR","Variance"],
+    "B_high_parity6": ["LB","MSTV","AC_rate","DEC_rate","MeanHR","Variance"]
+  },
+  "valid_beat_filter": {"fhr_min_bpm": 50, "fhr_max_bpm": 240, "max_jump_bpm": 25}
+}
