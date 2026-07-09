@@ -1,0 +1,6 @@
+{
+  "float_vs_int8_argmax_agreement": 0.9901,
+  "float_train_acc": 0.794,
+  "int8_train_acc": 0.7973,
+  "tflite_bytes": 1560
+}

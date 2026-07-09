@@ -1,0 +1,218 @@
+{
+  "logistic|A_all8": {
+    "accuracy": 0.7843,
+    "macro_f1": 0.6621,
+    "pathologic_recall": 0.6899,
+    "per_class_recall": {
+      "Normal": 0.786,
+      "Suspect": 0.803,
+      "Pathologic": 0.741
+    },
+    "confusion_total": [
+      [
+        7805,
+        1486,
+        639
+      ],
+      [
+        126,
+        1421,
+        223
+      ],
+      [
+        83,
+        191,
+        782
+      ]
+    ]
+  },
+  "mlp|A_all8": {
+    "accuracy": 0.8624,
+    "macro_f1": 0.7297,
+    "pathologic_recall": 0.6199,
+    "per_class_recall": {
+      "Normal": 0.923,
+      "Suspect": 0.648,
+      "Pathologic": 0.663
+    },
+    "confusion_total": [
+      [
+        9161,
+        594,
+        175
+      ],
+      [
+        541,
+        1147,
+        82
+      ],
+      [
+        154,
+        202,
+        700
+      ]
+    ]
+  },
+  "rf|A_all8": {
+    "accuracy": 0.8765,
+    "macro_f1": 0.742,
+    "pathologic_recall": 0.597,
+    "per_class_recall": {
+      "Normal": 0.951,
+      "Suspect": 0.613,
+      "Pathologic": 0.629
+    },
+    "confusion_total": [
+      [
+        9442,
+        402,
+        86
+      ],
+      [
+        619,
+        1085,
+        66
+      ],
+      [
+        235,
+        157,
+        664
+      ]
+    ]
+  },
+  "gboost|A_all8": {
+    "accuracy": 0.8736,
+    "macro_f1": 0.745,
+    "pathologic_recall": 0.6235,
+    "per_class_recall": {
+      "Normal": 0.937,
+      "Suspect": 0.657,
+      "Pathologic": 0.652
+    },
+    "confusion_total": [
+      [
+        9302,
+        517,
+        111
+      ],
+      [
+        508,
+        1163,
+        99
+      ],
+      [
+        220,
+        148,
+        688
+      ]
+    ]
+  },
+  "logistic|B_high_parity6": {
+    "accuracy": 0.7825,
+    "macro_f1": 0.6515,
+    "pathologic_recall": 0.6314,
+    "per_class_recall": {
+      "Normal": 0.787,
+      "Suspect": 0.813,
+      "Pathologic": 0.693
+    },
+    "confusion_total": [
+      [
+        7816,
+        1566,
+        548
+      ],
+      [
+        110,
+        1439,
+        221
+      ],
+      [
+        61,
+        263,
+        732
+      ]
+    ]
+  },
+  "mlp|B_high_parity6": {
+    "accuracy": 0.8641,
+    "macro_f1": 0.7072,
+    "pathologic_recall": 0.5613,
+    "per_class_recall": {
+      "Normal": 0.931,
+      "Suspect": 0.636,
+      "Pathologic": 0.617
+    },
+    "confusion_total": [
+      [
+        9249,
+        507,
+        174
+      ],
+      [
+        503,
+        1126,
+        141
+      ],
+      [
+        142,
+        262,
+        652
+      ]
+    ]
+  },
+  "rf|B_high_parity6": {
+    "accuracy": 0.8611,
+    "macro_f1": 0.7012,
+    "pathologic_recall": 0.5706,
+    "per_class_recall": {
+      "Normal": 0.943,
+      "Suspect": 0.567,
+      "Pathologic": 0.592
+    },
+    "confusion_total": [
+      [
+        9365,
+        479,
+        86
+      ],
+      [
+        564,
+        1004,
+        202
+      ],
+      [
+        242,
+        189,
+        625
+      ]
+    ]
+  },
+  "gboost|B_high_parity6": {
+    "accuracy": 0.8715,
+    "macro_f1": 0.728,
+    "pathologic_recall": 0.6145,
+    "per_class_recall": {
+      "Normal": 0.939,
+      "Suspect": 0.624,
+      "Pathologic": 0.656
+    },
+    "confusion_total": [
+      [
+        9329,
+        513,
+        88
+      ],
+      [
+        510,
+        1105,
+        155
+      ],
+      [
+        157,
+        206,
+        693
+      ]
+    ]
+  }
+}

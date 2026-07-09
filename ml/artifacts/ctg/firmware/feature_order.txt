@@ -1,0 +1,8 @@
+LB
+MSTV
+MLTV
+AC_rate
+DEC_rate
+FM_rate
+MeanHR
+Variance
