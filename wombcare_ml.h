@@ -14,9 +14,13 @@ typedef enum {
     WOMBCARE_PATHOLOGIC = 2    // ALERT
 } WombCareNSP_t;
 
+// This is the type app.c expects back from wombcare_ml_run().
+// IMPORTANT: app.h must NOT also define a `WombCareResult_t` (an older app.h did,
+// holding {features, imu_confidence, ml_prediction}) -- that collides with this.
+// The current app.c uses THIS struct (.nsp / .confidence), so keep only this one.
 typedef struct {
-    WombCareNSP_t nsp;      // winning class
-    float confidence;      // probability of the winning class (0..1)
+    WombCareNSP_t nsp;      // winning class (0=Normal,1=Suspect,2=Pathologic)
+    float confidence;      // probability of the winning class, 0..1
     float probs[3];        // {Normal, Suspect, Pathologic}, sums to ~1
     bool  ok;              // false if inference failed
 } WombCareResult_t;

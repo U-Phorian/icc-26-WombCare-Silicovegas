@@ -57,11 +57,22 @@ Compute an `fhr[]` array (bpm) from the valid RR intervals — most features use
 ## FIX 4 — MSTV in **bpm**, not ms
 [wombcare_dsp.c:106](wombcare_dsp.c#L106)
 
+**Why this matters:** the model was trained on variability in **bpm** (UCI MSTV ≈
+0.2–7). The current code computes `mean|ΔRR|` in **milliseconds** (tens of ms).
+Feeding ms into a bpm-trained model → garbage output. Compute it directly on the
+`fhr[]` (bpm) series — this is exact (no conversion needed):
+
 ```c
 // mean absolute successive difference of FHR (bpm), not RR (ms)
 float s=0; for (n=1;n<n_beats;n++) s += fabsf(fhr[n]-fhr[n-1]);
-out->mstv = s/(n_beats-1);
+out->mstv = s/(n_beats-1);   // bpm
 ```
+
+> **Do NOT convert ms→bpm by scaling against baseline** — the RR→BPM relationship
+> is a reciprocal (`FHR = 60000/RR`), not linear. If you ever must convert an
+> ms value, the correct first-order factor is `× LB²/60000`
+> (since `dFHR/dRR = −FHR²/60000`), e.g. LB=140 → ×0.327. But computing on `fhr[]`
+> directly avoids this approximation entirely and is the recommended path.
 
 ## FIX 5 — MeanHR and Variance on FHR (bpm / bpm²)
 [wombcare_dsp.c:93-99](wombcare_dsp.c#L93)

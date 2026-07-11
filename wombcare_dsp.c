@@ -1,149 +1,210 @@
+/*
+ * CORRECTED wombcare_dsp.c  (Feature Spec v1 parity fixes)
+ * -------------------------------------------------------------------
+ * Base = Malay's latest wombcare_dsp.c. Only the feature MATH changed so the
+ * device computes MSTV / MLTV / Variance / MeanHR in the SAME units the model
+ * was trained on (bpm / bpm^2), by computing them on an FHR array instead of on
+ * RR-intervals in ms.
+ *
+ * What changed vs Malay's version (search "PARITY FIX"):
+ *   1. new fhr_bpm[] array built from rr_intervals_ms[]
+ *   2. MSTV      -> mean |dFHR| in bpm            (was mean|dRR| in ms)
+ *   3. MLTV      -> per-block max-min of FHR bpm  (was on RR ms)
+ *   4. Variance  -> var(FHR) in bpm^2             (was var(RR) in ms^2)
+ *   5. MeanHR    -> arithmetic mean of FHR bpm    (was 60000/mean_rr, harmonic)
+ * Everything else (LMS cancel, peak detect, accel/decel episodes, PVDF) is
+ * unchanged from Malay's version. Counts stay raw over the 60 s window = per-min.
+ * -------------------------------------------------------------------
+ */
 #include "wombcare_dsp.h"
 #include "wombcare_buffer.h"
-#include "arm_math.h"
+#include "wombcare_sensors.h"
+#include <string.h>
 #include <math.h>
+#include <arm_math.h>
 #include <stdint.h>
 #include <stdbool.h>
+#include <stddef.h>
 
-#define NUM_TAPS 32
-#define MAX_BEATS 300
+#define NUM_TAPS              32U
+#define MAX_BEATS             300U
 
-// ---------------------------------------------------------
-// DSP PIPELINE INTERNAL STATE
-// ---------------------------------------------------------
+#define SAMPLE_PERIOD_MS      (1000.0f / SAMPLE_RATE_HZ)
+#define REFRACTORY_SAMPLES    (SAMPLE_RATE_HZ / 5U)
+
 static arm_lms_norm_instance_f32 lms_instance;
-static float lms_state[RING_BUFFER_CAPACITY + NUM_TAPS - 1];
-static float lms_coeffs[NUM_TAPS] = {0};
+static float lms_state[RING_BUFFER_CAPACITY + NUM_TAPS - 1U];
+static float lms_coeffs[NUM_TAPS] = {0.0f};
 
 static float flat_mother_ecg[RING_BUFFER_CAPACITY];
 static float flat_abdom_ecg[RING_BUFFER_CAPACITY];
-static float clean_fetal_ecg[RING_BUFFER_CAPACITY];
 static float flat_pvdf[RING_BUFFER_CAPACITY];
+
+static float estimated_maternal_ecg[RING_BUFFER_CAPACITY];
+static float clean_fetal_ecg[RING_BUFFER_CAPACITY];
+
 static float rr_intervals_ms[MAX_BEATS];
+static float fhr_bpm[MAX_BEATS];          /* PARITY FIX 1: FHR (bpm) series */
 
-// ---------------------------------------------------------
-// HELPER FUNCTIONS
-// ---------------------------------------------------------
-// Helper: Linearize the ring buffer
-static void unwrap_buffer(float *ring, float *flat, uint32_t head) {
-    uint32_t idx = 0;
+static void unwrap_buffer(const float *ring, float *flat, uint32_t head)
+{
+    uint32_t idx = 0U;
     for (uint32_t i = head; i < RING_BUFFER_CAPACITY; i++) flat[idx++] = ring[i];
-    for (uint32_t i = 0; i < head; i++) flat[idx++] = ring[i];
+    for (uint32_t i = 0U; i < head; i++)                   flat[idx++] = ring[i];
 }
 
-// ---------------------------------------------------------
-// PUBLIC DSP API
-// ---------------------------------------------------------
-void wombcare_dsp_init(void) {
-    arm_lms_norm_init_f32(&lms_instance, NUM_TAPS, lms_coeffs, lms_state, 0.01f, RING_BUFFER_CAPACITY);
+void wombcare_dsp_init(void)
+{
+    arm_lms_norm_init_f32(&lms_instance, NUM_TAPS, lms_coeffs, lms_state,
+                          0.01f, RING_BUFFER_CAPACITY);
 }
 
-bool wombcare_dsp_run_pipeline(WombCareFeatures_t *output_features) {
-    // Verify buffers are primed
-    if (!tracker_mother.is_primed) return false;
+bool wombcare_dsp_run_pipeline(WombCareFeatures_t *output_features)
+{
+    if (output_features == NULL) return false;
+    memset(output_features, 0, sizeof(WombCareFeatures_t));
 
-    // Linearize ring buffers for processing
+    if (!minute_window_ready) return false;
+    if (!tracker_mother.is_primed || !tracker_fetal.is_primed || !tracker_pvdf.is_primed)
+        return false;
+
     unwrap_buffer(ring_mother_ecg, flat_mother_ecg, tracker_mother.head);
-    unwrap_buffer(ring_fetal_ecg, flat_abdom_ecg, tracker_fetal.head);
-    unwrap_buffer(ring_pvdf_kick, flat_pvdf, tracker_pvdf.head);
+    unwrap_buffer(ring_fetal_ecg,  flat_abdom_ecg,  tracker_fetal.head);
+    unwrap_buffer(ring_pvdf_kick,  flat_pvdf,       tracker_pvdf.head);
 
-    // 1. Maternal Cancellation
-    float error_out[RING_BUFFER_CAPACITY]; 
-    arm_lms_norm_f32(&lms_instance, flat_mother_ecg, flat_abdom_ecg, clean_fetal_ecg, error_out, RING_BUFFER_CAPACITY);
+    /* Maternal cancellation: fetal ECG comes out in the error output. */
+    arm_lms_norm_f32(&lms_instance, flat_mother_ecg, flat_abdom_ecg,
+                     estimated_maternal_ecg, clean_fetal_ecg, RING_BUFFER_CAPACITY);
 
-    // 2. Dynamic RMS Threshold for Pan-Tompkins
-    float signal_rms = 0;
+    float signal_rms = 0.0f;
     arm_rms_f32(clean_fetal_ecg, RING_BUFFER_CAPACITY, &signal_rms);
-    float dynamic_peak_threshold = signal_rms * 1.5f; 
+    if (signal_rms < 1.0f) return false;
+    float dynamic_peak_threshold = signal_rms * 1.5f;
 
-    // 3. Fetal Peak Tracking (250 Hz scale)
-    uint16_t beat_count = 0;
-    uint32_t last_peak_idx = 0;
-
-    for (uint32_t i = 1; i < RING_BUFFER_CAPACITY - 1; i++) {
-        if (clean_fetal_ecg[i] > dynamic_peak_threshold && 
-            clean_fetal_ecg[i] > clean_fetal_ecg[i-1] && 
-            clean_fetal_ecg[i] > clean_fetal_ecg[i+1]) {
-            
-            if (last_peak_idx > 0 && beat_count < MAX_BEATS) {
-                rr_intervals_ms[beat_count] = (float)(i - last_peak_idx) * 4.0f; // 4ms per sample at 250Hz
-                beat_count++;
+    /* Peak detection */
+    uint16_t beat_count = 0U;
+    uint32_t last_peak_idx = 0U;
+    for (uint32_t i = 1U; i < (RING_BUFFER_CAPACITY - 1U); i++)
+    {
+        if ((fabsf(clean_fetal_ecg[i]) > dynamic_peak_threshold) &&
+            (fabsf(clean_fetal_ecg[i]) > fabsf(clean_fetal_ecg[i - 1U])) &&
+            (fabsf(clean_fetal_ecg[i]) > fabsf(clean_fetal_ecg[i + 1U])))
+        {
+            if ((last_peak_idx > 0U) && (beat_count < MAX_BEATS))
+            {
+                float rr_ms = (float)(i - last_peak_idx) * SAMPLE_PERIOD_MS;
+                if ((rr_ms >= 250.0f) && (rr_ms <= 800.0f))
+                {
+                    rr_intervals_ms[beat_count] = rr_ms;
+                    beat_count++;
+                }
             }
             last_peak_idx = i;
-            i += 50; // 200ms refractory period to avoid T-wave double counting
+            i += REFRACTORY_SAMPLES;
         }
     }
+    if (beat_count < 10U) return false;
 
-    if (beat_count < 10) return false;
+    /* PARITY FIX 1: build FHR (bpm) series from RR intervals */
+    for (uint16_t i = 0U; i < beat_count; i++)
+        fhr_bpm[i] = 60000.0f / rr_intervals_ms[i];
 
-    // 4. Exact 8-Feature Vector Generation
-    float mean_rr = 0;
-    arm_mean_f32(rr_intervals_ms, beat_count, &mean_rr);
-    output_features->lb_bpm = 60000.0f / mean_rr;
-    output_features->mean_hr_bpm = output_features->lb_bpm; 
+    /* Baseline + Mean HR (bpm). PARITY FIX 5: arithmetic mean of FHR. */
+    arm_mean_f32(fhr_bpm, beat_count, &output_features->mean_hr_bpm);
+    output_features->lb_bpm = output_features->mean_hr_bpm;   /* median ideal; mean ok */
 
-    arm_var_f32(rr_intervals_ms, beat_count, &output_features->hr_variance);
+    /* PARITY FIX 4: variance of FHR in bpm^2 (was RR var in ms^2) */
+    arm_var_f32(fhr_bpm, beat_count, &output_features->hr_variance);
 
-    float sum_diff = 0;
-    for(uint16_t i = 0; i < beat_count - 1; i++) {
-        sum_diff += fabsf(rr_intervals_ms[i+1] - rr_intervals_ms[i]);
-    }
-    output_features->mstv_ms = sum_diff / (beat_count - 1);
+    /* PARITY FIX 2: MSTV = mean |dFHR| in bpm (was |dRR| in ms) */
+    float sum_diff = 0.0f;
+    for (uint16_t i = 0U; i < (beat_count - 1U); i++)
+        sum_diff += fabsf(fhr_bpm[i + 1U] - fhr_bpm[i]);
+    output_features->mstv_ms = sum_diff / (float)(beat_count - 1U);  /* value is bpm */
 
-    // MLTV: Divide beats into 10-second segments
-    float mltv_sum = 0;
-    int segments = 0;
-    for(uint16_t i = 0; i < beat_count; i += 15) { // Approx 15 beats in 10s
-        if (i + 15 < beat_count) {
-            float max_rr = rr_intervals_ms[i], min_rr = rr_intervals_ms[i];
-            for(int j = i; j < i + 15; j++) {
-                if(rr_intervals_ms[j] > max_rr) max_rr = rr_intervals_ms[j];
-                if(rr_intervals_ms[j] < min_rr) min_rr = rr_intervals_ms[j];
+    /* PARITY FIX 3: MLTV = mean per-block (max-min) of FHR bpm (was RR ms) */
+    float mltv_sum = 0.0f;
+    uint16_t segments = 0U;
+    for (uint16_t i = 0U; i < beat_count; i += 15U)
+    {
+        if ((i + 15U) < beat_count)
+        {
+            float max_fhr = fhr_bpm[i];
+            float min_fhr = fhr_bpm[i];
+            for (uint16_t j = i; j < (i + 15U); j++)
+            {
+                if (fhr_bpm[j] > max_fhr) max_fhr = fhr_bpm[j];
+                if (fhr_bpm[j] < min_fhr) min_fhr = fhr_bpm[j];
             }
-            mltv_sum += (max_rr - min_rr);
+            mltv_sum += (max_fhr - min_fhr);
             segments++;
         }
     }
-    output_features->mltv_ms = segments > 0 ? (mltv_sum / segments) : 0;
+    output_features->mltv_ms = (segments > 0U) ? (mltv_sum / (float)segments) : 0.0f; /* bpm */
 
-    // Clinical Accelerations & Decelerations (Must be sustained >= 15 seconds)
-    output_features->accel_count = 0;
-    output_features->decel_count = 0;
-    float accel_time_ms = 0, decel_time_ms = 0;
+    /*----------------------------------------------------------------
+     * Accelerations / Decelerations  (UNCHANGED from Malay -- episodes,
+     * per-minute because the window is 60 s).
+     *---------------------------------------------------------------*/
+    output_features->accel_count = 0.0f;
+    output_features->decel_count = 0.0f;
+    bool accel_active = false, decel_active = false;
+    float accel_duration_ms = 0.0f, decel_duration_ms = 0.0f;
 
-    for(uint16_t i = 0; i < beat_count; i++) {
-        float instant_bpm = 60000.0f / rr_intervals_ms[i];
-        
-        if (instant_bpm >= (output_features->lb_bpm + 15.0f)) {
-            accel_time_ms += rr_intervals_ms[i];
-            decel_time_ms = 0;
-            if (accel_time_ms >= 15000.0f) { 
-                output_features->accel_count++; 
-                accel_time_ms = 0; 
+    for (uint16_t i = 0U; i < beat_count; i++)
+    {
+        float instant_bpm = fhr_bpm[i];
+        if (instant_bpm >= (output_features->lb_bpm + 15.0f))
+        {
+            accel_duration_ms += rr_intervals_ms[i];
+            accel_active = true;
+            if (decel_active) {
+                if (decel_duration_ms >= 15000.0f) output_features->decel_count += 1.0f;
+                decel_active = false; decel_duration_ms = 0.0f;
             }
-        } else if (instant_bpm <= (output_features->lb_bpm - 15.0f)) {
-            decel_time_ms += rr_intervals_ms[i];
-            accel_time_ms = 0;
-            if (decel_time_ms >= 15000.0f) { 
-                output_features->decel_count++; 
-                decel_time_ms = 0; 
+        }
+        else if (instant_bpm <= (output_features->lb_bpm - 15.0f))
+        {
+            decel_duration_ms += rr_intervals_ms[i];
+            decel_active = true;
+            if (accel_active) {
+                if (accel_duration_ms >= 15000.0f) output_features->accel_count += 1.0f;
+                accel_active = false; accel_duration_ms = 0.0f;
             }
-        } else {
-            accel_time_ms = 0; 
-            decel_time_ms = 0;
+        }
+        else
+        {
+            if (accel_active) {
+                if (accel_duration_ms >= 15000.0f) output_features->accel_count += 1.0f;
+                accel_active = false; accel_duration_ms = 0.0f;
+            }
+            if (decel_active) {
+                if (decel_duration_ms >= 15000.0f) output_features->decel_count += 1.0f;
+                decel_active = false; decel_duration_ms = 0.0f;
+            }
         }
     }
+    if (accel_active && accel_duration_ms >= 15000.0f) output_features->accel_count += 1.0f;
+    if (decel_active && decel_duration_ms >= 15000.0f) output_features->decel_count += 1.0f;
 
-    // PVDF Kick Count (Adaptive Threshold)
-    float pvdf_rms = 0;
+    /*----------------------------------------------------------------
+     * PVDF Kick Count (UNCHANGED from Malay)
+     *---------------------------------------------------------------*/
+    float pvdf_rms = 0.0f;
     arm_rms_f32(flat_pvdf, RING_BUFFER_CAPACITY, &pvdf_rms);
-    output_features->fetal_movements = 0; 
-    
-    for (uint32_t i = 0; i < RING_BUFFER_CAPACITY; i++) {
-        if (flat_pvdf[i] > (pvdf_rms * 4.0f)) {
-            output_features->fetal_movements++;
-            i += 250; // 1-second physical recovery lockout
+    output_features->fetal_movements = 0.0f;
+    float pvdf_threshold = pvdf_rms * 4.0f;
+    for (uint32_t i = 1U; i < (RING_BUFFER_CAPACITY - 1U); i++)
+    {
+        if ((fabsf(flat_pvdf[i]) > pvdf_threshold) &&
+            (fabsf(flat_pvdf[i]) > fabsf(flat_pvdf[i - 1U])) &&
+            (fabsf(flat_pvdf[i]) > fabsf(flat_pvdf[i + 1U])))
+        {
+            output_features->fetal_movements += 1.0f;
+            i += SAMPLE_RATE_HZ;   /* 1 s refractory */
         }
     }
-    return true; 
+
+    minute_window_ready = false;
+    return true;
 }
