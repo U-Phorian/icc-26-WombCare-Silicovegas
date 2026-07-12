@@ -96,12 +96,24 @@ void sl_bt_on_event(sl_bt_msg_t *evt)
             wombcare_ble_init();
 
             // >>> TODO(O2): create advertiser set + set timing, then start.
-            // sl_bt_advertiser_create_set(&s_advertiser);
-            // sl_bt_legacy_advertiser_generate_data(s_advertiser,
-            //         sl_bt_advertiser_general_discoverable);
-            // sl_bt_advertiser_set_timing(s_advertiser, 160, 160, 0, 0); // 100ms
-            // sl_bt_legacy_advertiser_start(s_advertiser,
-            //         sl_bt_advertiser_connectable_scannable);
+            sc = sl_bt_advertiser_create_set(&s_advertiser);
+            app_assert_status(sc);
+
+            sc = sl_bt_legacy_advertiser_generate_data(
+                     s_advertiser,
+                     sl_bt_advertiser_general_discoverable);
+            app_assert_status(sc);
+
+            sc = sl_bt_advertiser_set_timing(
+                     s_advertiser, 160, 160, 0, 0);
+            app_assert_status(sc);
+
+            sc = sl_bt_legacy_advertiser_start(
+                     s_advertiser,
+                     sl_bt_legacy_advertiser_connectable);
+            app_assert_status(sc);
+
+            app_log_info("WombCare BLE: advertising started" APP_LOG_NL);
             break;
         }
 
@@ -110,6 +122,11 @@ void sl_bt_on_event(sl_bt_msg_t *evt)
         {
             s_connection = evt->data.evt_connection_opened.connection;
             // >>> TODO: (optional) stop advertising while connected.
+            app_log_info("BLE: phone connected (handle %d)" APP_LOG_NL,
+                         s_connection);
+
+            // Stop advertising while connected
+            sl_bt_advertiser_stop(s_advertiser);
             break;
         }
 
@@ -118,9 +135,13 @@ void sl_bt_on_event(sl_bt_msg_t *evt)
         {
             s_connection = 0xFFu;
             s_notifications_on = false;
-            // >>> TODO(O2): restart advertising (same as boot path).
-            // sl_bt_legacy_advertiser_start(s_advertiser,
-            //         sl_bt_advertiser_connectable_scannable);
+            app_log_info("BLE: phone disconnected, restarting advertising"
+                         APP_LOG_NL);
+
+            sc = sl_bt_legacy_advertiser_start(
+                     s_advertiser,
+                     sl_bt_legacy_advertiser_connectable);
+            app_assert_status(sc);
             break;
         }
 
@@ -136,6 +157,27 @@ void sl_bt_on_event(sl_bt_msg_t *evt)
             //                        .client_config_flags;
             //     s_notifications_on = (cfg & sl_bt_gatt_notification);
             // }
+            if (evt->data.evt_gatt_server_characteristic_status.characteristic
+                    == gattdb_clinical_update &&
+                evt->data.evt_gatt_server_characteristic_status.status_flags
+                    == sl_bt_gatt_server_client_config)
+            {
+                uint16_t cfg = evt->data
+                    .evt_gatt_server_characteristic_status
+                    .client_config_flags;
+                s_notifications_on = (cfg & sl_bt_gatt_notification) != 0;
+
+                if (s_notifications_on) {
+                    app_log_info("BLE: phone subscribed to notifications"
+                                 APP_LOG_NL);
+                    // Send last known payload immediately
+                    sl_bt_gatt_server_send_notification(
+                        s_connection,
+                        gattdb_clinical_update,
+                        sizeof(s_last_payload),
+                        (const uint8_t *)&s_last_payload);
+                }
+            }
             break;
         }
 
