@@ -2,7 +2,8 @@
 #include "wombcare_sensors.h"
 #include "wombcare_buffer.h"
 #include "wombcare_imu.h"
-#include "wombcare_dsp.h"  
+#include "wombcare_dsp.h"
+#include "wombcare_ble.h"
 
 // Global structure to hold the 8 TinyML inputs
 WombCareFeatures_t current_patient_features;
@@ -103,7 +104,13 @@ void app_process_action(void) {
 
         case SYSTEM_STATE_BLE_BROADCAST:
             // TODO: Update GATT server characteristics and notify local network
-            
+            wombcare_ble_send_clinical_update(
+            ml_result.nsp,
+                (uint8_t)(ml_result.confidence * 100.0f),
+                current_patient_features.lb_bpm,
+                current_patient_features.fetal_movements
+            );
+            current_system_state = SYSTEM_STATE_IMU_EVAL;
             // current_system_state = SYSTEM_STATE_IMU_EVAL; // Restart the cycle
             break;
     }
