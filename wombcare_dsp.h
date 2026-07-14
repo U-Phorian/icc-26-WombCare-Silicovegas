@@ -3,25 +3,33 @@
 
 #include <stdint.h>
 #include <stdbool.h>
+#include <stddef.h>
 
-// ---------------------------------------------------------
-// TINYML FEATURE VECTOR STRUCTURE
-// ---------------------------------------------------------
-typedef struct {
-    float lb_bpm;           // Baseline Fetal Heart Rate
-    float mstv_ms;          // Mean Short-Term Variability
-    float mltv_ms;          // Mean Long-Term Variability
-    float accel_count;      // Accelerations (AC)
-    float decel_count;      // Decelerations (DL/DS)
-    float fetal_movements;  // Kick Count (FM)
-    float mean_hr_bpm;      // Overall Mean HR
-    float hr_variance;      // Heart Rate Variance
+/*----------------------------------------------------------
+ * TinyML Feature Vector
+ *
+ * Order MUST remain identical to the trained model input.
+ *---------------------------------------------------------*/
+typedef struct
+{
+    float lb_bpm;            /* Baseline Fetal Heart Rate (BPM) */
+    float mstv_ms;           /* Mean Short-Term Variability */
+    float mltv_ms;           /* Mean Long-Term Variability */
+    float accel_count;       /* Accelerations */
+    float decel_count;       /* Decelerations */
+    float fetal_movements;   /* PVDF Kick Count */
+    float mean_hr_bpm;       /* Mean Heart Rate */
+    float hr_variance;       /* Heart Rate Variance */
+
 } WombCareFeatures_t;
 
-// ---------------------------------------------------------
-// PROTOTYPES
-// ---------------------------------------------------------
-void wombcare_dsp_init(void);
-bool wombcare_dsp_run_pipeline(WombCareFeatures_t *output_features);
+/*----------------------------------------------------------
+ * Public API
+ *---------------------------------------------------------*/
 
-#endif // WOMBCARE_DSP_H
+void wombcare_dsp_init(void);
+
+bool wombcare_dsp_run_pipeline(
+    WombCareFeatures_t *output_features);
+
+#endif /* WOMBCARE_DSP_H */

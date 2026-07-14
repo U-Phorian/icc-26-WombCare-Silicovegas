@@ -127,24 +127,24 @@ SECTIONS
     __bss_start__ = .;
     *(SORT_BY_ALIGNMENT(.bss*))
     *(COMMON)
-    . = ALIGN(4);
+    . = ALIGN(32);
     __bss_end__ = .;
   } > RAM :ram_pre_code
 
-  .noinit (NOLOAD) : ALIGN(4)
+  .noinit (NOLOAD) : ALIGN(32)
   {
     *(.noinit*);
   } > RAM :ram_pre_code
 
-  text_application_ram : ALIGN(4)
+  text_application_ram : ALIGN(32)
   {
-    . = ALIGN(4);
+    . = ALIGN(32);
     __vma_ramfuncs_start__ = .;
 
     /* text_application_ram */
     *(text_application_ram)
 
-    . = ALIGN(4);
+    . = ALIGN(32);
     __vma_ramfuncs_end__ = .;
   } > RAM AT > FLASH :ram_code
 

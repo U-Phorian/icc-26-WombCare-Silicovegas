@@ -1,63 +1,98 @@
 #include "wombcare_sensors.h"
+
 #include "em_cmu.h"
-#include "em_letimer.h"
-#include "em_prs.h"
+#include <em_gpio.h>
 #include "em_iadc.h"
 #include "em_ldma.h"
-#include "em_core.h"
+#include "em_letimer.h"
+#include "em_prs.h"
 
-// ---------------------------------------------------------
-// GLOBAL MEMORY ALLOCATIONS
-// ---------------------------------------------------------
+#include <stdint.h>
+
 uint16_t adcBufferPing[DMA_BUFFER_SIZE];
 uint16_t adcBufferPong[DMA_BUFFER_SIZE];
 
 volatile bool ping_buffer_ready = false;
 volatile bool pong_buffer_ready = false;
 
-LDMA_Descriptor_t ldmaDescriptors[2];
+/* Keep descriptors private to this file */
+static LDMA_Descriptor_t ldmaDescriptors[2];
 
-#define LDMA_CHANNEL 0
+#define LDMA_CHANNEL   0U
 
-void wombcare_hardware_init(void) {
-    // ---------------------------------------------------------
-    // 1. ENABLE CLOCKS
-    // ---------------------------------------------------------
+void wombcare_hardware_init(void)
+{
     CMU_ClockEnable(cmuClock_IADC0, true);
     CMU_ClockEnable(cmuClock_PRS, true);
-    CMU_ClockEnable(cmuClock_LDMA, true); 
-    
-    CMU_ClockSelectSet(cmuClock_EM23GRPACLK, cmuSelect_LFRCO);
+    CMU_ClockEnable(cmuClock_LDMA, true);
     CMU_ClockEnable(cmuClock_LETIMER0, true);
 
-    // ---------------------------------------------------------
-    // 2. CONFIGURE LETIMER0 (250 Hz)
-    // ---------------------------------------------------------
-    LETIMER_Init_TypeDef letimerInit = LETIMER_INIT_DEFAULT;
-    letimerInit.comp0Top = true; 
-    letimerInit.enable = false; 
-    LETIMER_Init(LETIMER0, &letimerInit);
+    CMU_ClockSelectSet(cmuClock_EM23GRPACLK, cmuSelect_LFRCO);
 
-    uint32_t topValue = (CMU_ClockFreqGet(cmuClock_LETIMER0) / 250) - 1;
+    /*---------------------------------------------------------------
+    * Configure Analog GPIO Pins
+    *--------------------------------------------------------------*/
+    GPIO_PinModeSet(gpioPortB, 7, gpioModeDisabled, 0);
+    GPIO_PinModeSet(gpioPortB, 8, gpioModeDisabled, 0);
+    GPIO_PinModeSet(gpioPortD, 8, gpioModeDisabled, 0);
+
+    //----------------------------------------------------------------------
+    // LETIMER
+    //----------------------------------------------------------------------
+    LETIMER_Init_TypeDef letimerInit = LETIMER_INIT_DEFAULT;
+
+/* Free-running periodic timer */
+letimerInit.enable = false;
+letimerInit.comp0Top = true;
+letimerInit.repMode = letimerRepeatFree;
+
+/* Generate PRS pulse on every underflow */
+letimerInit.ufoa0 = letimerUFOAPulse;
+
+LETIMER_Init(
+    LETIMER0,
+    &letimerInit);
+
+    uint32_t topValue = (32768U / SAMPLE_RATE_HZ) - 1U;
+
     LETIMER_CompareSet(LETIMER0, 0, topValue);
 
-    // ---------------------------------------------------------
-    // 3. CONFIGURE PRS
-    // ---------------------------------------------------------
-    PRS_SourceAsyncSignalSet(0, PRS_ASYNC_CH_CTRL_SOURCESEL_LETIMER0, PRS_ASYNC_CH_CTRL_SIGSEL_LETIMER0CH0);
-    PRS_ConnectConsumer(0, prsTypeAsync, prsConsumerIADC0_SCANTRIGGER);
+    //----------------------------------------------------------------------
+    // PRS
+    //----------------------------------------------------------------------
+    PRS_SourceAsyncSignalSet(
+        0,
+        PRS_ASYNC_CH_CTRL_SOURCESEL_LETIMER0,
+        PRS_ASYNC_CH_CTRL_SIGSEL_LETIMER0CH0);
 
-    // ---------------------------------------------------------
-    // 4. CONFIGURE IADC
-    // ---------------------------------------------------------
+    PRS_ConnectConsumer(
+        0,
+        prsTypeAsync,
+        prsConsumerIADC0_SCANTRIGGER);
+
+    //----------------------------------------------------------------------
+    // IADC
+    //----------------------------------------------------------------------
     IADC_Init_t init = IADC_INIT_DEFAULT;
-    IADC_AllConfigs_t allConfigs = IADC_ALLCONFIGS_DEFAULT;
-    IADC_InitScan_t initScan = IADC_INITSCAN_DEFAULT;
-    IADC_ScanTable_t scanTable = IADC_SCANTABLE_DEFAULT;
+
+IADC_AllConfigs_t allConfigs = IADC_ALLCONFIGS_DEFAULT;
+
+IADC_InitScan_t initScan = IADC_INITSCAN_DEFAULT;
+
+IADC_ScanTable_t scanTable = IADC_SCANTABLE_DEFAULT;
 
     allConfigs.configs[0].reference = iadcCfgReferenceVddx;
-    initScan.triggerAction = iadcTriggerActionOnce;
-    initScan.dataValidLevel = iadcFifoCfgDvl3; 
+
+    /* Triggered by PRS */
+initScan.triggerSelect = iadcTriggerSelPrs0PosEdge;
+
+/* One scan for every PRS pulse */
+initScan.triggerAction = iadcTriggerActionOnce;
+
+/* DMA wakes after all 3 channels */
+initScan.dataValidLevel = iadcFifoCfgDvl3;
+
+initScan.fifoDmaWakeup = true;
 
     scanTable.entries[CH_MOTHER_ECG].posInput = IADC_INPUT_MOTHER_ECG;
     scanTable.entries[CH_MOTHER_ECG].negInput = iadcNegInputGnd;
@@ -74,74 +109,97 @@ void wombcare_hardware_init(void) {
     IADC_init(IADC0, &init, &allConfigs);
     IADC_initScan(IADC0, &initScan, &scanTable);
 
-    // ---------------------------------------------------------
-    // 5. CONFIGURE THE LDMA PING-PONG ENGINE (Manual Structs)
-    // ---------------------------------------------------------
+    //----------------------------------------------------------------------
+    // LDMA
+    //----------------------------------------------------------------------
     LDMA_Init_t ldmaInit = LDMA_INIT_DEFAULT;
     LDMA_Init(&ldmaInit);
 
-    LDMA_TransferCfg_t transferCfg = LDMA_TRANSFER_CFG_PERIPHERAL(ldmaPeripheralSignal_IADC0_IADC_SCAN);
-
-    // Setup Ping Descriptor (Index 0) Manually
-    ldmaDescriptors[0].xfer.srcAddr = (uint32_t)&(IADC0->SCANFIFODATA);
+    ldmaDescriptors[0].xfer.structType = ldmaCtrlStructTypeXfer;
+    ldmaDescriptors[0].xfer.srcAddr = (uint32_t)&IADC0->SCANFIFODATA;
     ldmaDescriptors[0].xfer.dstAddr = (uint32_t)adcBufferPing;
-    ldmaDescriptors[0].xfer.xferCnt = (DMA_BUFFER_SIZE - 1);
-    ldmaDescriptors[0].xfer.size = ldmaCtrlSizeHalf;       // 16-bit halfword
-    ldmaDescriptors[0].xfer.srcInc = ldmaCtrlSrcIncNone;   // Do not increment ADC register
-    ldmaDescriptors[0].xfer.dstInc = ldmaCtrlDstIncOne;    // Increment RAM array
+    ldmaDescriptors[0].xfer.xferCnt = DMA_BUFFER_SIZE - 1;
+    ldmaDescriptors[0].xfer.size = ldmaCtrlSizeHalf;
+    ldmaDescriptors[0].xfer.srcInc = ldmaCtrlSrcIncNone;
+    ldmaDescriptors[0].xfer.dstInc = ldmaCtrlDstIncOne;
     ldmaDescriptors[0].xfer.reqMode = ldmaCtrlReqModeBlock;
     ldmaDescriptors[0].xfer.blockSize = ldmaCtrlBlockSizeUnit1;
-    ldmaDescriptors[0].xfer.doneIfs = 1;                   // Fire interrupt when Ping is full
-    ldmaDescriptors[0].xfer.link = 1;                      // Enable Linking
+    ldmaDescriptors[0].xfer.doneIfs = 1;
+    ldmaDescriptors[0].xfer.link = 1;
     ldmaDescriptors[0].xfer.linkMode = ldmaLinkModeRel;
-    ldmaDescriptors[0].xfer.linkAddr = 1;                  // Jump FORWARD 1 to Pong
+    ldmaDescriptors[0].xfer.linkAddr = 1;
 
-    // Setup Pong Descriptor (Index 1) Manually
-    ldmaDescriptors[1].xfer.srcAddr = (uint32_t)&(IADC0->SCANFIFODATA);
+    /* Duplicate Ping descriptor to create Pong descriptor */
+ldmaDescriptors[1] = ldmaDescriptors[0];
     ldmaDescriptors[1].xfer.dstAddr = (uint32_t)adcBufferPong;
-    ldmaDescriptors[1].xfer.xferCnt = (DMA_BUFFER_SIZE - 1);
-    ldmaDescriptors[1].xfer.size = ldmaCtrlSizeHalf;       
-    ldmaDescriptors[1].xfer.srcInc = ldmaCtrlSrcIncNone;   
-    ldmaDescriptors[1].xfer.dstInc = ldmaCtrlDstIncOne;    
-    ldmaDescriptors[1].xfer.reqMode = ldmaCtrlReqModeBlock;
-    ldmaDescriptors[1].xfer.blockSize = ldmaCtrlBlockSizeUnit1;
-    ldmaDescriptors[1].xfer.doneIfs = 1;                   // Fire interrupt when Pong is full
-    ldmaDescriptors[1].xfer.link = 1;                      // Enable Linking
-    ldmaDescriptors[1].xfer.linkMode = ldmaLinkModeRel;
-    ldmaDescriptors[1].xfer.linkAddr = -1;                 // Jump BACKWARD 1 to Ping
 
-    // Open the NVIC Gate for LDMA
+    /* End of ping-pong chain */
+    ldmaDescriptors[1].xfer.linkAddr = -1;
+
     NVIC_ClearPendingIRQ(LDMA_IRQn);
+}
+
+void wombcare_analog_start(void)
+{
+    ping_buffer_ready = false;
+    pong_buffer_ready = false;
+
+    LETIMER_CounterSet(
+        LETIMER0,
+        LETIMER_CompareGet(LETIMER0, 0));
+
+    LDMA_TransferCfg_t transferCfg =
+        LDMA_TRANSFER_CFG_PERIPHERAL(
+            ldmaPeripheralSignal_IADC0_IADC_SCAN);
+
+    LDMA_IntClear(0xFFFFFFFFU);
+    LDMA_StartTransfer(
+        LDMA_CHANNEL,
+        &transferCfg,
+        &ldmaDescriptors[0]);
+
     NVIC_EnableIRQ(LDMA_IRQn);
 
-    // Start the endless background loop
-    LDMA_StartTransfer(LDMA_CHANNEL, &transferCfg, &ldmaDescriptors[0]);
-
-    // ---------------------------------------------------------
-    // 6. START THE METRONOME
-    // ---------------------------------------------------------
     LETIMER_Enable(LETIMER0, true);
 }
 
-// ---------------------------------------------------------
-// PHASE 2: THE LDMA WAKE-UP INTERRUPT
-// ---------------------------------------------------------
-void LDMA_IRQHandler(void) {
-    // SiSDK v2024.x and newer uses IF (Interrupt Flag) nomenclature
-    uint32_t pending = LDMA_IntGet();
+void wombcare_analog_stop(void)
+{
+    LETIMER_Enable(LETIMER0, false);
 
-    // Clear the interrupt flag immediately
-    LDMA_IntClear(pending);
+    LDMA_StopTransfer(LDMA_CHANNEL);
 
-    if (pending & (1 << LDMA_CHANNEL)) {
+    LDMA_IntClear(0xFFFFFFFFU);
+
+    NVIC_DisableIRQ(LDMA_IRQn);
+
+    ping_buffer_ready = false;
+    pong_buffer_ready = false;
+
+    IADC_command(IADC0, iadcCmdStopScan);
+    IADC_reset(IADC0);
+}
+
+void LDMA_IRQHandler(void)
+{
+    uint32_t pending = LDMA_IF_Get();
+
+    LDMA_IF_Clear(pending);
+
+    if (pending & (1UL << LDMA_CHANNEL))
+    {
         static bool isPing = true;
-        
-        if (isPing) {
+
+        if (isPing)
+        {
             ping_buffer_ready = true;
-        } else {
+        }
+        else
+        {
             pong_buffer_ready = true;
         }
-        
-        isPing = !isPing; // Toggle for the next second
+
+        /* Toggle between Ping and Pong completion notifications */
+        isPing = !isPing;
     }
 }

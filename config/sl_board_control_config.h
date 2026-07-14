@@ -128,3 +128,4 @@
 // <<< sl:end pin_tool >>>
 
 #endif // SL_BOARD_CONTROL_CONFIG_H
+

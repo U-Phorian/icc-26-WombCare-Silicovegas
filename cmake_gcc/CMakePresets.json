@@ -8,7 +8,7 @@
     "configurePresets": [
       {
         "name": "project",
-        "displayName": "Configure WombCare_Firmwire",
+        "displayName": "Configure Wombcare_PreFinal2",
         "generator": "Ninja Multi-Config",
         "binaryDir": "${sourceDir}/build",
         "toolchainFile": "${sourceDir}/toolchain.cmake",
@@ -20,10 +20,10 @@
     "buildPresets": [
       {
         "name": "default_config",
-        "displayName": "Build WombCare_Firmwire",
+        "displayName": "Build Wombcare_PreFinal2",
         "configurePreset": "project",
         "configuration": "base",
-        "targets": ["WombCare_Firmwire"]
+        "targets": ["Wombcare_PreFinal2"]
       }
     ],
     "workflowPresets": [

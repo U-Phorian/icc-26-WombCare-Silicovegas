@@ -1,117 +1,138 @@
 #include "app.h"
+
 #include "wombcare_sensors.h"
 #include "wombcare_buffer.h"
-#include "wombcare_imu.h"
 #include "wombcare_dsp.h"
-#include "wombcare_ble.h"
+#include "wombcare_imu.h"
 
-// Global structure to hold the 8 TinyML inputs
-WombCareFeatures_t current_patient_features;
+#include <stdint.h>
+#include <stdbool.h>
+#include <string.h>
 
-// ---------------------------------------------------------
-// FUTURE INCLUDES (Phase 6)
-// ---------------------------------------------------------
-// #include "wombcare_dsp.h" 
-// #include "wombcare_ml.h"  
+/*--------------------------------------------------------------------
+ * APPLICATION RESULT
+ *-------------------------------------------------------------------*/
 
-// ---------------------------------------------------------
-// SYSTEM BOOT SEQUENCE
-// ---------------------------------------------------------
-void app_init(void) {
-    // 1. Initialize static RAM buffers (Phase 3)
+WombCareResult_t current_result;
+
+/*--------------------------------------------------------------------
+ * INITIALIZATION
+ *-------------------------------------------------------------------*/
+
+void app_init(void)
+{
+    /*
+     * Initialize software modules first.
+     */
+
     wombcare_buffer_init();
-    
-    // 2. Initialize IMU GPIO pins (Phase 4)
-    wombcare_imu_init();
-    
-    // 3. Initialize DSP Pipeline (Phase 5)
+
     wombcare_dsp_init();
-    
-    // 4. Initialize hardware metronome & DMA (Phases 1 & 2)
-    wombcare_hardware_init(); 
+
+    wombcare_imu_init();
+
+    /*
+     * Initialize hardware.
+     */
+
+    wombcare_hardware_init();
+
+    wombcare_imu_power_on();
+
+    wombcare_analog_start();
+
+    memset(
+        &current_result,
+        0,
+        sizeof(WombCareResult_t));
 }
 
-// ---------------------------------------------------------
-// MAIN APPLICATION STATE MACHINE (Infinite Loop)
-// ---------------------------------------------------------
-void app_process_action(void) {
-    
-    switch (current_system_state) {
-        
-        case SYSTEM_STATE_IMU_EVAL:
-            // Phase 4: Mother is evaluated for movement (30-second window)
-            wombcare_evaluate_rest_state();
-            break;
 
-        case SYSTEM_STATE_DATA_ACQ:
-            // Phase 3: Only ingest hardware data if the mother is confirmed at rest
-            if (ping_buffer_ready) {
-                ping_buffer_ready = false; 
-                wombcare_buffer_ingest(adcBufferPing); 
-            }
 
-            if (pong_buffer_ready) {
-                pong_buffer_ready = false; 
-                wombcare_buffer_ingest(adcBufferPong); 
-            }
+void app_process_action(void)
+{
+    /*--------------------------------------------------------------
+     * Process completed ADC DMA buffers
+     *-------------------------------------------------------------*/
 
-            // ---------------------------------------------------------
-            // THE DSP HANDOFF
-            // ---------------------------------------------------------
-            // We check if the static ring buffer has accumulated a full 60 seconds.
-            if (tracker_mother.is_primed && tracker_fetal.is_primed && tracker_pvdf.is_primed) {
-                
-                // Reset flags so we don't trigger this continuously
-                tracker_mother.is_primed = false;
-                tracker_fetal.is_primed = false;
-                tracker_pvdf.is_primed = false;
+    if (ping_buffer_ready)
+    {
+        ping_buffer_ready = false;
 
-                // Move the state machine forward to Phase 5
-                current_system_state = SYSTEM_STATE_DSP_PROCESSING;
-            }
-            break;
-            
-        case SYSTEM_STATE_DEEP_SLEEP:
-            // Phase 4 Cool-down: The MCU drops into EM2.
-            break;
-
-        // ---------------------------------------------------------
-        // PHASE 5: DIGITAL SIGNAL PROCESSING
-        // ---------------------------------------------------------
-        case SYSTEM_STATE_DSP_PROCESSING: {
-            // Run the CMSIS-DSP pipeline to extract the 8 features
-            bool success = wombcare_dsp_run_pipeline(&current_patient_features);
-            
-            if (success) {
-                // Successfully extracted 8 features! Move to Phase 6 (AI)
-                current_system_state = SYSTEM_STATE_ML_INFERENCE;
-            } else {
-                // Not enough valid heartbeats detected (e.g., too much noise).
-                // Abort ML inference and go back to collecting data.
-                current_system_state = SYSTEM_STATE_IMU_EVAL; 
-            }
-            break;
-        }
-
-        // ---------------------------------------------------------
-        // PHASE 6: TINYML & BLUETOOTH (Pending)
-        // ---------------------------------------------------------
-        case SYSTEM_STATE_ML_INFERENCE:
-            // TODO: Pass 'current_patient_features' into TFLite MVP accelerator
-            
-            // current_system_state = SYSTEM_STATE_BLE_BROADCAST;
-            break;
-
-        case SYSTEM_STATE_BLE_BROADCAST:
-            // TODO: Update GATT server characteristics and notify local network
-            wombcare_ble_send_clinical_update(
-            ml_result.nsp,
-                (uint8_t)(ml_result.confidence * 100.0f),
-                current_patient_features.lb_bpm,
-                current_patient_features.fetal_movements
-            );
-            current_system_state = SYSTEM_STATE_IMU_EVAL;
-            // current_system_state = SYSTEM_STATE_IMU_EVAL; // Restart the cycle
-            break;
+        wombcare_buffer_ingest(adcBufferPing);
     }
+
+    if (pong_buffer_ready)
+    {
+        pong_buffer_ready = false;
+
+        wombcare_buffer_ingest(adcBufferPong);
+    }
+
+    /*--------------------------------------------------------------
+     * Continuous IMU sampling
+     *
+     * This should be called every 38 ms
+     * (26 Hz scheduler or timer callback).
+     *-------------------------------------------------------------*/
+
+    wombcare_imu_sample();
+
+    /*--------------------------------------------------------------
+     * Wait until one complete minute of ECG/PVDF data
+     * has been collected.
+     *-------------------------------------------------------------*/
+
+    if (!minute_window_ready)
+    {
+        return;
+    }
+
+    /*--------------------------------------------------------------
+     * Run DSP Feature Extraction
+     *-------------------------------------------------------------*/
+
+    if (!wombcare_dsp_run_pipeline(
+            &current_result.features))
+    {
+        /*
+         * Invalid minute.
+         *
+         * Wait for next minute.
+         */
+
+        return;
+    }
+
+    /*--------------------------------------------------------------
+     * Compute IMU Confidence
+     *-------------------------------------------------------------*/
+
+    wombcare_imu_compute_confidence();
+
+    current_result.imu_confidence =
+        wombcare_imu_get_confidence();
+
+    /*--------------------------------------------------------------
+     * TinyML Inference
+     *-------------------------------------------------------------*/
+
+    /*
+     * TODO
+     *
+     * current_result.ml_prediction =
+     * wombcare_ml_run(
+     *      &current_result.features);
+     */
+
+    /*--------------------------------------------------------------
+     * BLE Notification
+     *-------------------------------------------------------------*/
+
+    /*
+     * TODO
+     *
+     * wombcare_ble_send(
+     *      &current_result);
+     */
 }

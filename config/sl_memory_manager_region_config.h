@@ -42,10 +42,11 @@
 // <i> The stack size configured here will be used by the stack that the
 // <i> application uses when coming out of a reset.
 #ifndef SL_STACK_SIZE
-#define SL_STACK_SIZE 4096
+#define SL_STACK_SIZE 2752
 #endif
 // </h>
 
 // <<< end of configuration section >>>
 
 #endif /* SL_MEMORY_MANAGER_REGION_CONFIG_H */
+

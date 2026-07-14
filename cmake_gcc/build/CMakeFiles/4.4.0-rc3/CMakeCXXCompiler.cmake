@@ -1,4 +1,4 @@
-set(CMAKE_CXX_COMPILER "C:/Users/jishu/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/arm-none-eabi-g++.exe")
+set(CMAKE_CXX_COMPILER "C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/arm-none-eabi-g++.exe")
 set(CMAKE_CXX_COMPILER_ARG1 "")
 set(CMAKE_CXX_COMPILER_ID "GNU")
 set(CMAKE_CXX_COMPILER_VERSION "14.2.1")
@@ -26,11 +26,11 @@ set(CMAKE_CXX_COMPILER_ARCHITECTURE_ID "")
 
 
 
-set(CMAKE_AR "C:/Users/jishu/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/arm-none-eabi-ar.exe")
-set(CMAKE_CXX_COMPILER_AR "C:/Users/jishu/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/arm-none-eabi-gcc-ar.exe")
-set(CMAKE_RANLIB "C:/Users/jishu/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/arm-none-eabi-gcc-ranlib.exe")
-set(CMAKE_CXX_COMPILER_RANLIB "C:/Users/jishu/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/arm-none-eabi-gcc-ranlib.exe")
-set(CMAKE_LINKER "C:/Users/jishu/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/arm-none-eabi-gcc.exe")
+set(CMAKE_AR "C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/arm-none-eabi-ar.exe")
+set(CMAKE_CXX_COMPILER_AR "C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/arm-none-eabi-gcc-ar.exe")
+set(CMAKE_RANLIB "C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/arm-none-eabi-gcc-ranlib.exe")
+set(CMAKE_CXX_COMPILER_RANLIB "C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/arm-none-eabi-gcc-ranlib.exe")
+set(CMAKE_LINKER "C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/arm-none-eabi-gcc.exe")
 set(CMAKE_LINKER_LINK "")
 set(CMAKE_LINKER_LLD "")
 set(CMAKE_CXX_COMPILER_LINKER "NOTFOUND")
@@ -92,7 +92,7 @@ endif()
 
 
 
-set(CMAKE_CXX_IMPLICIT_INCLUDE_DIRECTORIES "C:/Users/jishu/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/arm-none-eabi/include/c++/14.2.1;C:/Users/jishu/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/arm-none-eabi/include/c++/14.2.1/arm-none-eabi;C:/Users/jishu/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/arm-none-eabi/include/c++/14.2.1/backward;C:/Users/jishu/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/lib/gcc/arm-none-eabi/14.2.1/include;C:/Users/jishu/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/lib/gcc/arm-none-eabi/14.2.1/include-fixed;C:/Users/jishu/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/arm-none-eabi/include")
+set(CMAKE_CXX_IMPLICIT_INCLUDE_DIRECTORIES "C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/arm-none-eabi/include/c++/14.2.1;C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/arm-none-eabi/include/c++/14.2.1/arm-none-eabi;C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/arm-none-eabi/include/c++/14.2.1/backward;C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/lib/gcc/arm-none-eabi/14.2.1/include;C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/lib/gcc/arm-none-eabi/14.2.1/include-fixed;C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/arm-none-eabi/include")
 set(CMAKE_CXX_IMPLICIT_LINK_LIBRARIES "")
 set(CMAKE_CXX_IMPLICIT_LINK_DIRECTORIES "")
 set(CMAKE_CXX_IMPLICIT_LINK_FRAMEWORK_DIRECTORIES "")

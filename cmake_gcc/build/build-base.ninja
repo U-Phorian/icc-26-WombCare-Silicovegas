@@ -6,15 +6,15 @@
 
 include CMakeFiles/impl-base.ninja
 
-build WombCare_Firmwire: phony base/WombCare_Firmwire.out
+build Wombcare_PreFinal2: phony base/Wombcare_PreFinal2.out
 
-build WombCare_Firmwire.out: phony base/WombCare_Firmwire.out
+build Wombcare_PreFinal2.out: phony base/Wombcare_PreFinal2.out
 
 build slc: phony slc$:base
 
 
 #############################################
-# Folder: C:/Users/jishu/SimplicityStudio/v6_workspace/WombCare_Firmwire/cmake_gcc/build
+# Folder: C:/Users/royma/SimplicityStudio/v6_workspace/Wombcare_PreFinal2/cmake_gcc/build
 
 build all: phony all$:base
 

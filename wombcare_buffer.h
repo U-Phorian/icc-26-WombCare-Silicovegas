@@ -3,38 +3,63 @@
 
 #include <stdint.h>
 #include <stdbool.h>
-#include "wombcare_dsp.h"
+#include "wombcare_sensors.h"
 
-// ---------------------------------------------------------
-// BUFFER CONFIGURATION
-// ---------------------------------------------------------
-#define RING_BUFFER_CAPACITY  1024  // 60 seconds at 17.07 Hz effective
-#define SAMPLES_PER_SECOND    1000  // Expected samples per DMA transfer
+/*----------------------------------------------------------
+ * BUFFER CONFIGURATION
+ *---------------------------------------------------------*/
 
-// ---------------------------------------------------------
-// RING BUFFER TRACKER STRUCTURE
-// ---------------------------------------------------------
-typedef struct {
-    bool is_primed;
+/*
+ * 60-second rolling window
+ * 250 samples/sec × 60 sec = 15000 samples/channel
+ */
+#define RING_BUFFER_CAPACITY   (SAMPLE_RATE_HZ * 60U)
+
+/*----------------------------------------------------------
+ * RING BUFFER TRACKER
+ *---------------------------------------------------------*/
+
+typedef struct
+{
+    /* Next write position */
     uint32_t head;
+
+    /* Number of valid samples currently stored */
+    uint32_t valid_samples;
+
+    /* True once the entire ring has been filled at least once */
+    bool is_primed;
+
 } RingBufferTracker_t;
 
-// ---------------------------------------------------------
-// EXTERNAL BUFFER TRACKERS (for cross-module access)
-// ---------------------------------------------------------
+/*----------------------------------------------------------
+ * GLOBAL TRACKERS
+ *---------------------------------------------------------*/
+
 extern RingBufferTracker_t tracker_mother;
 extern RingBufferTracker_t tracker_fetal;
 extern RingBufferTracker_t tracker_pvdf;
+/*----------------------------------------------------------
+ * One Minute Window Flag
+ *---------------------------------------------------------*/
+extern volatile bool minute_window_ready;
+
+/*----------------------------------------------------------
+ * RING BUFFERS
+ *---------------------------------------------------------*/
 
 extern float ring_mother_ecg[RING_BUFFER_CAPACITY];
 extern float ring_fetal_ecg[RING_BUFFER_CAPACITY];
 extern float ring_pvdf_kick[RING_BUFFER_CAPACITY];
 
-// ---------------------------------------------------------
-// FUNCTION PROTOTYPES
-// ---------------------------------------------------------
-void wombcare_buffer_init(void);
-void wombcare_buffer_reset(void);
-void wombcare_buffer_ingest(uint16_t *dma_source_buffer);
+/*----------------------------------------------------------
+ * API
+ *---------------------------------------------------------*/
 
-#endif  // WOMBCARE_BUFFER_H
+void wombcare_buffer_init(void);
+
+void wombcare_buffer_reset(void);
+
+void wombcare_buffer_ingest(const uint16_t *dma_source_buffer);
+
+#endif /* WOMBCARE_BUFFER_H */

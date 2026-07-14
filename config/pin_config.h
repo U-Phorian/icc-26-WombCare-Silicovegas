@@ -104,6 +104,38 @@
 // [TIMER9]$
 
 // $[EUSART1]
+// EUSART1 CS on PC00
+#ifndef EUSART1_CS_PORT                         
+#define EUSART1_CS_PORT                          SL_GPIO_PORT_C
+#endif
+#ifndef EUSART1_CS_PIN                          
+#define EUSART1_CS_PIN                           0
+#endif
+
+// EUSART1 RX on PC02
+#ifndef EUSART1_RX_PORT                         
+#define EUSART1_RX_PORT                          SL_GPIO_PORT_C
+#endif
+#ifndef EUSART1_RX_PIN                          
+#define EUSART1_RX_PIN                           2
+#endif
+
+// EUSART1 SCLK on PC01
+#ifndef EUSART1_SCLK_PORT                       
+#define EUSART1_SCLK_PORT                        SL_GPIO_PORT_C
+#endif
+#ifndef EUSART1_SCLK_PIN                        
+#define EUSART1_SCLK_PIN                         1
+#endif
+
+// EUSART1 TX on PC03
+#ifndef EUSART1_TX_PORT                         
+#define EUSART1_TX_PORT                          SL_GPIO_PORT_C
+#endif
+#ifndef EUSART1_TX_PIN                          
+#define EUSART1_TX_PIN                           3
+#endif
+
 // [EUSART1]$
 
 // $[EUSART2]
@@ -137,30 +169,6 @@
 // [LETIMER0]$
 
 // $[IADC0]
-// IADC0 SCAN0POS on PB07
-#ifndef IADC0_SCAN0POS_PORT                     
-#define IADC0_SCAN0POS_PORT                      SL_GPIO_PORT_B
-#endif
-#ifndef IADC0_SCAN0POS_PIN                      
-#define IADC0_SCAN0POS_PIN                       7
-#endif
-
-// IADC0 SCAN1POS on PB08
-#ifndef IADC0_SCAN1POS_PORT                     
-#define IADC0_SCAN1POS_PORT                      SL_GPIO_PORT_B
-#endif
-#ifndef IADC0_SCAN1POS_PIN                      
-#define IADC0_SCAN1POS_PIN                       8
-#endif
-
-// IADC0 SCAN2POS on PD08
-#ifndef IADC0_SCAN2POS_PORT                     
-#define IADC0_SCAN2POS_PORT                      SL_GPIO_PORT_D
-#endif
-#ifndef IADC0_SCAN2POS_PIN                      
-#define IADC0_SCAN2POS_PIN                       8
-#endif
-
 // [IADC0]$
 
 // $[ACMP0]
@@ -185,6 +193,22 @@
 // [EUSART0]$
 
 // $[PTI]
+// PTI DFRAME on PC07
+#ifndef PTI_DFRAME_PORT                         
+#define PTI_DFRAME_PORT                          SL_GPIO_PORT_C
+#endif
+#ifndef PTI_DFRAME_PIN                          
+#define PTI_DFRAME_PIN                           7
+#endif
+
+// PTI DOUT on PC06
+#ifndef PTI_DOUT_PORT                           
+#define PTI_DOUT_PORT                            SL_GPIO_PORT_C
+#endif
+#ifndef PTI_DOUT_PIN                            
+#define PTI_DOUT_PIN                             6
+#endif
+
 // [PTI]$
 
 // $[MODEM]
@@ -215,19 +239,6 @@
 
 
 
-#ifndef HERAT_ECG_PORT                          
-#define HERAT_ECG_PORT                           SL_GPIO_PORT_B
-#endif
-#ifndef HERAT_ECG_PIN                           
-#define HERAT_ECG_PIN                            7
-#endif
-
-#ifndef FETAL_ECG_PORT                          
-#define FETAL_ECG_PORT                           SL_GPIO_PORT_B
-#endif
-#ifndef FETAL_ECG_PIN                           
-#define FETAL_ECG_PIN                            8
-#endif
 
 
 
@@ -251,12 +262,7 @@
 
 
 
-#ifndef PVDF_KICK_PORT                          
-#define PVDF_KICK_PORT                           SL_GPIO_PORT_D
-#endif
-#ifndef PVDF_KICK_PIN                           
-#define PVDF_KICK_PIN                            8
-#endif
+
 
 
 

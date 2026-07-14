@@ -1,0 +1,11 @@
+{
+	"Configs" : 
+	[
+		"base"
+	],
+	"InstallScripts" : 
+	[
+		"C:/Users/royma/SimplicityStudio/v6_workspace/Wombcare_PreFinal2/cmake_gcc/build/cmake_install.cmake"
+	],
+	"Parallel" : false
+}

@@ -1,8 +1,8 @@
-# Install script for directory: C:/Users/jishu/SimplicityStudio/v6_workspace/WombCare_Firmwire/cmake_gcc
+# Install script for directory: C:/Users/royma/SimplicityStudio/v6_workspace/Wombcare_PreFinal2/cmake_gcc
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  set(CMAKE_INSTALL_PREFIX "C:/Program Files (x86)/WombCare_Firmwire")
+  set(CMAKE_INSTALL_PREFIX "C:/Program Files (x86)/Wombcare_PreFinal2")
 endif()
 string(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 
@@ -34,13 +34,13 @@ endif()
 
 # Set path to fallback-tool for dependency-resolution.
 if(NOT DEFINED CMAKE_OBJDUMP)
-  set(CMAKE_OBJDUMP "C:/Users/jishu/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/arm-none-eabi-objdump.exe")
+  set(CMAKE_OBJDUMP "C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/arm-none-eabi-objdump.exe")
 endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
 if(CMAKE_INSTALL_LOCAL_ONLY)
-  file(WRITE "C:/Users/jishu/SimplicityStudio/v6_workspace/WombCare_Firmwire/cmake_gcc/build/install_local_manifest.txt"
+  file(WRITE "C:/Users/royma/SimplicityStudio/v6_workspace/Wombcare_PreFinal2/cmake_gcc/build/install_local_manifest.txt"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")
 endif()
 if(CMAKE_INSTALL_COMPONENT)
@@ -56,6 +56,6 @@ else()
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
-  file(WRITE "C:/Users/jishu/SimplicityStudio/v6_workspace/WombCare_Firmwire/cmake_gcc/build/${CMAKE_INSTALL_MANIFEST}"
+  file(WRITE "C:/Users/royma/SimplicityStudio/v6_workspace/Wombcare_PreFinal2/cmake_gcc/build/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")
 endif()

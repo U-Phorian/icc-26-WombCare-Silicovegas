@@ -12,9 +12,9 @@
 #include <string.h>
 
 /* Silicon Labs Bluetooth stack + generated GATT database. */
-#include "sl_bluetooth.h"
-#include "sl_bt_api.h"
-#include "gatt_db.h"            /* provides gattdb_clinical_update after config */
+#include <sl_bluetooth.h>
+#include <sl_bt_api.h>
+#include <gatt_db.h>            /* provides gattdb_clinical_update after config */
 
 /* --------------------------------------------------------------------------
  * Connection / subscription state
