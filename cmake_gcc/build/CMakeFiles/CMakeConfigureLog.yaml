@@ -1,0 +1,1181 @@
+
+---
+events:
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Users/royma/.silabs/slt/installs/conan/p/cmakefa35ab0687064/p/share/cmake-3.30/Modules/CMakeDetermineSystem.cmake:200 (message)"
+      - "CMakeLists.txt:5 (project)"
+    message: |
+      The target system is: Generic -  - arm
+      The host system is: Windows - 10.0.26200 - AMD64
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Users/royma/.silabs/slt/installs/conan/p/cmakefa35ab0687064/p/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "C:/Users/royma/.silabs/slt/installs/conan/p/cmakefa35ab0687064/p/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "C:/Users/royma/.silabs/slt/installs/conan/p/cmakefa35ab0687064/p/share/cmake-3.30/Modules/CMakeDetermineCCompiler.cmake:123 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:5 (project)"
+    message: |
+      Compiling the C compiler identification source file "CMakeCCompilerId.c" failed.
+      Compiler: C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/arm-none-eabi-gcc.exe 
+      Build flags: 
+      Id flags:  
+      
+      The output was:
+      1
+      C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/bin/ld.exe: C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/lib\\libc.a(libc_a-exit.o): in function `exit':
+      exit.c:(.text.exit+0x28): undefined reference to `_exit'
+      C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/bin/ld.exe: C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/lib\\libc.a(libc_a-closer.o): in function `_close_r':
+      closer.c:(.text._close_r+0x18): undefined reference to `_close'
+      C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/bin/ld.exe: C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/lib\\libc.a(libc_a-lseekr.o): in function `_lseek_r':
+      lseekr.c:(.text._lseek_r+0x24): undefined reference to `_lseek'
+      C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/bin/ld.exe: C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/lib\\libc.a(libc_a-readr.o): in function `_read_r':
+      readr.c:(.text._read_r+0x24): undefined reference to `_read'
+      C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/bin/ld.exe: C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/lib\\libc.a(libc_a-writer.o): in function `_write_r':
+      writer.c:(.text._write_r+0x24): undefined reference to `_write'
+      C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/bin/ld.exe: C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/lib\\libc.a(libc_a-sbrkr.o): in function `_sbrk_r':
+      sbrkr.c:(.text._sbrk_r+0x18): undefined reference to `_sbrk'
+      collect2.exe: error: ld returned 1 exit status
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Users/royma/.silabs/slt/installs/conan/p/cmakefa35ab0687064/p/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "C:/Users/royma/.silabs/slt/installs/conan/p/cmakefa35ab0687064/p/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "C:/Users/royma/.silabs/slt/installs/conan/p/cmakefa35ab0687064/p/share/cmake-3.30/Modules/CMakeDetermineCCompiler.cmake:123 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:5 (project)"
+    message: |
+      Compiling the C compiler identification source file "CMakeCCompilerId.c" succeeded.
+      Compiler: C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/arm-none-eabi-gcc.exe 
+      Build flags: 
+      Id flags: -c 
+      
+      The output was:
+      0
+      
+      
+      Compilation of the C compiler identification source "CMakeCCompilerId.c" produced "CMakeCCompilerId.o"
+      
+      The C compiler identification is GNU, found in:
+        C:/Users/royma/SimplicityStudio/v6_workspace/Wombcare_PreFinal2/cmake_gcc/build/CMakeFiles/3.30.2/CompilerIdC/CMakeCCompilerId.o
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Users/royma/.silabs/slt/installs/conan/p/cmakefa35ab0687064/p/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "C:/Users/royma/.silabs/slt/installs/conan/p/cmakefa35ab0687064/p/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "C:/Users/royma/.silabs/slt/installs/conan/p/cmakefa35ab0687064/p/share/cmake-3.30/Modules/CMakeDetermineCXXCompiler.cmake:126 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:5 (project)"
+    message: |
+      Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" failed.
+      Compiler: C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/arm-none-eabi-g++.exe 
+      Build flags: 
+      Id flags:  
+      
+      The output was:
+      1
+      C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/bin/ld.exe: C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/lib\\libc.a(libc_a-exit.o): in function `exit':
+      exit.c:(.text.exit+0x28): undefined reference to `_exit'
+      C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/bin/ld.exe: C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/lib\\libc.a(libc_a-closer.o): in function `_close_r':
+      closer.c:(.text._close_r+0x18): undefined reference to `_close'
+      C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/bin/ld.exe: C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/lib\\libc.a(libc_a-lseekr.o): in function `_lseek_r':
+      lseekr.c:(.text._lseek_r+0x24): undefined reference to `_lseek'
+      C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/bin/ld.exe: C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/lib\\libc.a(libc_a-readr.o): in function `_read_r':
+      readr.c:(.text._read_r+0x24): undefined reference to `_read'
+      C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/bin/ld.exe: C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/lib\\libc.a(libc_a-writer.o): in function `_write_r':
+      writer.c:(.text._write_r+0x24): undefined reference to `_write'
+      C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/bin/ld.exe: C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/lib\\libc.a(libc_a-sbrkr.o): in function `_sbrk_r':
+      sbrkr.c:(.text._sbrk_r+0x18): undefined reference to `_sbrk'
+      collect2.exe: error: ld returned 1 exit status
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Users/royma/.silabs/slt/installs/conan/p/cmakefa35ab0687064/p/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "C:/Users/royma/.silabs/slt/installs/conan/p/cmakefa35ab0687064/p/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "C:/Users/royma/.silabs/slt/installs/conan/p/cmakefa35ab0687064/p/share/cmake-3.30/Modules/CMakeDetermineCXXCompiler.cmake:126 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:5 (project)"
+    message: |
+      Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" succeeded.
+      Compiler: C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/arm-none-eabi-g++.exe 
+      Build flags: 
+      Id flags: -c 
+      
+      The output was:
+      0
+      
+      
+      Compilation of the CXX compiler identification source "CMakeCXXCompilerId.cpp" produced "CMakeCXXCompilerId.o"
+      
+      The CXX compiler identification is GNU, found in:
+        C:/Users/royma/SimplicityStudio/v6_workspace/Wombcare_PreFinal2/cmake_gcc/build/CMakeFiles/3.30.2/CompilerIdCXX/CMakeCXXCompilerId.o
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Users/royma/.silabs/slt/installs/conan/p/cmakefa35ab0687064/p/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:1192 (message)"
+      - "C:/Users/royma/.silabs/slt/installs/conan/p/cmakefa35ab0687064/p/share/cmake-3.30/Modules/CMakeDetermineASMCompiler.cmake:135 (CMAKE_DETERMINE_COMPILER_ID_VENDOR)"
+      - "CMakeLists.txt:5 (project)"
+    message: |
+      Checking whether the ASM compiler is GNU using "--version" matched "(GNU assembler)|(GCC)|(Free Software Foundation)":
+      arm-none-eabi-gcc.exe (Arm GNU Toolchain 14.2.rel1 (Build silabs-14.2.rel1-b66)) 14.2.1 20241119
+      Copyright (C) 2024 Free Software Foundation, Inc.
+      This is free software; see the source for copying conditions.  There is NO
+      warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+      
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/Users/royma/.silabs/slt/installs/conan/p/cmakefa35ab0687064/p/share/cmake-3.30/Modules/CMakeDetermineCompilerABI.cmake:74 (try_compile)"
+      - "C:/Users/royma/.silabs/slt/installs/conan/p/cmakefa35ab0687064/p/share/cmake-3.30/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:5 (project)"
+    checks:
+      - "Detecting C compiler ABI info"
+    directories:
+      source: "C:/Users/royma/SimplicityStudio/v6_workspace/Wombcare_PreFinal2/cmake_gcc/build/CMakeFiles/CMakeScratch/TryCompile-1r5rol"
+      binary: "C:/Users/royma/SimplicityStudio/v6_workspace/Wombcare_PreFinal2/cmake_gcc/build/CMakeFiles/CMakeScratch/TryCompile-1r5rol"
+    cmakeVariables:
+      CMAKE_C_FLAGS: ""
+      CMAKE_C_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: ""
+    buildResult:
+      variable: "CMAKE_C_ABI_COMPILED"
+      cached: true
+      stdout: |
+        Change Dir: 'C:/Users/royma/SimplicityStudio/v6_workspace/Wombcare_PreFinal2/cmake_gcc/build/CMakeFiles/CMakeScratch/TryCompile-1r5rol'
+        
+        Run Build Command(s): C:/Users/royma/.silabs/slt/installs/conan/p/ninja1a38fc85adcf7/p/ninja.exe -v cmTC_af72c
+        [1/2] C:\\Users\\royma\\.silabs\\slt\\installs\\conan\\p\\gcc-a999d2e027337f\\p\\bin\\arm-none-eabi-gcc.exe @CMakeFiles\\cmTC_af72c.dir\\Debug\\CMakeCCompilerABI.c.obj.rsp -o CMakeFiles/cmTC_af72c.dir/Debug/CMakeCCompilerABI.c.obj -c C:/Users/royma/.silabs/slt/installs/conan/p/cmakefa35ab0687064/p/share/cmake-3.30/Modules/CMakeCCompilerABI.c
+        Using built-in specs.
+        COLLECT_GCC=C:\\Users\\royma\\.silabs\\slt\\installs\\conan\\p\\gcc-a999d2e027337f\\p\\bin\\arm-none-eabi-gcc.exe
+        Target: arm-none-eabi
+        Configured with: /opt/jenkins/jenkins-worker/workspace/test-build-armgcc-toolchain/armgcc-rebuild-i686/src/gcc/configure --target=arm-none-eabi --prefix=/opt/jenkins/jenkins-worker/workspace/test-build-armgcc-toolchain/armgcc-rebuild-i686/build-i686-arm-none-eabi/install --with-gmp=/opt/jenkins/jenkins-worker/workspace/test-build-armgcc-toolchain/armgcc-rebuild-i686/build-i686-arm-none-eabi/host-tools --with-mpfr=/opt/jenkins/jenkins-worker/workspace/test-build-armgcc-toolchain/armgcc-rebuild-i686/build-i686-arm-none-eabi/host-tools --with-mpc=/opt/jenkins/jenkins-worker/workspace/test-build-armgcc-toolchain/armgcc-rebuild-i686/build-i686-arm-none-eabi/host-tools --with-isl=/opt/jenkins/jenkins-worker/workspace/test-build-armgcc-toolchain/armgcc-rebuild-i686/build-i686-arm-none-eabi/host-tools --disable-shared --disable-nls --disable-threads --disable-tls --enable-checking=release --enable-languages=c,c++,fortran --with-newlib --with-gnu-as --with-headers=yes --with-gnu-ld --with-native-system-header-dir=/include --with-sysroot=/opt/jenkins/jenkins-worker/workspace/test-build-armgcc-toolchain/armgcc-rebuild-i686/build-i686-arm-none-eabi/install/arm-none-eabi --with-multilib-list=aprofile,rmprofile --with-zstd --with-libiconv-prefix=/opt/jenkins/jenkins-worker/workspace/test-build-armgcc-toolchain/armgcc-rebuild-i686/build-i686-arm-none-eabi/host-tools --with-libiconv-prefix=/opt/jenkins/jenkins-worker/workspace/test-build-armgcc-toolchain/armgcc-rebuild-i686/build-i686-arm-none-eabi/host-tools --enable-mingw-wildcard --host=i686-w64-mingw32 --with-pkgversion='Arm GNU Toolchain 14.2.rel1 (Build silabs-14.2.rel1-b66)'
+        Thread model: single
+        Supported LTO compression algorithms: zlib zstd
+        gcc version 14.2.1 20241119 (Arm GNU Toolchain 14.2.rel1 (Build silabs-14.2.rel1-b66)) 
+        COLLECT_GCC_OPTIONS='-D' 'CMAKE_INTDIR="Debug"' '-g' '-std=c17' '-v' '-o' 'CMakeFiles/cmTC_af72c.dir/Debug/CMakeCCompilerABI.c.obj' '-c' '-mcpu=arm7tdmi' '-mfloat-abi=soft' '-marm' '-mlibarch=armv4t' '-march=armv4t' '-dumpdir' 'CMakeFiles/cmTC_af72c.dir/Debug/'
+         C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../libexec/gcc/arm-none-eabi/14.2.1/cc1.exe -quiet -v -iprefix C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../lib/gcc/arm-none-eabi/14.2.1/ -isysroot C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../arm-none-eabi -D__USES_INITFINI__ -D CMAKE_INTDIR="Debug" C:/Users/royma/.silabs/slt/installs/conan/p/cmakefa35ab0687064/p/share/cmake-3.30/Modules/CMakeCCompilerABI.c -quiet -dumpdir CMakeFiles/cmTC_af72c.dir/Debug/ -dumpbase CMakeCCompilerABI.c.c -dumpbase-ext .c -mcpu=arm7tdmi -mfloat-abi=soft -marm -mlibarch=armv4t -march=armv4t -g -std=c17 -version -o C:\\Users\\royma\\AppData\\Local\\Temp\\cc34MKVj.s
+        GNU C17 (Arm GNU Toolchain 14.2.rel1 (Build silabs-14.2.rel1-b66)) version 14.2.1 20241119 (arm-none-eabi)
+        	compiled by GNU C version 9.3-win32 20200320, GMP version 6.2.1, MPFR version 3.1.6, MPC version 1.0.3, isl version isl-0.15-1-g835ea3a-GMP
+        
+        GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072
+        ignoring duplicate directory "C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/lib/gcc/../../lib/gcc/arm-none-eabi/14.2.1/include"
+        ignoring nonexistent directory "C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../arm-none-eabi/opt/jenkins/jenkins-worker/workspace/test-build-armgcc-toolchain/armgcc-rebuild-i686/build-i686-arm-none-eabi/install/lib/gcc/arm-none-eabi/14.2.1/../../../../include"
+        ignoring duplicate directory "C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/lib/gcc/../../lib/gcc/arm-none-eabi/14.2.1/include-fixed"
+        ignoring duplicate directory "C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/lib/gcc/../../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/include"
+        ignoring duplicate directory "C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../arm-none-eabi/include"
+        #include "..." search starts here:
+        #include <...> search starts here:
+         C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../lib/gcc/arm-none-eabi/14.2.1/include
+         C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../lib/gcc/arm-none-eabi/14.2.1/include-fixed
+         C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/include
+        End of search list.
+        Compiler executable checksum: ba3b2c2dbf96eeda95f984eb189d807d
+        COLLECT_GCC_OPTIONS='-D' 'CMAKE_INTDIR="Debug"' '-g' '-std=c17' '-v' '-o' 'CMakeFiles/cmTC_af72c.dir/Debug/CMakeCCompilerABI.c.obj' '-c' '-mcpu=arm7tdmi' '-mfloat-abi=soft' '-marm' '-mlibarch=armv4t' '-march=armv4t' '-dumpdir' 'CMakeFiles/cmTC_af72c.dir/Debug/'
+         C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/bin/as.exe -v -march=armv4t -mfloat-abi=soft -meabi=5 -o CMakeFiles/cmTC_af72c.dir/Debug/CMakeCCompilerABI.c.obj C:\\Users\\royma\\AppData\\Local\\Temp\\cc34MKVj.s
+        GNU assembler version 2.43.1 (arm-none-eabi) using BFD version (Arm GNU Toolchain 14.2.rel1 (Build silabs-14.2.rel1-b66)) 2.43.1.20241119
+        COMPILER_PATH=C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../libexec/gcc/arm-none-eabi/14.2.1/;C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../libexec/gcc/;C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/bin/
+        LIBRARY_PATH=C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../lib/gcc/arm-none-eabi/14.2.1/;C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../lib/gcc/;C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/lib/;C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../arm-none-eabi/lib/
+        COLLECT_GCC_OPTIONS='-D' 'CMAKE_INTDIR="Debug"' '-g' '-std=c17' '-v' '-o' 'CMakeFiles/cmTC_af72c.dir/Debug/CMakeCCompilerABI.c.obj' '-c' '-mcpu=arm7tdmi' '-mfloat-abi=soft' '-marm' '-mlibarch=armv4t' '-march=armv4t' '-dumpdir' 'CMakeFiles/cmTC_af72c.dir/Debug/CMakeCCompilerABI.c.'\x0d
+        [2/2] C:\\WINDOWS\\system32\\cmd.exe /C "cd . && C:\\Users\\royma\\.silabs\\slt\\installs\\conan\\p\\cmakefa35ab0687064\\p\\bin\\cmake.exe -E rm -f Debug\\libcmTC_af72c.a && C:\\Users\\royma\\.silabs\\slt\\installs\\conan\\p\\gcc-a999d2e027337f\\p\\bin\\arm-none-eabi-ar.exe qc Debug\\libcmTC_af72c.a  @CMakeFiles\\cmTC_af72c.Debug.rsp && C:\\Users\\royma\\.silabs\\slt\\installs\\conan\\p\\gcc-a999d2e027337f\\p\\bin\\arm-none-eabi-gcc-ranlib.exe Debug\\libcmTC_af72c.a && cd ."
+        
+      exitCode: 0
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Users/royma/.silabs/slt/installs/conan/p/cmakefa35ab0687064/p/share/cmake-3.30/Modules/CMakeDetermineCompilerABI.cmake:182 (message)"
+      - "C:/Users/royma/.silabs/slt/installs/conan/p/cmakefa35ab0687064/p/share/cmake-3.30/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:5 (project)"
+    message: |
+      Parsed C implicit include dir info: rv=done
+        found start of include info
+        found start of implicit include info
+          add: [C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../lib/gcc/arm-none-eabi/14.2.1/include]
+          add: [C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../lib/gcc/arm-none-eabi/14.2.1/include-fixed]
+          add: [C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/include]
+        end of search list found
+        collapse include dir [C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../lib/gcc/arm-none-eabi/14.2.1/include] ==> [C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/lib/gcc/arm-none-eabi/14.2.1/include]
+        collapse include dir [C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../lib/gcc/arm-none-eabi/14.2.1/include-fixed] ==> [C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/lib/gcc/arm-none-eabi/14.2.1/include-fixed]
+        collapse include dir [C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/include] ==> [C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/arm-none-eabi/include]
+        implicit include dirs: [C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/lib/gcc/arm-none-eabi/14.2.1/include;C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/lib/gcc/arm-none-eabi/14.2.1/include-fixed;C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/arm-none-eabi/include]
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Users/royma/.silabs/slt/installs/conan/p/cmakefa35ab0687064/p/share/cmake-3.30/Modules/CMakeDetermineCompilerABI.cmake:218 (message)"
+      - "C:/Users/royma/.silabs/slt/installs/conan/p/cmakefa35ab0687064/p/share/cmake-3.30/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:5 (project)"
+    message: |
+      Parsed C implicit link information:
+        link line regex: [^( *|.*[/\\])(arm-none-eabi-gcc\\.exe|;ld[0-9]*(\\.[a-z]+)?|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\\]+-)?ld|collect2)[^/\\]*( |$)]
+        linker tool regex: [^[ 	]*(->|")?[ 	]*(([^"]*[/\\])?(arm-none-eabi-gcc\\.exe|;ld[0-9]*(\\.[a-z]+)?))("|,| |$)]
+        ignore line: [Change Dir: 'C:/Users/royma/SimplicityStudio/v6_workspace/Wombcare_PreFinal2/cmake_gcc/build/CMakeFiles/CMakeScratch/TryCompile-1r5rol']
+        ignore line: []
+        ignore line: [Run Build Command(s): C:/Users/royma/.silabs/slt/installs/conan/p/ninja1a38fc85adcf7/p/ninja.exe -v cmTC_af72c]
+        ignore line: [[1/2] C:\\Users\\royma\\.silabs\\slt\\installs\\conan\\p\\gcc-a999d2e027337f\\p\\bin\\arm-none-eabi-gcc.exe @CMakeFiles\\cmTC_af72c.dir\\Debug\\CMakeCCompilerABI.c.obj.rsp -o CMakeFiles/cmTC_af72c.dir/Debug/CMakeCCompilerABI.c.obj -c C:/Users/royma/.silabs/slt/installs/conan/p/cmakefa35ab0687064/p/share/cmake-3.30/Modules/CMakeCCompilerABI.c]
+        ignore line: [Using built-in specs.]
+        ignore line: [COLLECT_GCC=C:\\Users\\royma\\.silabs\\slt\\installs\\conan\\p\\gcc-a999d2e027337f\\p\\bin\\arm-none-eabi-gcc.exe]
+        ignore line: [Target: arm-none-eabi]
+        ignore line: [Configured with: /opt/jenkins/jenkins-worker/workspace/test-build-armgcc-toolchain/armgcc-rebuild-i686/src/gcc/configure --target=arm-none-eabi --prefix=/opt/jenkins/jenkins-worker/workspace/test-build-armgcc-toolchain/armgcc-rebuild-i686/build-i686-arm-none-eabi/install --with-gmp=/opt/jenkins/jenkins-worker/workspace/test-build-armgcc-toolchain/armgcc-rebuild-i686/build-i686-arm-none-eabi/host-tools --with-mpfr=/opt/jenkins/jenkins-worker/workspace/test-build-armgcc-toolchain/armgcc-rebuild-i686/build-i686-arm-none-eabi/host-tools --with-mpc=/opt/jenkins/jenkins-worker/workspace/test-build-armgcc-toolchain/armgcc-rebuild-i686/build-i686-arm-none-eabi/host-tools --with-isl=/opt/jenkins/jenkins-worker/workspace/test-build-armgcc-toolchain/armgcc-rebuild-i686/build-i686-arm-none-eabi/host-tools --disable-shared --disable-nls --disable-threads --disable-tls --enable-checking=release --enable-languages=c,c++,fortran --with-newlib --with-gnu-as --with-headers=yes --with-gnu-ld --with-native-system-header-dir=/include --with-sysroot=/opt/jenkins/jenkins-worker/workspace/test-build-armgcc-toolchain/armgcc-rebuild-i686/build-i686-arm-none-eabi/install/arm-none-eabi --with-multilib-list=aprofile,rmprofile --with-zstd --with-libiconv-prefix=/opt/jenkins/jenkins-worker/workspace/test-build-armgcc-toolchain/armgcc-rebuild-i686/build-i686-arm-none-eabi/host-tools --with-libiconv-prefix=/opt/jenkins/jenkins-worker/workspace/test-build-armgcc-toolchain/armgcc-rebuild-i686/build-i686-arm-none-eabi/host-tools --enable-mingw-wildcard --host=i686-w64-mingw32 --with-pkgversion='Arm GNU Toolchain 14.2.rel1 (Build silabs-14.2.rel1-b66)']
+        ignore line: [Thread model: single]
+        ignore line: [Supported LTO compression algorithms: zlib zstd]
+        ignore line: [gcc version 14.2.1 20241119 (Arm GNU Toolchain 14.2.rel1 (Build silabs-14.2.rel1-b66)) ]
+        ignore line: [COLLECT_GCC_OPTIONS='-D' 'CMAKE_INTDIR="Debug"' '-g' '-std=c17' '-v' '-o' 'CMakeFiles/cmTC_af72c.dir/Debug/CMakeCCompilerABI.c.obj' '-c' '-mcpu=arm7tdmi' '-mfloat-abi=soft' '-marm' '-mlibarch=armv4t' '-march=armv4t' '-dumpdir' 'CMakeFiles/cmTC_af72c.dir/Debug/']
+        ignore line: [ C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../libexec/gcc/arm-none-eabi/14.2.1/cc1.exe -quiet -v -iprefix C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../lib/gcc/arm-none-eabi/14.2.1/ -isysroot C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../arm-none-eabi -D__USES_INITFINI__ -D CMAKE_INTDIR="Debug" C:/Users/royma/.silabs/slt/installs/conan/p/cmakefa35ab0687064/p/share/cmake-3.30/Modules/CMakeCCompilerABI.c -quiet -dumpdir CMakeFiles/cmTC_af72c.dir/Debug/ -dumpbase CMakeCCompilerABI.c.c -dumpbase-ext .c -mcpu=arm7tdmi -mfloat-abi=soft -marm -mlibarch=armv4t -march=armv4t -g -std=c17 -version -o C:\\Users\\royma\\AppData\\Local\\Temp\\cc34MKVj.s]
+        ignore line: [GNU C17 (Arm GNU Toolchain 14.2.rel1 (Build silabs-14.2.rel1-b66)) version 14.2.1 20241119 (arm-none-eabi)]
+        ignore line: [	compiled by GNU C version 9.3-win32 20200320  GMP version 6.2.1  MPFR version 3.1.6  MPC version 1.0.3  isl version isl-0.15-1-g835ea3a-GMP]
+        ignore line: []
+        ignore line: [GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072]
+        ignore line: [ignoring duplicate directory "C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/lib/gcc/../../lib/gcc/arm-none-eabi/14.2.1/include"]
+        ignore line: [ignoring nonexistent directory "C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../arm-none-eabi/opt/jenkins/jenkins-worker/workspace/test-build-armgcc-toolchain/armgcc-rebuild-i686/build-i686-arm-none-eabi/install/lib/gcc/arm-none-eabi/14.2.1/../../../../include"]
+        ignore line: [ignoring duplicate directory "C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/lib/gcc/../../lib/gcc/arm-none-eabi/14.2.1/include-fixed"]
+        ignore line: [ignoring duplicate directory "C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/lib/gcc/../../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/include"]
+        ignore line: [ignoring duplicate directory "C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../arm-none-eabi/include"]
+        ignore line: [#include "..." search starts here:]
+        ignore line: [#include <...> search starts here:]
+        ignore line: [ C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../lib/gcc/arm-none-eabi/14.2.1/include]
+        ignore line: [ C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../lib/gcc/arm-none-eabi/14.2.1/include-fixed]
+        ignore line: [ C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/include]
+        ignore line: [End of search list.]
+        ignore line: [Compiler executable checksum: ba3b2c2dbf96eeda95f984eb189d807d]
+        ignore line: [COLLECT_GCC_OPTIONS='-D' 'CMAKE_INTDIR="Debug"' '-g' '-std=c17' '-v' '-o' 'CMakeFiles/cmTC_af72c.dir/Debug/CMakeCCompilerABI.c.obj' '-c' '-mcpu=arm7tdmi' '-mfloat-abi=soft' '-marm' '-mlibarch=armv4t' '-march=armv4t' '-dumpdir' 'CMakeFiles/cmTC_af72c.dir/Debug/']
+        ignore line: [ C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/bin/as.exe -v -march=armv4t -mfloat-abi=soft -meabi=5 -o CMakeFiles/cmTC_af72c.dir/Debug/CMakeCCompilerABI.c.obj C:\\Users\\royma\\AppData\\Local\\Temp\\cc34MKVj.s]
+        ignore line: [GNU assembler version 2.43.1 (arm-none-eabi) using BFD version (Arm GNU Toolchain 14.2.rel1 (Build silabs-14.2.rel1-b66)) 2.43.1.20241119]
+        ignore line: [COMPILER_PATH=C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../libexec/gcc/arm-none-eabi/14.2.1/]
+        ignore line: [C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../libexec/gcc/]
+        ignore line: [C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/bin/]
+        ignore line: [LIBRARY_PATH=C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../lib/gcc/arm-none-eabi/14.2.1/]
+        ignore line: [C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../lib/gcc/]
+        ignore line: [C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/lib/]
+        ignore line: [C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../arm-none-eabi/lib/]
+        ignore line: [COLLECT_GCC_OPTIONS='-D' 'CMAKE_INTDIR="Debug"' '-g' '-std=c17' '-v' '-o' 'CMakeFiles/cmTC_af72c.dir/Debug/CMakeCCompilerABI.c.obj' '-c' '-mcpu=arm7tdmi' '-mfloat-abi=soft' '-marm' '-mlibarch=armv4t' '-march=armv4t' '-dumpdir' 'CMakeFiles/cmTC_af72c.dir/Debug/CMakeCCompilerABI.c.'\x0d]
+        ignore line: [[2/2] C:\\WINDOWS\\system32\\cmd.exe /C "cd . && C:\\Users\\royma\\.silabs\\slt\\installs\\conan\\p\\cmakefa35ab0687064\\p\\bin\\cmake.exe -E rm -f Debug\\libcmTC_af72c.a && C:\\Users\\royma\\.silabs\\slt\\installs\\conan\\p\\gcc-a999d2e027337f\\p\\bin\\arm-none-eabi-ar.exe qc Debug\\libcmTC_af72c.a  @CMakeFiles\\cmTC_af72c.Debug.rsp && C:\\Users\\royma\\.silabs\\slt\\installs\\conan\\p\\gcc-a999d2e027337f\\p\\bin\\arm-none-eabi-gcc-ranlib.exe Debug\\libcmTC_af72c.a && cd ."]
+        ignore line: []
+        ignore line: []
+        linker tool for 'C': [1/2] C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/arm-none-eabi-gcc.exe
+        implicit libs: []
+        implicit objs: []
+        implicit dirs: []
+        implicit fwks: []
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Users/royma/.silabs/slt/installs/conan/p/cmakefa35ab0687064/p/share/cmake-3.30/Modules/Internal/CMakeDetermineLinkerId.cmake:40 (message)"
+      - "C:/Users/royma/.silabs/slt/installs/conan/p/cmakefa35ab0687064/p/share/cmake-3.30/Modules/CMakeDetermineCompilerABI.cmake:255 (cmake_determine_linker_id)"
+      - "C:/Users/royma/.silabs/slt/installs/conan/p/cmakefa35ab0687064/p/share/cmake-3.30/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:5 (project)"
+    message: |
+      Running the C compiler's linker: "[1/2] C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/arm-none-eabi-gcc.exe" "-v"
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Users/royma/.silabs/slt/installs/conan/p/cmakefa35ab0687064/p/share/cmake-3.30/Modules/Internal/CMakeDetermineLinkerId.cmake:40 (message)"
+      - "C:/Users/royma/.silabs/slt/installs/conan/p/cmakefa35ab0687064/p/share/cmake-3.30/Modules/CMakeDetermineCompilerABI.cmake:255 (cmake_determine_linker_id)"
+      - "C:/Users/royma/.silabs/slt/installs/conan/p/cmakefa35ab0687064/p/share/cmake-3.30/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:5 (project)"
+    message: |
+      Running the C compiler's linker: "[1/2] C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/arm-none-eabi-gcc.exe" "-V"
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Users/royma/.silabs/slt/installs/conan/p/cmakefa35ab0687064/p/share/cmake-3.30/Modules/Internal/CMakeDetermineLinkerId.cmake:40 (message)"
+      - "C:/Users/royma/.silabs/slt/installs/conan/p/cmakefa35ab0687064/p/share/cmake-3.30/Modules/CMakeDetermineCompilerABI.cmake:255 (cmake_determine_linker_id)"
+      - "C:/Users/royma/.silabs/slt/installs/conan/p/cmakefa35ab0687064/p/share/cmake-3.30/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:5 (project)"
+    message: |
+      Running the C compiler's linker: "[1/2] C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/arm-none-eabi-gcc.exe" "--version"
+      
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/Users/royma/.silabs/slt/installs/conan/p/cmakefa35ab0687064/p/share/cmake-3.30/Modules/CMakeDetermineCompilerABI.cmake:74 (try_compile)"
+      - "C:/Users/royma/.silabs/slt/installs/conan/p/cmakefa35ab0687064/p/share/cmake-3.30/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:5 (project)"
+    checks:
+      - "Detecting CXX compiler ABI info"
+    directories:
+      source: "C:/Users/royma/SimplicityStudio/v6_workspace/Wombcare_PreFinal2/cmake_gcc/build/CMakeFiles/CMakeScratch/TryCompile-3caw9k"
+      binary: "C:/Users/royma/SimplicityStudio/v6_workspace/Wombcare_PreFinal2/cmake_gcc/build/CMakeFiles/CMakeScratch/TryCompile-3caw9k"
+    cmakeVariables:
+      CMAKE_CXX_FLAGS: ""
+      CMAKE_CXX_FLAGS_DEBUG: "-g"
+      CMAKE_CXX_SCAN_FOR_MODULES: "OFF"
+      CMAKE_EXE_LINKER_FLAGS: ""
+    buildResult:
+      variable: "CMAKE_CXX_ABI_COMPILED"
+      cached: true
+      stdout: |
+        Change Dir: 'C:/Users/royma/SimplicityStudio/v6_workspace/Wombcare_PreFinal2/cmake_gcc/build/CMakeFiles/CMakeScratch/TryCompile-3caw9k'
+        
+        Run Build Command(s): C:/Users/royma/.silabs/slt/installs/conan/p/ninja1a38fc85adcf7/p/ninja.exe -v cmTC_2c3c0
+        [1/2] C:\\Users\\royma\\.silabs\\slt\\installs\\conan\\p\\gcc-a999d2e027337f\\p\\bin\\arm-none-eabi-g++.exe @CMakeFiles\\cmTC_2c3c0.dir\\Debug\\CMakeCXXCompilerABI.cpp.obj.rsp -o CMakeFiles/cmTC_2c3c0.dir/Debug/CMakeCXXCompilerABI.cpp.obj -c C:/Users/royma/.silabs/slt/installs/conan/p/cmakefa35ab0687064/p/share/cmake-3.30/Modules/CMakeCXXCompilerABI.cpp
+        Using built-in specs.
+        COLLECT_GCC=C:\\Users\\royma\\.silabs\\slt\\installs\\conan\\p\\gcc-a999d2e027337f\\p\\bin\\arm-none-eabi-g++.exe
+        Target: arm-none-eabi
+        Configured with: /opt/jenkins/jenkins-worker/workspace/test-build-armgcc-toolchain/armgcc-rebuild-i686/src/gcc/configure --target=arm-none-eabi --prefix=/opt/jenkins/jenkins-worker/workspace/test-build-armgcc-toolchain/armgcc-rebuild-i686/build-i686-arm-none-eabi/install --with-gmp=/opt/jenkins/jenkins-worker/workspace/test-build-armgcc-toolchain/armgcc-rebuild-i686/build-i686-arm-none-eabi/host-tools --with-mpfr=/opt/jenkins/jenkins-worker/workspace/test-build-armgcc-toolchain/armgcc-rebuild-i686/build-i686-arm-none-eabi/host-tools --with-mpc=/opt/jenkins/jenkins-worker/workspace/test-build-armgcc-toolchain/armgcc-rebuild-i686/build-i686-arm-none-eabi/host-tools --with-isl=/opt/jenkins/jenkins-worker/workspace/test-build-armgcc-toolchain/armgcc-rebuild-i686/build-i686-arm-none-eabi/host-tools --disable-shared --disable-nls --disable-threads --disable-tls --enable-checking=release --enable-languages=c,c++,fortran --with-newlib --with-gnu-as --with-headers=yes --with-gnu-ld --with-native-system-header-dir=/include --with-sysroot=/opt/jenkins/jenkins-worker/workspace/test-build-armgcc-toolchain/armgcc-rebuild-i686/build-i686-arm-none-eabi/install/arm-none-eabi --with-multilib-list=aprofile,rmprofile --with-zstd --with-libiconv-prefix=/opt/jenkins/jenkins-worker/workspace/test-build-armgcc-toolchain/armgcc-rebuild-i686/build-i686-arm-none-eabi/host-tools --with-libiconv-prefix=/opt/jenkins/jenkins-worker/workspace/test-build-armgcc-toolchain/armgcc-rebuild-i686/build-i686-arm-none-eabi/host-tools --enable-mingw-wildcard --host=i686-w64-mingw32 --with-pkgversion='Arm GNU Toolchain 14.2.rel1 (Build silabs-14.2.rel1-b66)'
+        Thread model: single
+        Supported LTO compression algorithms: zlib zstd
+        gcc version 14.2.1 20241119 (Arm GNU Toolchain 14.2.rel1 (Build silabs-14.2.rel1-b66)) 
+        COLLECT_GCC_OPTIONS='-D' 'CMAKE_INTDIR="Debug"' '-g' '-v' '-o' 'CMakeFiles/cmTC_2c3c0.dir/Debug/CMakeCXXCompilerABI.cpp.obj' '-c' '-mcpu=arm7tdmi' '-mfloat-abi=soft' '-marm' '-mlibarch=armv4t' '-march=armv4t' '-dumpdir' 'CMakeFiles/cmTC_2c3c0.dir/Debug/'
+         C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../libexec/gcc/arm-none-eabi/14.2.1/cc1plus.exe -quiet -v -iprefix C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../lib/gcc/arm-none-eabi/14.2.1/ -isysroot C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../arm-none-eabi -D__USES_INITFINI__ -D CMAKE_INTDIR="Debug" C:/Users/royma/.silabs/slt/installs/conan/p/cmakefa35ab0687064/p/share/cmake-3.30/Modules/CMakeCXXCompilerABI.cpp -quiet -dumpdir CMakeFiles/cmTC_2c3c0.dir/Debug/ -dumpbase CMakeCXXCompilerABI.cpp.cpp -dumpbase-ext .cpp -mcpu=arm7tdmi -mfloat-abi=soft -marm -mlibarch=armv4t -march=armv4t -g -version -o C:\\Users\\royma\\AppData\\Local\\Temp\\cc6R2GOF.s
+        GNU C++17 (Arm GNU Toolchain 14.2.rel1 (Build silabs-14.2.rel1-b66)) version 14.2.1 20241119 (arm-none-eabi)
+        	compiled by GNU C version 9.3-win32 20200320, GMP version 6.2.1, MPFR version 3.1.6, MPC version 1.0.3, isl version isl-0.15-1-g835ea3a-GMP
+        
+        GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072
+        ignoring duplicate directory "C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/lib/gcc/../../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/include/c++/14.2.1"
+        ignoring duplicate directory "C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/lib/gcc/../../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/include/c++/14.2.1/arm-none-eabi"
+        ignoring duplicate directory "C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/lib/gcc/../../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/include/c++/14.2.1/backward"
+        ignoring duplicate directory "C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/lib/gcc/../../lib/gcc/arm-none-eabi/14.2.1/include"
+        ignoring nonexistent directory "C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../arm-none-eabi/opt/jenkins/jenkins-worker/workspace/test-build-armgcc-toolchain/armgcc-rebuild-i686/build-i686-arm-none-eabi/install/lib/gcc/arm-none-eabi/14.2.1/../../../../include"
+        ignoring duplicate directory "C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/lib/gcc/../../lib/gcc/arm-none-eabi/14.2.1/include-fixed"
+        ignoring duplicate directory "C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/lib/gcc/../../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/include"
+        ignoring duplicate directory "C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../arm-none-eabi/include"
+        #include "..." search starts here:
+        #include <...> search starts here:
+         C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/include/c++/14.2.1
+         C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/include/c++/14.2.1/arm-none-eabi
+         C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/include/c++/14.2.1/backward
+         C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../lib/gcc/arm-none-eabi/14.2.1/include
+         C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../lib/gcc/arm-none-eabi/14.2.1/include-fixed
+         C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/include
+        End of search list.
+        Compiler executable checksum: 8a0f9119f04f8ae7d54f8a44b35a1d69
+        COLLECT_GCC_OPTIONS='-D' 'CMAKE_INTDIR="Debug"' '-g' '-v' '-o' 'CMakeFiles/cmTC_2c3c0.dir/Debug/CMakeCXXCompilerABI.cpp.obj' '-c' '-mcpu=arm7tdmi' '-mfloat-abi=soft' '-marm' '-mlibarch=armv4t' '-march=armv4t' '-dumpdir' 'CMakeFiles/cmTC_2c3c0.dir/Debug/'
+         C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/bin/as.exe -v -march=armv4t -mfloat-abi=soft -meabi=5 -o CMakeFiles/cmTC_2c3c0.dir/Debug/CMakeCXXCompilerABI.cpp.obj C:\\Users\\royma\\AppData\\Local\\Temp\\cc6R2GOF.s
+        GNU assembler version 2.43.1 (arm-none-eabi) using BFD version (Arm GNU Toolchain 14.2.rel1 (Build silabs-14.2.rel1-b66)) 2.43.1.20241119
+        COMPILER_PATH=C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../libexec/gcc/arm-none-eabi/14.2.1/;C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../libexec/gcc/;C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/bin/
+        LIBRARY_PATH=C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../lib/gcc/arm-none-eabi/14.2.1/;C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../lib/gcc/;C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/lib/;C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../arm-none-eabi/lib/\x0d
+        COLLECT_GCC_OPTIONS='-D' 'CMAKE_INTDIR="Debug"' '-g' '-v' '-o' 'CMakeFiles/cmTC_2c3c0.dir/Debug/CMakeCXXCompilerABI.cpp.obj' '-c' '-mcpu=arm7tdmi' '-mfloat-abi=soft' '-marm' '-mlibarch=armv4t' '-march=armv4t' '-dumpdir' 'CMakeFiles/cmTC_2c3c0.dir/Debug/CMakeCXXCompilerABI.cpp.'\x0d
+        [2/2] C:\\WINDOWS\\system32\\cmd.exe /C "cd . && C:\\Users\\royma\\.silabs\\slt\\installs\\conan\\p\\cmakefa35ab0687064\\p\\bin\\cmake.exe -E rm -f Debug\\libcmTC_2c3c0.a && C:\\Users\\royma\\.silabs\\slt\\installs\\conan\\p\\gcc-a999d2e027337f\\p\\bin\\arm-none-eabi-ar.exe qc Debug\\libcmTC_2c3c0.a  @CMakeFiles\\cmTC_2c3c0.Debug.rsp && C:\\Users\\royma\\.silabs\\slt\\installs\\conan\\p\\gcc-a999d2e027337f\\p\\bin\\arm-none-eabi-gcc-ranlib.exe Debug\\libcmTC_2c3c0.a && cd ."
+        
+      exitCode: 0
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Users/royma/.silabs/slt/installs/conan/p/cmakefa35ab0687064/p/share/cmake-3.30/Modules/CMakeDetermineCompilerABI.cmake:182 (message)"
+      - "C:/Users/royma/.silabs/slt/installs/conan/p/cmakefa35ab0687064/p/share/cmake-3.30/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:5 (project)"
+    message: |
+      Parsed CXX implicit include dir info: rv=done
+        found start of include info
+        found start of implicit include info
+          add: [C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/include/c++/14.2.1]
+          add: [C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/include/c++/14.2.1/arm-none-eabi]
+          add: [C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/include/c++/14.2.1/backward]
+          add: [C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../lib/gcc/arm-none-eabi/14.2.1/include]
+          add: [C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../lib/gcc/arm-none-eabi/14.2.1/include-fixed]
+          add: [C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/include]
+        end of search list found
+        collapse include dir [C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/include/c++/14.2.1] ==> [C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/arm-none-eabi/include/c++/14.2.1]
+        collapse include dir [C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/include/c++/14.2.1/arm-none-eabi] ==> [C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/arm-none-eabi/include/c++/14.2.1/arm-none-eabi]
+        collapse include dir [C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/include/c++/14.2.1/backward] ==> [C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/arm-none-eabi/include/c++/14.2.1/backward]
+        collapse include dir [C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../lib/gcc/arm-none-eabi/14.2.1/include] ==> [C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/lib/gcc/arm-none-eabi/14.2.1/include]
+        collapse include dir [C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../lib/gcc/arm-none-eabi/14.2.1/include-fixed] ==> [C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/lib/gcc/arm-none-eabi/14.2.1/include-fixed]
+        collapse include dir [C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/include] ==> [C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/arm-none-eabi/include]
+        implicit include dirs: [C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/arm-none-eabi/include/c++/14.2.1;C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/arm-none-eabi/include/c++/14.2.1/arm-none-eabi;C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/arm-none-eabi/include/c++/14.2.1/backward;C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/lib/gcc/arm-none-eabi/14.2.1/include;C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/lib/gcc/arm-none-eabi/14.2.1/include-fixed;C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/arm-none-eabi/include]
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Users/royma/.silabs/slt/installs/conan/p/cmakefa35ab0687064/p/share/cmake-3.30/Modules/CMakeDetermineCompilerABI.cmake:218 (message)"
+      - "C:/Users/royma/.silabs/slt/installs/conan/p/cmakefa35ab0687064/p/share/cmake-3.30/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:5 (project)"
+    message: |
+      Parsed CXX implicit link information:
+        link line regex: [^( *|.*[/\\])(arm-none-eabi-gcc\\.exe|;ld[0-9]*(\\.[a-z]+)?|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\\]+-)?ld|collect2)[^/\\]*( |$)]
+        linker tool regex: [^[ 	]*(->|")?[ 	]*(([^"]*[/\\])?(arm-none-eabi-gcc\\.exe|;ld[0-9]*(\\.[a-z]+)?))("|,| |$)]
+        ignore line: [Change Dir: 'C:/Users/royma/SimplicityStudio/v6_workspace/Wombcare_PreFinal2/cmake_gcc/build/CMakeFiles/CMakeScratch/TryCompile-3caw9k']
+        ignore line: []
+        ignore line: [Run Build Command(s): C:/Users/royma/.silabs/slt/installs/conan/p/ninja1a38fc85adcf7/p/ninja.exe -v cmTC_2c3c0]
+        ignore line: [[1/2] C:\\Users\\royma\\.silabs\\slt\\installs\\conan\\p\\gcc-a999d2e027337f\\p\\bin\\arm-none-eabi-g++.exe @CMakeFiles\\cmTC_2c3c0.dir\\Debug\\CMakeCXXCompilerABI.cpp.obj.rsp -o CMakeFiles/cmTC_2c3c0.dir/Debug/CMakeCXXCompilerABI.cpp.obj -c C:/Users/royma/.silabs/slt/installs/conan/p/cmakefa35ab0687064/p/share/cmake-3.30/Modules/CMakeCXXCompilerABI.cpp]
+        ignore line: [Using built-in specs.]
+        ignore line: [COLLECT_GCC=C:\\Users\\royma\\.silabs\\slt\\installs\\conan\\p\\gcc-a999d2e027337f\\p\\bin\\arm-none-eabi-g++.exe]
+        ignore line: [Target: arm-none-eabi]
+        ignore line: [Configured with: /opt/jenkins/jenkins-worker/workspace/test-build-armgcc-toolchain/armgcc-rebuild-i686/src/gcc/configure --target=arm-none-eabi --prefix=/opt/jenkins/jenkins-worker/workspace/test-build-armgcc-toolchain/armgcc-rebuild-i686/build-i686-arm-none-eabi/install --with-gmp=/opt/jenkins/jenkins-worker/workspace/test-build-armgcc-toolchain/armgcc-rebuild-i686/build-i686-arm-none-eabi/host-tools --with-mpfr=/opt/jenkins/jenkins-worker/workspace/test-build-armgcc-toolchain/armgcc-rebuild-i686/build-i686-arm-none-eabi/host-tools --with-mpc=/opt/jenkins/jenkins-worker/workspace/test-build-armgcc-toolchain/armgcc-rebuild-i686/build-i686-arm-none-eabi/host-tools --with-isl=/opt/jenkins/jenkins-worker/workspace/test-build-armgcc-toolchain/armgcc-rebuild-i686/build-i686-arm-none-eabi/host-tools --disable-shared --disable-nls --disable-threads --disable-tls --enable-checking=release --enable-languages=c,c++,fortran --with-newlib --with-gnu-as --with-headers=yes --with-gnu-ld --with-native-system-header-dir=/include --with-sysroot=/opt/jenkins/jenkins-worker/workspace/test-build-armgcc-toolchain/armgcc-rebuild-i686/build-i686-arm-none-eabi/install/arm-none-eabi --with-multilib-list=aprofile,rmprofile --with-zstd --with-libiconv-prefix=/opt/jenkins/jenkins-worker/workspace/test-build-armgcc-toolchain/armgcc-rebuild-i686/build-i686-arm-none-eabi/host-tools --with-libiconv-prefix=/opt/jenkins/jenkins-worker/workspace/test-build-armgcc-toolchain/armgcc-rebuild-i686/build-i686-arm-none-eabi/host-tools --enable-mingw-wildcard --host=i686-w64-mingw32 --with-pkgversion='Arm GNU Toolchain 14.2.rel1 (Build silabs-14.2.rel1-b66)']
+        ignore line: [Thread model: single]
+        ignore line: [Supported LTO compression algorithms: zlib zstd]
+        ignore line: [gcc version 14.2.1 20241119 (Arm GNU Toolchain 14.2.rel1 (Build silabs-14.2.rel1-b66)) ]
+        ignore line: [COLLECT_GCC_OPTIONS='-D' 'CMAKE_INTDIR="Debug"' '-g' '-v' '-o' 'CMakeFiles/cmTC_2c3c0.dir/Debug/CMakeCXXCompilerABI.cpp.obj' '-c' '-mcpu=arm7tdmi' '-mfloat-abi=soft' '-marm' '-mlibarch=armv4t' '-march=armv4t' '-dumpdir' 'CMakeFiles/cmTC_2c3c0.dir/Debug/']
+        ignore line: [ C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../libexec/gcc/arm-none-eabi/14.2.1/cc1plus.exe -quiet -v -iprefix C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../lib/gcc/arm-none-eabi/14.2.1/ -isysroot C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../arm-none-eabi -D__USES_INITFINI__ -D CMAKE_INTDIR="Debug" C:/Users/royma/.silabs/slt/installs/conan/p/cmakefa35ab0687064/p/share/cmake-3.30/Modules/CMakeCXXCompilerABI.cpp -quiet -dumpdir CMakeFiles/cmTC_2c3c0.dir/Debug/ -dumpbase CMakeCXXCompilerABI.cpp.cpp -dumpbase-ext .cpp -mcpu=arm7tdmi -mfloat-abi=soft -marm -mlibarch=armv4t -march=armv4t -g -version -o C:\\Users\\royma\\AppData\\Local\\Temp\\cc6R2GOF.s]
+        ignore line: [GNU C++17 (Arm GNU Toolchain 14.2.rel1 (Build silabs-14.2.rel1-b66)) version 14.2.1 20241119 (arm-none-eabi)]
+        ignore line: [	compiled by GNU C version 9.3-win32 20200320  GMP version 6.2.1  MPFR version 3.1.6  MPC version 1.0.3  isl version isl-0.15-1-g835ea3a-GMP]
+        ignore line: []
+        ignore line: [GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072]
+        ignore line: [ignoring duplicate directory "C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/lib/gcc/../../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/include/c++/14.2.1"]
+        ignore line: [ignoring duplicate directory "C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/lib/gcc/../../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/include/c++/14.2.1/arm-none-eabi"]
+        ignore line: [ignoring duplicate directory "C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/lib/gcc/../../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/include/c++/14.2.1/backward"]
+        ignore line: [ignoring duplicate directory "C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/lib/gcc/../../lib/gcc/arm-none-eabi/14.2.1/include"]
+        ignore line: [ignoring nonexistent directory "C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../arm-none-eabi/opt/jenkins/jenkins-worker/workspace/test-build-armgcc-toolchain/armgcc-rebuild-i686/build-i686-arm-none-eabi/install/lib/gcc/arm-none-eabi/14.2.1/../../../../include"]
+        ignore line: [ignoring duplicate directory "C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/lib/gcc/../../lib/gcc/arm-none-eabi/14.2.1/include-fixed"]
+        ignore line: [ignoring duplicate directory "C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/lib/gcc/../../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/include"]
+        ignore line: [ignoring duplicate directory "C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../arm-none-eabi/include"]
+        ignore line: [#include "..." search starts here:]
+        ignore line: [#include <...> search starts here:]
+        ignore line: [ C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/include/c++/14.2.1]
+        ignore line: [ C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/include/c++/14.2.1/arm-none-eabi]
+        ignore line: [ C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/include/c++/14.2.1/backward]
+        ignore line: [ C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../lib/gcc/arm-none-eabi/14.2.1/include]
+        ignore line: [ C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../lib/gcc/arm-none-eabi/14.2.1/include-fixed]
+        ignore line: [ C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/include]
+        ignore line: [End of search list.]
+        ignore line: [Compiler executable checksum: 8a0f9119f04f8ae7d54f8a44b35a1d69]
+        ignore line: [COLLECT_GCC_OPTIONS='-D' 'CMAKE_INTDIR="Debug"' '-g' '-v' '-o' 'CMakeFiles/cmTC_2c3c0.dir/Debug/CMakeCXXCompilerABI.cpp.obj' '-c' '-mcpu=arm7tdmi' '-mfloat-abi=soft' '-marm' '-mlibarch=armv4t' '-march=armv4t' '-dumpdir' 'CMakeFiles/cmTC_2c3c0.dir/Debug/']
+        ignore line: [ C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/bin/as.exe -v -march=armv4t -mfloat-abi=soft -meabi=5 -o CMakeFiles/cmTC_2c3c0.dir/Debug/CMakeCXXCompilerABI.cpp.obj C:\\Users\\royma\\AppData\\Local\\Temp\\cc6R2GOF.s]
+        ignore line: [GNU assembler version 2.43.1 (arm-none-eabi) using BFD version (Arm GNU Toolchain 14.2.rel1 (Build silabs-14.2.rel1-b66)) 2.43.1.20241119]
+        ignore line: [COMPILER_PATH=C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../libexec/gcc/arm-none-eabi/14.2.1/]
+        ignore line: [C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../libexec/gcc/]
+        ignore line: [C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/bin/]
+        ignore line: [LIBRARY_PATH=C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../lib/gcc/arm-none-eabi/14.2.1/]
+        ignore line: [C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../lib/gcc/]
+        ignore line: [C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/lib/]
+        ignore line: [C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../arm-none-eabi/lib/\x0d]
+        ignore line: [COLLECT_GCC_OPTIONS='-D' 'CMAKE_INTDIR="Debug"' '-g' '-v' '-o' 'CMakeFiles/cmTC_2c3c0.dir/Debug/CMakeCXXCompilerABI.cpp.obj' '-c' '-mcpu=arm7tdmi' '-mfloat-abi=soft' '-marm' '-mlibarch=armv4t' '-march=armv4t' '-dumpdir' 'CMakeFiles/cmTC_2c3c0.dir/Debug/CMakeCXXCompilerABI.cpp.'\x0d]
+        ignore line: [[2/2] C:\\WINDOWS\\system32\\cmd.exe /C "cd . && C:\\Users\\royma\\.silabs\\slt\\installs\\conan\\p\\cmakefa35ab0687064\\p\\bin\\cmake.exe -E rm -f Debug\\libcmTC_2c3c0.a && C:\\Users\\royma\\.silabs\\slt\\installs\\conan\\p\\gcc-a999d2e027337f\\p\\bin\\arm-none-eabi-ar.exe qc Debug\\libcmTC_2c3c0.a  @CMakeFiles\\cmTC_2c3c0.Debug.rsp && C:\\Users\\royma\\.silabs\\slt\\installs\\conan\\p\\gcc-a999d2e027337f\\p\\bin\\arm-none-eabi-gcc-ranlib.exe Debug\\libcmTC_2c3c0.a && cd ."]
+        ignore line: []
+        ignore line: []
+        implicit libs: []
+        implicit objs: []
+        implicit dirs: []
+        implicit fwks: []
+      
+      
+...
+
+---
+events:
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-4.4/Modules/CMakeDetermineSystem.cmake:213 (message)"
+      - "CMakeLists.txt:5 (project)"
+    message: |
+      The target system is: Generic -  - arm
+      The host system is: Windows - 10.0.26200 - AMD64
+  -
+    kind: "find-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-4.4/Modules/CMakeDetermineCompilerId.cmake:501 (find_file)"
+      - "C:/Program Files/CMake/share/cmake-4.4/Modules/CMakeDetermineCompilerId.cmake:538 (CMAKE_DETERMINE_COMPILER_ID_WRITE)"
+      - "C:/Program Files/CMake/share/cmake-4.4/Modules/CMakeDetermineCompilerId.cmake:8 (CMAKE_DETERMINE_COMPILER_ID_BUILD)"
+      - "C:/Program Files/CMake/share/cmake-4.4/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "C:/Program Files/CMake/share/cmake-4.4/Modules/CMakeDetermineCCompiler.cmake:122 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:5 (project)"
+    mode: "file"
+    variable: "src_in"
+    description: "Path to a file."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: true
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "CMakeCCompilerId.c.in"
+    candidate_directories:
+      - "C:/Program Files/CMake/share/cmake-4.4/Modules/"
+    found: "C:/Program Files/CMake/share/cmake-4.4/Modules/CMakeCCompilerId.c.in"
+    search_context:
+      ENV{PATH}:
+        - "C:\\ProgramData\\miniconda3\\condabin"
+        - "C:/Users/royma/.silabs/slt/installs/archive/v6-base-v6.2.0-282/SimplicityStudio-6/sts_back_end//plugins/org.eclipse.justj.openjdk.hotspot.jre.full.stripped.win32.x86_64_21.0.6.v20250130-0529/jre/bin/server"
+        - "C:/Users/royma/.silabs/slt/installs/archive/v6-base-v6.2.0-282/SimplicityStudio-6/sts_back_end//plugins/org.eclipse.justj.openjdk.hotspot.jre.full.stripped.win32.x86_64_21.0.6.v20250130-0529/jre/bin"
+        - "C:/Users/royma/.silabs/slt/installs/archive/v6-base-v6.2.0-282/SimplicityStudio-6//sts_back_end/plugins/org.eclipse.justj.openjdk.hotspot.jre.full.stripped.win32.x86_64_21.0.6.v20250130-0529/jre/bin/server"
+        - "C:/Users/royma/.silabs/slt/installs/archive/v6-base-v6.2.0-282/SimplicityStudio-6//sts_back_end/plugins/org.eclipse.justj.openjdk.hotspot.jre.full.stripped.win32.x86_64_21.0.6.v20250130-0529/jre/bin"
+        - "C:\\Program Files\\Python39\\Scripts\\"
+        - "C:\\Program Files\\Python39\\"
+        - "C:\\windows\\system32"
+        - "C:\\windows"
+        - "C:\\windows\\System32\\Wbem"
+        - "C:\\windows\\System32\\WindowsPowerShell\\v1.0\\"
+        - "C:\\windows\\System32\\OpenSSH\\"
+        - "C:\\Program Files (x86)\\NVIDIA Corporation\\PhysX\\Common"
+        - "C:\\WINDOWS\\system32"
+        - "C:\\WINDOWS"
+        - "C:\\WINDOWS\\System32\\Wbem"
+        - "C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\"
+        - "C:\\WINDOWS\\System32\\OpenSSH\\"
+        - "C:\\Program Files\\dotnet\\"
+        - "C:\\MinGW\\bin"
+        - "C:\\Program Files\\HP\\HP One Agent"
+        - "C:\\Program Files\\NVIDIA Corporation\\NVIDIA app\\NvDLISR"
+        - "C:\\WINDOWS\\system32"
+        - "C:\\WINDOWS"
+        - "C:\\WINDOWS\\System32\\Wbem"
+        - "C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\"
+        - "C:\\WINDOWS\\System32\\OpenSSH\\"
+        - "C:\\Program Files\\Git\\cmd"
+        - "C:\\Program Files\\CMake\\bin"
+        - "C:\\Users\\royma\\.local\\bin"
+        - "C:\\Users\\royma\\AppData\\Local\\Programs\\Python\\Python39\\Scripts\\"
+        - "C:\\Users\\royma\\AppData\\Local\\Programs\\Python\\Python39\\"
+        - "C:\\Users\\royma\\AppData\\Local\\Programs\\Python\\Python313\\Scripts\\"
+        - "C:\\Users\\royma\\AppData\\Local\\Programs\\Python\\Python313\\"
+        - "C:\\Users\\royma\\AppData\\Local\\Microsoft\\WindowsApps"
+        - "C:\\Users\\royma\\AppData\\Local\\Programs\\Microsoft VS Code\\bin"
+        - "C:\\iverilog\\bin"
+        - "C:\\iverilog\\gtkwave\\bin"
+        - "C:\\ProgramData\\miniconda3\\Scripts"
+        - "C:\\Users\\royma\\.silabs\\slt\\installs\\archive\\v6-base-v6.2.0-282"
+        - "C:\\Users\\royma\\.silabs\\slt\\installs\\archive\\v6-base-v6.2.0-282\\SimplicityStudio-6\\sts_back_end"
+      CMAKE_INSTALL_PREFIX: "C:/Program Files (x86)/Wombcare_PreFinal2"
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-4.4/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "C:/Program Files/CMake/share/cmake-4.4/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "C:/Program Files/CMake/share/cmake-4.4/Modules/CMakeDetermineCCompiler.cmake:122 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:5 (project)"
+    message: |
+      Compiling the C compiler identification source file "CMakeCCompilerId.c" failed.
+      Compiler: C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/arm-none-eabi-gcc.exe 
+      Build flags: 
+      Id flags:  
+      
+      The output was:
+      1
+      C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/bin/ld.exe: C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/lib\\libc.a(libc_a-exit.o): in function `exit':
+      exit.c:(.text.exit+0x28): undefined reference to `_exit'
+      C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/bin/ld.exe: C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/lib\\libc.a(libc_a-closer.o): in function `_close_r':
+      closer.c:(.text._close_r+0x18): undefined reference to `_close'
+      C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/bin/ld.exe: C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/lib\\libc.a(libc_a-lseekr.o): in function `_lseek_r':
+      lseekr.c:(.text._lseek_r+0x24): undefined reference to `_lseek'
+      C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/bin/ld.exe: C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/lib\\libc.a(libc_a-readr.o): in function `_read_r':
+      readr.c:(.text._read_r+0x24): undefined reference to `_read'
+      C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/bin/ld.exe: C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/lib\\libc.a(libc_a-writer.o): in function `_write_r':
+      writer.c:(.text._write_r+0x24): undefined reference to `_write'
+      C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/bin/ld.exe: C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/lib\\libc.a(libc_a-sbrkr.o): in function `_sbrk_r':
+      sbrkr.c:(.text._sbrk_r+0x18): undefined reference to `_sbrk'
+      collect2.exe: error: ld returned 1 exit status
+      
+      
+  -
+    kind: "find-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-4.4/Modules/CMakeDetermineCompilerId.cmake:501 (find_file)"
+      - "C:/Program Files/CMake/share/cmake-4.4/Modules/CMakeDetermineCompilerId.cmake:538 (CMAKE_DETERMINE_COMPILER_ID_WRITE)"
+      - "C:/Program Files/CMake/share/cmake-4.4/Modules/CMakeDetermineCompilerId.cmake:8 (CMAKE_DETERMINE_COMPILER_ID_BUILD)"
+      - "C:/Program Files/CMake/share/cmake-4.4/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "C:/Program Files/CMake/share/cmake-4.4/Modules/CMakeDetermineCCompiler.cmake:122 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:5 (project)"
+    mode: "file"
+    variable: "src_in"
+    description: "Path to a file."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: true
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "CMakeCCompilerId.c.in"
+    candidate_directories:
+      - "C:/Program Files/CMake/share/cmake-4.4/Modules/"
+    found: "C:/Program Files/CMake/share/cmake-4.4/Modules/CMakeCCompilerId.c.in"
+    search_context:
+      ENV{PATH}:
+        - "C:\\ProgramData\\miniconda3\\condabin"
+        - "C:/Users/royma/.silabs/slt/installs/archive/v6-base-v6.2.0-282/SimplicityStudio-6/sts_back_end//plugins/org.eclipse.justj.openjdk.hotspot.jre.full.stripped.win32.x86_64_21.0.6.v20250130-0529/jre/bin/server"
+        - "C:/Users/royma/.silabs/slt/installs/archive/v6-base-v6.2.0-282/SimplicityStudio-6/sts_back_end//plugins/org.eclipse.justj.openjdk.hotspot.jre.full.stripped.win32.x86_64_21.0.6.v20250130-0529/jre/bin"
+        - "C:/Users/royma/.silabs/slt/installs/archive/v6-base-v6.2.0-282/SimplicityStudio-6//sts_back_end/plugins/org.eclipse.justj.openjdk.hotspot.jre.full.stripped.win32.x86_64_21.0.6.v20250130-0529/jre/bin/server"
+        - "C:/Users/royma/.silabs/slt/installs/archive/v6-base-v6.2.0-282/SimplicityStudio-6//sts_back_end/plugins/org.eclipse.justj.openjdk.hotspot.jre.full.stripped.win32.x86_64_21.0.6.v20250130-0529/jre/bin"
+        - "C:\\Program Files\\Python39\\Scripts\\"
+        - "C:\\Program Files\\Python39\\"
+        - "C:\\windows\\system32"
+        - "C:\\windows"
+        - "C:\\windows\\System32\\Wbem"
+        - "C:\\windows\\System32\\WindowsPowerShell\\v1.0\\"
+        - "C:\\windows\\System32\\OpenSSH\\"
+        - "C:\\Program Files (x86)\\NVIDIA Corporation\\PhysX\\Common"
+        - "C:\\WINDOWS\\system32"
+        - "C:\\WINDOWS"
+        - "C:\\WINDOWS\\System32\\Wbem"
+        - "C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\"
+        - "C:\\WINDOWS\\System32\\OpenSSH\\"
+        - "C:\\Program Files\\dotnet\\"
+        - "C:\\MinGW\\bin"
+        - "C:\\Program Files\\HP\\HP One Agent"
+        - "C:\\Program Files\\NVIDIA Corporation\\NVIDIA app\\NvDLISR"
+        - "C:\\WINDOWS\\system32"
+        - "C:\\WINDOWS"
+        - "C:\\WINDOWS\\System32\\Wbem"
+        - "C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\"
+        - "C:\\WINDOWS\\System32\\OpenSSH\\"
+        - "C:\\Program Files\\Git\\cmd"
+        - "C:\\Program Files\\CMake\\bin"
+        - "C:\\Users\\royma\\.local\\bin"
+        - "C:\\Users\\royma\\AppData\\Local\\Programs\\Python\\Python39\\Scripts\\"
+        - "C:\\Users\\royma\\AppData\\Local\\Programs\\Python\\Python39\\"
+        - "C:\\Users\\royma\\AppData\\Local\\Programs\\Python\\Python313\\Scripts\\"
+        - "C:\\Users\\royma\\AppData\\Local\\Programs\\Python\\Python313\\"
+        - "C:\\Users\\royma\\AppData\\Local\\Microsoft\\WindowsApps"
+        - "C:\\Users\\royma\\AppData\\Local\\Programs\\Microsoft VS Code\\bin"
+        - "C:\\iverilog\\bin"
+        - "C:\\iverilog\\gtkwave\\bin"
+        - "C:\\ProgramData\\miniconda3\\Scripts"
+        - "C:\\Users\\royma\\.silabs\\slt\\installs\\archive\\v6-base-v6.2.0-282"
+        - "C:\\Users\\royma\\.silabs\\slt\\installs\\archive\\v6-base-v6.2.0-282\\SimplicityStudio-6\\sts_back_end"
+      CMAKE_INSTALL_PREFIX: "C:/Program Files (x86)/Wombcare_PreFinal2"
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-4.4/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "C:/Program Files/CMake/share/cmake-4.4/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "C:/Program Files/CMake/share/cmake-4.4/Modules/CMakeDetermineCCompiler.cmake:122 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:5 (project)"
+    message: |
+      Compiling the C compiler identification source file "CMakeCCompilerId.c" succeeded.
+      Compiler: C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/arm-none-eabi-gcc.exe 
+      Build flags: 
+      Id flags: -c 
+      
+      The output was:
+      0
+      
+      
+      Compilation of the C compiler identification source "CMakeCCompilerId.c" produced "CMakeCCompilerId.o"
+      
+      The C compiler identification is GNU, found in:
+        C:/Users/royma/SimplicityStudio/v6_workspace/Wombcare_PreFinal2/cmake_gcc/build/CMakeFiles/4.4.0-rc3/CompilerIdC/CMakeCCompilerId.o
+      
+  -
+    kind: "find-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-4.4/Modules/CMakeDetermineCompilerId.cmake:501 (find_file)"
+      - "C:/Program Files/CMake/share/cmake-4.4/Modules/CMakeDetermineCompilerId.cmake:538 (CMAKE_DETERMINE_COMPILER_ID_WRITE)"
+      - "C:/Program Files/CMake/share/cmake-4.4/Modules/CMakeDetermineCompilerId.cmake:8 (CMAKE_DETERMINE_COMPILER_ID_BUILD)"
+      - "C:/Program Files/CMake/share/cmake-4.4/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "C:/Program Files/CMake/share/cmake-4.4/Modules/CMakeDetermineCXXCompiler.cmake:125 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:5 (project)"
+    mode: "file"
+    variable: "src_in"
+    description: "Path to a file."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: true
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "CMakeCXXCompilerId.cpp.in"
+    candidate_directories:
+      - "C:/Program Files/CMake/share/cmake-4.4/Modules/"
+    found: "C:/Program Files/CMake/share/cmake-4.4/Modules/CMakeCXXCompilerId.cpp.in"
+    search_context:
+      ENV{PATH}:
+        - "C:\\ProgramData\\miniconda3\\condabin"
+        - "C:/Users/royma/.silabs/slt/installs/archive/v6-base-v6.2.0-282/SimplicityStudio-6/sts_back_end//plugins/org.eclipse.justj.openjdk.hotspot.jre.full.stripped.win32.x86_64_21.0.6.v20250130-0529/jre/bin/server"
+        - "C:/Users/royma/.silabs/slt/installs/archive/v6-base-v6.2.0-282/SimplicityStudio-6/sts_back_end//plugins/org.eclipse.justj.openjdk.hotspot.jre.full.stripped.win32.x86_64_21.0.6.v20250130-0529/jre/bin"
+        - "C:/Users/royma/.silabs/slt/installs/archive/v6-base-v6.2.0-282/SimplicityStudio-6//sts_back_end/plugins/org.eclipse.justj.openjdk.hotspot.jre.full.stripped.win32.x86_64_21.0.6.v20250130-0529/jre/bin/server"
+        - "C:/Users/royma/.silabs/slt/installs/archive/v6-base-v6.2.0-282/SimplicityStudio-6//sts_back_end/plugins/org.eclipse.justj.openjdk.hotspot.jre.full.stripped.win32.x86_64_21.0.6.v20250130-0529/jre/bin"
+        - "C:\\Program Files\\Python39\\Scripts\\"
+        - "C:\\Program Files\\Python39\\"
+        - "C:\\windows\\system32"
+        - "C:\\windows"
+        - "C:\\windows\\System32\\Wbem"
+        - "C:\\windows\\System32\\WindowsPowerShell\\v1.0\\"
+        - "C:\\windows\\System32\\OpenSSH\\"
+        - "C:\\Program Files (x86)\\NVIDIA Corporation\\PhysX\\Common"
+        - "C:\\WINDOWS\\system32"
+        - "C:\\WINDOWS"
+        - "C:\\WINDOWS\\System32\\Wbem"
+        - "C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\"
+        - "C:\\WINDOWS\\System32\\OpenSSH\\"
+        - "C:\\Program Files\\dotnet\\"
+        - "C:\\MinGW\\bin"
+        - "C:\\Program Files\\HP\\HP One Agent"
+        - "C:\\Program Files\\NVIDIA Corporation\\NVIDIA app\\NvDLISR"
+        - "C:\\WINDOWS\\system32"
+        - "C:\\WINDOWS"
+        - "C:\\WINDOWS\\System32\\Wbem"
+        - "C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\"
+        - "C:\\WINDOWS\\System32\\OpenSSH\\"
+        - "C:\\Program Files\\Git\\cmd"
+        - "C:\\Program Files\\CMake\\bin"
+        - "C:\\Users\\royma\\.local\\bin"
+        - "C:\\Users\\royma\\AppData\\Local\\Programs\\Python\\Python39\\Scripts\\"
+        - "C:\\Users\\royma\\AppData\\Local\\Programs\\Python\\Python39\\"
+        - "C:\\Users\\royma\\AppData\\Local\\Programs\\Python\\Python313\\Scripts\\"
+        - "C:\\Users\\royma\\AppData\\Local\\Programs\\Python\\Python313\\"
+        - "C:\\Users\\royma\\AppData\\Local\\Microsoft\\WindowsApps"
+        - "C:\\Users\\royma\\AppData\\Local\\Programs\\Microsoft VS Code\\bin"
+        - "C:\\iverilog\\bin"
+        - "C:\\iverilog\\gtkwave\\bin"
+        - "C:\\ProgramData\\miniconda3\\Scripts"
+        - "C:\\Users\\royma\\.silabs\\slt\\installs\\archive\\v6-base-v6.2.0-282"
+        - "C:\\Users\\royma\\.silabs\\slt\\installs\\archive\\v6-base-v6.2.0-282\\SimplicityStudio-6\\sts_back_end"
+      CMAKE_INSTALL_PREFIX: "C:/Program Files (x86)/Wombcare_PreFinal2"
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-4.4/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "C:/Program Files/CMake/share/cmake-4.4/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "C:/Program Files/CMake/share/cmake-4.4/Modules/CMakeDetermineCXXCompiler.cmake:125 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:5 (project)"
+    message: |
+      Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" failed.
+      Compiler: C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/arm-none-eabi-g++.exe 
+      Build flags: 
+      Id flags:  
+      
+      The output was:
+      1
+      C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/bin/ld.exe: C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/lib\\libc.a(libc_a-exit.o): in function `exit':
+      exit.c:(.text.exit+0x28): undefined reference to `_exit'
+      C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/bin/ld.exe: C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/lib\\libc.a(libc_a-closer.o): in function `_close_r':
+      closer.c:(.text._close_r+0x18): undefined reference to `_close'
+      C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/bin/ld.exe: C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/lib\\libc.a(libc_a-lseekr.o): in function `_lseek_r':
+      lseekr.c:(.text._lseek_r+0x24): undefined reference to `_lseek'
+      C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/bin/ld.exe: C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/lib\\libc.a(libc_a-readr.o): in function `_read_r':
+      readr.c:(.text._read_r+0x24): undefined reference to `_read'
+      C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/bin/ld.exe: C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/lib\\libc.a(libc_a-writer.o): in function `_write_r':
+      writer.c:(.text._write_r+0x24): undefined reference to `_write'
+      C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/bin/ld.exe: C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/lib\\libc.a(libc_a-sbrkr.o): in function `_sbrk_r':
+      sbrkr.c:(.text._sbrk_r+0x18): undefined reference to `_sbrk'
+      collect2.exe: error: ld returned 1 exit status
+      
+      
+  -
+    kind: "find-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-4.4/Modules/CMakeDetermineCompilerId.cmake:501 (find_file)"
+      - "C:/Program Files/CMake/share/cmake-4.4/Modules/CMakeDetermineCompilerId.cmake:538 (CMAKE_DETERMINE_COMPILER_ID_WRITE)"
+      - "C:/Program Files/CMake/share/cmake-4.4/Modules/CMakeDetermineCompilerId.cmake:8 (CMAKE_DETERMINE_COMPILER_ID_BUILD)"
+      - "C:/Program Files/CMake/share/cmake-4.4/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "C:/Program Files/CMake/share/cmake-4.4/Modules/CMakeDetermineCXXCompiler.cmake:125 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:5 (project)"
+    mode: "file"
+    variable: "src_in"
+    description: "Path to a file."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: true
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "CMakeCXXCompilerId.cpp.in"
+    candidate_directories:
+      - "C:/Program Files/CMake/share/cmake-4.4/Modules/"
+    found: "C:/Program Files/CMake/share/cmake-4.4/Modules/CMakeCXXCompilerId.cpp.in"
+    search_context:
+      ENV{PATH}:
+        - "C:\\ProgramData\\miniconda3\\condabin"
+        - "C:/Users/royma/.silabs/slt/installs/archive/v6-base-v6.2.0-282/SimplicityStudio-6/sts_back_end//plugins/org.eclipse.justj.openjdk.hotspot.jre.full.stripped.win32.x86_64_21.0.6.v20250130-0529/jre/bin/server"
+        - "C:/Users/royma/.silabs/slt/installs/archive/v6-base-v6.2.0-282/SimplicityStudio-6/sts_back_end//plugins/org.eclipse.justj.openjdk.hotspot.jre.full.stripped.win32.x86_64_21.0.6.v20250130-0529/jre/bin"
+        - "C:/Users/royma/.silabs/slt/installs/archive/v6-base-v6.2.0-282/SimplicityStudio-6//sts_back_end/plugins/org.eclipse.justj.openjdk.hotspot.jre.full.stripped.win32.x86_64_21.0.6.v20250130-0529/jre/bin/server"
+        - "C:/Users/royma/.silabs/slt/installs/archive/v6-base-v6.2.0-282/SimplicityStudio-6//sts_back_end/plugins/org.eclipse.justj.openjdk.hotspot.jre.full.stripped.win32.x86_64_21.0.6.v20250130-0529/jre/bin"
+        - "C:\\Program Files\\Python39\\Scripts\\"
+        - "C:\\Program Files\\Python39\\"
+        - "C:\\windows\\system32"
+        - "C:\\windows"
+        - "C:\\windows\\System32\\Wbem"
+        - "C:\\windows\\System32\\WindowsPowerShell\\v1.0\\"
+        - "C:\\windows\\System32\\OpenSSH\\"
+        - "C:\\Program Files (x86)\\NVIDIA Corporation\\PhysX\\Common"
+        - "C:\\WINDOWS\\system32"
+        - "C:\\WINDOWS"
+        - "C:\\WINDOWS\\System32\\Wbem"
+        - "C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\"
+        - "C:\\WINDOWS\\System32\\OpenSSH\\"
+        - "C:\\Program Files\\dotnet\\"
+        - "C:\\MinGW\\bin"
+        - "C:\\Program Files\\HP\\HP One Agent"
+        - "C:\\Program Files\\NVIDIA Corporation\\NVIDIA app\\NvDLISR"
+        - "C:\\WINDOWS\\system32"
+        - "C:\\WINDOWS"
+        - "C:\\WINDOWS\\System32\\Wbem"
+        - "C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\"
+        - "C:\\WINDOWS\\System32\\OpenSSH\\"
+        - "C:\\Program Files\\Git\\cmd"
+        - "C:\\Program Files\\CMake\\bin"
+        - "C:\\Users\\royma\\.local\\bin"
+        - "C:\\Users\\royma\\AppData\\Local\\Programs\\Python\\Python39\\Scripts\\"
+        - "C:\\Users\\royma\\AppData\\Local\\Programs\\Python\\Python39\\"
+        - "C:\\Users\\royma\\AppData\\Local\\Programs\\Python\\Python313\\Scripts\\"
+        - "C:\\Users\\royma\\AppData\\Local\\Programs\\Python\\Python313\\"
+        - "C:\\Users\\royma\\AppData\\Local\\Microsoft\\WindowsApps"
+        - "C:\\Users\\royma\\AppData\\Local\\Programs\\Microsoft VS Code\\bin"
+        - "C:\\iverilog\\bin"
+        - "C:\\iverilog\\gtkwave\\bin"
+        - "C:\\ProgramData\\miniconda3\\Scripts"
+        - "C:\\Users\\royma\\.silabs\\slt\\installs\\archive\\v6-base-v6.2.0-282"
+        - "C:\\Users\\royma\\.silabs\\slt\\installs\\archive\\v6-base-v6.2.0-282\\SimplicityStudio-6\\sts_back_end"
+      CMAKE_INSTALL_PREFIX: "C:/Program Files (x86)/Wombcare_PreFinal2"
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-4.4/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "C:/Program Files/CMake/share/cmake-4.4/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "C:/Program Files/CMake/share/cmake-4.4/Modules/CMakeDetermineCXXCompiler.cmake:125 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:5 (project)"
+    message: |
+      Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" succeeded.
+      Compiler: C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/arm-none-eabi-g++.exe 
+      Build flags: 
+      Id flags: -c 
+      
+      The output was:
+      0
+      
+      
+      Compilation of the CXX compiler identification source "CMakeCXXCompilerId.cpp" produced "CMakeCXXCompilerId.o"
+      
+      The CXX compiler identification is GNU, found in:
+        C:/Users/royma/SimplicityStudio/v6_workspace/Wombcare_PreFinal2/cmake_gcc/build/CMakeFiles/4.4.0-rc3/CompilerIdCXX/CMakeCXXCompilerId.o
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-4.4/Modules/CMakeDetermineCompilerId.cmake:1328 (message)"
+      - "C:/Program Files/CMake/share/cmake-4.4/Modules/CMakeDetermineASMCompiler.cmake:174 (CMAKE_DETERMINE_COMPILER_ID_VENDOR)"
+      - "CMakeLists.txt:5 (project)"
+    message: |
+      Checking whether the ASM compiler is GNU using "--version" matched "(GNU assembler)|(GCC)|(Free Software Foundation)":
+      arm-none-eabi-gcc.exe (Arm GNU Toolchain 14.2.rel1 (Build silabs-14.2.rel1-b66)) 14.2.1 20241119
+      Copyright (C) 2024 Free Software Foundation, Inc.
+      This is free software; see the source for copying conditions.  There is NO
+      warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+      
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-4.4/Modules/CMakeDetermineCompilerABI.cmake:123 (try_compile)"
+      - "C:/Program Files/CMake/share/cmake-4.4/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:5 (project)"
+    checks:
+      - "Detecting C compiler ABI info"
+    directories:
+      source: "C:/Users/royma/SimplicityStudio/v6_workspace/Wombcare_PreFinal2/cmake_gcc/build/CMakeFiles/CMakeScratch/TryCompile-rg3pxs"
+      binary: "C:/Users/royma/SimplicityStudio/v6_workspace/Wombcare_PreFinal2/cmake_gcc/build/CMakeFiles/CMakeScratch/TryCompile-rg3pxs"
+    cmakeVariables:
+      CMAKE_CXX_STDLIB_MODULES_JSON: ""
+      CMAKE_C_FLAGS: ""
+      CMAKE_C_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: ""
+    buildResult:
+      variable: "CMAKE_C_ABI_COMPILED"
+      cached: false
+      stdout: |
+        Change Dir: 'C:/Users/royma/SimplicityStudio/v6_workspace/Wombcare_PreFinal2/cmake_gcc/build/CMakeFiles/CMakeScratch/TryCompile-rg3pxs'
+        
+        Run Build Command(s): C:/Users/royma/.silabs/slt/installs/conan/p/ninja1a38fc85adcf7/p/ninja.exe -v cmTC_39ea5
+        [1/2] C:\\Users\\royma\\.silabs\\slt\\installs\\conan\\p\\gcc-a999d2e027337f\\p\\bin\\arm-none-eabi-gcc.exe @CMakeFiles\\cmTC_39ea5.dir\\Debug\\CMakeCCompilerABI.c.obj.rsp -o CMakeFiles/cmTC_39ea5.dir/Debug/CMakeCCompilerABI.c.obj -c "C:/Program Files/CMake/share/cmake-4.4/Modules/CMakeCCompilerABI.c"
+        Using built-in specs.
+        COLLECT_GCC=C:\\Users\\royma\\.silabs\\slt\\installs\\conan\\p\\gcc-a999d2e027337f\\p\\bin\\arm-none-eabi-gcc.exe
+        Target: arm-none-eabi
+        Configured with: /opt/jenkins/jenkins-worker/workspace/test-build-armgcc-toolchain/armgcc-rebuild-i686/src/gcc/configure --target=arm-none-eabi --prefix=/opt/jenkins/jenkins-worker/workspace/test-build-armgcc-toolchain/armgcc-rebuild-i686/build-i686-arm-none-eabi/install --with-gmp=/opt/jenkins/jenkins-worker/workspace/test-build-armgcc-toolchain/armgcc-rebuild-i686/build-i686-arm-none-eabi/host-tools --with-mpfr=/opt/jenkins/jenkins-worker/workspace/test-build-armgcc-toolchain/armgcc-rebuild-i686/build-i686-arm-none-eabi/host-tools --with-mpc=/opt/jenkins/jenkins-worker/workspace/test-build-armgcc-toolchain/armgcc-rebuild-i686/build-i686-arm-none-eabi/host-tools --with-isl=/opt/jenkins/jenkins-worker/workspace/test-build-armgcc-toolchain/armgcc-rebuild-i686/build-i686-arm-none-eabi/host-tools --disable-shared --disable-nls --disable-threads --disable-tls --enable-checking=release --enable-languages=c,c++,fortran --with-newlib --with-gnu-as --with-headers=yes --with-gnu-ld --with-native-system-header-dir=/include --with-sysroot=/opt/jenkins/jenkins-worker/workspace/test-build-armgcc-toolchain/armgcc-rebuild-i686/build-i686-arm-none-eabi/install/arm-none-eabi --with-multilib-list=aprofile,rmprofile --with-zstd --with-libiconv-prefix=/opt/jenkins/jenkins-worker/workspace/test-build-armgcc-toolchain/armgcc-rebuild-i686/build-i686-arm-none-eabi/host-tools --with-libiconv-prefix=/opt/jenkins/jenkins-worker/workspace/test-build-armgcc-toolchain/armgcc-rebuild-i686/build-i686-arm-none-eabi/host-tools --enable-mingw-wildcard --host=i686-w64-mingw32 --with-pkgversion='Arm GNU Toolchain 14.2.rel1 (Build silabs-14.2.rel1-b66)'
+        Thread model: single
+        Supported LTO compression algorithms: zlib zstd
+        gcc version 14.2.1 20241119 (Arm GNU Toolchain 14.2.rel1 (Build silabs-14.2.rel1-b66)) 
+        COLLECT_GCC_OPTIONS='-D' 'CMAKE_INTDIR="Debug"' '-g' '-std=c17' '-v' '-o' 'CMakeFiles/cmTC_39ea5.dir/Debug/CMakeCCompilerABI.c.obj' '-c' '-mcpu=arm7tdmi' '-mfloat-abi=soft' '-marm' '-mlibarch=armv4t' '-march=armv4t' '-dumpdir' 'CMakeFiles/cmTC_39ea5.dir/Debug/'
+         C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../libexec/gcc/arm-none-eabi/14.2.1/cc1.exe -quiet -v -iprefix C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../lib/gcc/arm-none-eabi/14.2.1/ -isysroot C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../arm-none-eabi -D__USES_INITFINI__ -D CMAKE_INTDIR="Debug" C:/Program Files/CMake/share/cmake-4.4/Modules/CMakeCCompilerABI.c -quiet -dumpdir CMakeFiles/cmTC_39ea5.dir/Debug/ -dumpbase CMakeCCompilerABI.c.c -dumpbase-ext .c -mcpu=arm7tdmi -mfloat-abi=soft -marm -mlibarch=armv4t -march=armv4t -g -std=c17 -version -o C:\\Users\\royma\\AppData\\Local\\Temp\\ccPeuE6h.s
+        GNU C17 (Arm GNU Toolchain 14.2.rel1 (Build silabs-14.2.rel1-b66)) version 14.2.1 20241119 (arm-none-eabi)
+        	compiled by GNU C version 9.3-win32 20200320, GMP version 6.2.1, MPFR version 3.1.6, MPC version 1.0.3, isl version isl-0.15-1-g835ea3a-GMP
+        
+        GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072
+        ignoring duplicate directory "C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/lib/gcc/../../lib/gcc/arm-none-eabi/14.2.1/include"
+        ignoring nonexistent directory "C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../arm-none-eabi/opt/jenkins/jenkins-worker/workspace/test-build-armgcc-toolchain/armgcc-rebuild-i686/build-i686-arm-none-eabi/install/lib/gcc/arm-none-eabi/14.2.1/../../../../include"
+        ignoring duplicate directory "C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/lib/gcc/../../lib/gcc/arm-none-eabi/14.2.1/include-fixed"
+        ignoring duplicate directory "C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/lib/gcc/../../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/include"
+        ignoring duplicate directory "C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../arm-none-eabi/include"
+        #include "..." search starts here:
+        #include <...> search starts here:
+         C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../lib/gcc/arm-none-eabi/14.2.1/include
+         C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../lib/gcc/arm-none-eabi/14.2.1/include-fixed
+         C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/include
+        End of search list.
+        Compiler executable checksum: ba3b2c2dbf96eeda95f984eb189d807d
+        COLLECT_GCC_OPTIONS='-D' 'CMAKE_INTDIR="Debug"' '-g' '-std=c17' '-v' '-o' 'CMakeFiles/cmTC_39ea5.dir/Debug/CMakeCCompilerABI.c.obj' '-c' '-mcpu=arm7tdmi' '-mfloat-abi=soft' '-marm' '-mlibarch=armv4t' '-march=armv4t' '-dumpdir' 'CMakeFiles/cmTC_39ea5.dir/Debug/'
+         C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/bin/as.exe -v -march=armv4t -mfloat-abi=soft -meabi=5 -o CMakeFiles/cmTC_39ea5.dir/Debug/CMakeCCompilerABI.c.obj C:\\Users\\royma\\AppData\\Local\\Temp\\ccPeuE6h.s
+        GNU assembler version 2.43.1 (arm-none-eabi) using BFD version (Arm GNU Toolchain 14.2.rel1 (Build silabs-14.2.rel1-b66)) 2.43.1.20241119
+        COMPILER_PATH=C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../libexec/gcc/arm-none-eabi/14.2.1/;C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../libexec/gcc/;C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/bin/
+        LIBRARY_PATH=C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../lib/gcc/arm-none-eabi/14.2.1/;C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../lib/gcc/;C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/lib/;C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../arm-none-eabi/lib/
+        COLLECT_GCC_OPTIONS='-D' 'CMAKE_INTDIR="Debug"' '-g' '-std=c17' '-v' '-o' 'CMakeFiles/cmTC_39ea5.dir/Debug/CMakeCCompilerABI.c.obj' '-c' '-mcpu=arm7tdmi' '-mfloat-abi=soft' '-marm' '-mlibarch=armv4t' '-march=armv4t' '-dumpdir' 'CMakeFiles/cmTC_39ea5.dir/Debug/CMakeCCompilerABI.c.'\x0d
+        [2/2] C:\\WINDOWS\\system32\\cmd.exe /C "cd . && "C:\\Program Files\\CMake\\bin\\cmake.exe" -E rm -f Debug\\libcmTC_39ea5.a && C:\\Users\\royma\\.silabs\\slt\\installs\\conan\\p\\gcc-a999d2e027337f\\p\\bin\\arm-none-eabi-ar.exe qc Debug\\libcmTC_39ea5.a  @CMakeFiles\\cmTC_39ea5.Debug.rsp && C:\\Users\\royma\\.silabs\\slt\\installs\\conan\\p\\gcc-a999d2e027337f\\p\\bin\\arm-none-eabi-gcc-ranlib.exe Debug\\libcmTC_39ea5.a && cd ."
+        
+      exitCode: 0
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-4.4/Modules/CMakeDetermineCompilerABI.cmake:255 (message)"
+      - "C:/Program Files/CMake/share/cmake-4.4/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:5 (project)"
+    message: |
+      Parsed C implicit include dir info: rv=done
+        found start of include info
+        found start of implicit include info
+          add: [C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../lib/gcc/arm-none-eabi/14.2.1/include]
+          add: [C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../lib/gcc/arm-none-eabi/14.2.1/include-fixed]
+          add: [C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/include]
+        end of search list found
+        collapse include dir [C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../lib/gcc/arm-none-eabi/14.2.1/include] ==> [C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/lib/gcc/arm-none-eabi/14.2.1/include]
+        collapse include dir [C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../lib/gcc/arm-none-eabi/14.2.1/include-fixed] ==> [C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/lib/gcc/arm-none-eabi/14.2.1/include-fixed]
+        collapse include dir [C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/include] ==> [C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/arm-none-eabi/include]
+        implicit include dirs: [C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/lib/gcc/arm-none-eabi/14.2.1/include;C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/lib/gcc/arm-none-eabi/14.2.1/include-fixed;C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/arm-none-eabi/include]
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-4.4/Modules/CMakeDetermineCompilerABI.cmake:291 (message)"
+      - "C:/Program Files/CMake/share/cmake-4.4/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:5 (project)"
+    message: |
+      Parsed C implicit link information:
+        link line regex: [^( *|.*[/\\])(arm-none-eabi-gcc\\.exe|;ld[0-9]*(|\\.[a-rt-z][a-z]*|\\.s[a-np-z][a-z]*|\\.so[a-z]+)|wild|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\\]+-)?ld|collect2)[^/\\]*( |$)]
+        linker tool regex: [^[ 	]*(->|"|[0-9]+>[ 	-]*Build:[ 	0-9]+ ms[ 	]*)?[ 	]*(([^"]*[/\\])?(arm-none-eabi-gcc\\.exe|;ld[0-9]*(|\\.[a-rt-z][a-z]*|\\.s[a-np-z][a-z]*|\\.so[a-z]+)|wild))("|,| |$)]
+        ignore line: [Change Dir: 'C:/Users/royma/SimplicityStudio/v6_workspace/Wombcare_PreFinal2/cmake_gcc/build/CMakeFiles/CMakeScratch/TryCompile-rg3pxs']
+        ignore line: []
+        ignore line: [Run Build Command(s): C:/Users/royma/.silabs/slt/installs/conan/p/ninja1a38fc85adcf7/p/ninja.exe -v cmTC_39ea5]
+        link line: [[1/2] C:\\Users\\royma\\.silabs\\slt\\installs\\conan\\p\\gcc-a999d2e027337f\\p\\bin\\arm-none-eabi-gcc.exe @CMakeFiles\\cmTC_39ea5.dir\\Debug\\CMakeCCompilerABI.c.obj.rsp -o CMakeFiles/cmTC_39ea5.dir/Debug/CMakeCCompilerABI.c.obj -c "C:/Program Files/CMake/share/cmake-4.4/Modules/CMakeCCompilerABI.c"] ==> linker [[1/2] C:\\Users\\royma\\.silabs\\slt\\installs\\conan\\p\\gcc-a999d2e027337f\\p\\bin\\arm-none-eabi-gcc.exe]
+        ignore line: [[1/2] C:\\Users\\royma\\.silabs\\slt\\installs\\conan\\p\\gcc-a999d2e027337f\\p\\bin\\arm-none-eabi-gcc.exe @CMakeFiles\\cmTC_39ea5.dir\\Debug\\CMakeCCompilerABI.c.obj.rsp -o CMakeFiles/cmTC_39ea5.dir/Debug/CMakeCCompilerABI.c.obj -c "C:/Program Files/CMake/share/cmake-4.4/Modules/CMakeCCompilerABI.c"]
+        ignore line: [Using built-in specs.]
+        ignore line: [COLLECT_GCC=C:\\Users\\royma\\.silabs\\slt\\installs\\conan\\p\\gcc-a999d2e027337f\\p\\bin\\arm-none-eabi-gcc.exe]
+        ignore line: [Target: arm-none-eabi]
+        ignore line: [Configured with: /opt/jenkins/jenkins-worker/workspace/test-build-armgcc-toolchain/armgcc-rebuild-i686/src/gcc/configure --target=arm-none-eabi --prefix=/opt/jenkins/jenkins-worker/workspace/test-build-armgcc-toolchain/armgcc-rebuild-i686/build-i686-arm-none-eabi/install --with-gmp=/opt/jenkins/jenkins-worker/workspace/test-build-armgcc-toolchain/armgcc-rebuild-i686/build-i686-arm-none-eabi/host-tools --with-mpfr=/opt/jenkins/jenkins-worker/workspace/test-build-armgcc-toolchain/armgcc-rebuild-i686/build-i686-arm-none-eabi/host-tools --with-mpc=/opt/jenkins/jenkins-worker/workspace/test-build-armgcc-toolchain/armgcc-rebuild-i686/build-i686-arm-none-eabi/host-tools --with-isl=/opt/jenkins/jenkins-worker/workspace/test-build-armgcc-toolchain/armgcc-rebuild-i686/build-i686-arm-none-eabi/host-tools --disable-shared --disable-nls --disable-threads --disable-tls --enable-checking=release --enable-languages=c,c++,fortran --with-newlib --with-gnu-as --with-headers=yes --with-gnu-ld --with-native-system-header-dir=/include --with-sysroot=/opt/jenkins/jenkins-worker/workspace/test-build-armgcc-toolchain/armgcc-rebuild-i686/build-i686-arm-none-eabi/install/arm-none-eabi --with-multilib-list=aprofile,rmprofile --with-zstd --with-libiconv-prefix=/opt/jenkins/jenkins-worker/workspace/test-build-armgcc-toolchain/armgcc-rebuild-i686/build-i686-arm-none-eabi/host-tools --with-libiconv-prefix=/opt/jenkins/jenkins-worker/workspace/test-build-armgcc-toolchain/armgcc-rebuild-i686/build-i686-arm-none-eabi/host-tools --enable-mingw-wildcard --host=i686-w64-mingw32 --with-pkgversion='Arm GNU Toolchain 14.2.rel1 (Build silabs-14.2.rel1-b66)']
+        ignore line: [Thread model: single]
+        ignore line: [Supported LTO compression algorithms: zlib zstd]
+        ignore line: [gcc version 14.2.1 20241119 (Arm GNU Toolchain 14.2.rel1 (Build silabs-14.2.rel1-b66)) ]
+        ignore line: [COLLECT_GCC_OPTIONS='-D' 'CMAKE_INTDIR="Debug"' '-g' '-std=c17' '-v' '-o' 'CMakeFiles/cmTC_39ea5.dir/Debug/CMakeCCompilerABI.c.obj' '-c' '-mcpu=arm7tdmi' '-mfloat-abi=soft' '-marm' '-mlibarch=armv4t' '-march=armv4t' '-dumpdir' 'CMakeFiles/cmTC_39ea5.dir/Debug/']
+        ignore line: [ C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../libexec/gcc/arm-none-eabi/14.2.1/cc1.exe -quiet -v -iprefix C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../lib/gcc/arm-none-eabi/14.2.1/ -isysroot C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../arm-none-eabi -D__USES_INITFINI__ -D CMAKE_INTDIR="Debug" C:/Program Files/CMake/share/cmake-4.4/Modules/CMakeCCompilerABI.c -quiet -dumpdir CMakeFiles/cmTC_39ea5.dir/Debug/ -dumpbase CMakeCCompilerABI.c.c -dumpbase-ext .c -mcpu=arm7tdmi -mfloat-abi=soft -marm -mlibarch=armv4t -march=armv4t -g -std=c17 -version -o C:\\Users\\royma\\AppData\\Local\\Temp\\ccPeuE6h.s]
+        ignore line: [GNU C17 (Arm GNU Toolchain 14.2.rel1 (Build silabs-14.2.rel1-b66)) version 14.2.1 20241119 (arm-none-eabi)]
+        ignore line: [	compiled by GNU C version 9.3-win32 20200320  GMP version 6.2.1  MPFR version 3.1.6  MPC version 1.0.3  isl version isl-0.15-1-g835ea3a-GMP]
+        ignore line: []
+        ignore line: [GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072]
+        ignore line: [ignoring duplicate directory "C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/lib/gcc/../../lib/gcc/arm-none-eabi/14.2.1/include"]
+        ignore line: [ignoring nonexistent directory "C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../arm-none-eabi/opt/jenkins/jenkins-worker/workspace/test-build-armgcc-toolchain/armgcc-rebuild-i686/build-i686-arm-none-eabi/install/lib/gcc/arm-none-eabi/14.2.1/../../../../include"]
+        ignore line: [ignoring duplicate directory "C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/lib/gcc/../../lib/gcc/arm-none-eabi/14.2.1/include-fixed"]
+        ignore line: [ignoring duplicate directory "C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/lib/gcc/../../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/include"]
+        ignore line: [ignoring duplicate directory "C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../arm-none-eabi/include"]
+        ignore line: [#include "..." search starts here:]
+        ignore line: [#include <...> search starts here:]
+        ignore line: [ C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../lib/gcc/arm-none-eabi/14.2.1/include]
+        ignore line: [ C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../lib/gcc/arm-none-eabi/14.2.1/include-fixed]
+        ignore line: [ C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/include]
+        ignore line: [End of search list.]
+        ignore line: [Compiler executable checksum: ba3b2c2dbf96eeda95f984eb189d807d]
+        ignore line: [COLLECT_GCC_OPTIONS='-D' 'CMAKE_INTDIR="Debug"' '-g' '-std=c17' '-v' '-o' 'CMakeFiles/cmTC_39ea5.dir/Debug/CMakeCCompilerABI.c.obj' '-c' '-mcpu=arm7tdmi' '-mfloat-abi=soft' '-marm' '-mlibarch=armv4t' '-march=armv4t' '-dumpdir' 'CMakeFiles/cmTC_39ea5.dir/Debug/']
+        ignore line: [ C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/bin/as.exe -v -march=armv4t -mfloat-abi=soft -meabi=5 -o CMakeFiles/cmTC_39ea5.dir/Debug/CMakeCCompilerABI.c.obj C:\\Users\\royma\\AppData\\Local\\Temp\\ccPeuE6h.s]
+        ignore line: [GNU assembler version 2.43.1 (arm-none-eabi) using BFD version (Arm GNU Toolchain 14.2.rel1 (Build silabs-14.2.rel1-b66)) 2.43.1.20241119]
+        ignore line: [COMPILER_PATH=C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../libexec/gcc/arm-none-eabi/14.2.1/]
+        ignore line: [C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../libexec/gcc/]
+        ignore line: [C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/bin/]
+        ignore line: [LIBRARY_PATH=C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../lib/gcc/arm-none-eabi/14.2.1/]
+        ignore line: [C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../lib/gcc/]
+        ignore line: [C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/lib/]
+        ignore line: [C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../arm-none-eabi/lib/]
+        ignore line: [COLLECT_GCC_OPTIONS='-D' 'CMAKE_INTDIR="Debug"' '-g' '-std=c17' '-v' '-o' 'CMakeFiles/cmTC_39ea5.dir/Debug/CMakeCCompilerABI.c.obj' '-c' '-mcpu=arm7tdmi' '-mfloat-abi=soft' '-marm' '-mlibarch=armv4t' '-march=armv4t' '-dumpdir' 'CMakeFiles/cmTC_39ea5.dir/Debug/CMakeCCompilerABI.c.'\x0d]
+        ignore line: [[2/2] C:\\WINDOWS\\system32\\cmd.exe /C "cd . && "C:\\Program Files\\CMake\\bin\\cmake.exe" -E rm -f Debug\\libcmTC_39ea5.a && C:\\Users\\royma\\.silabs\\slt\\installs\\conan\\p\\gcc-a999d2e027337f\\p\\bin\\arm-none-eabi-ar.exe qc Debug\\libcmTC_39ea5.a  @CMakeFiles\\cmTC_39ea5.Debug.rsp && C:\\Users\\royma\\.silabs\\slt\\installs\\conan\\p\\gcc-a999d2e027337f\\p\\bin\\arm-none-eabi-gcc-ranlib.exe Debug\\libcmTC_39ea5.a && cd ."]
+        ignore line: []
+        ignore line: []
+        linker tool for 'C': [1/2] C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/arm-none-eabi-gcc.exe 
+        implicit libs: []
+        implicit objs: []
+        implicit dirs: []
+        implicit fwks: []
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-4.4/Modules/Internal/CMakeDetermineLinkerId.cmake:41 (message)"
+      - "C:/Program Files/CMake/share/cmake-4.4/Modules/CMakeDetermineCompilerABI.cmake:337 (cmake_determine_linker_id)"
+      - "C:/Program Files/CMake/share/cmake-4.4/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:5 (project)"
+    message: |
+      Running the C compiler's linker: "[1/2] C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/arm-none-eabi-gcc.exe" "-v"
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-4.4/Modules/Internal/CMakeDetermineLinkerId.cmake:41 (message)"
+      - "C:/Program Files/CMake/share/cmake-4.4/Modules/CMakeDetermineCompilerABI.cmake:337 (cmake_determine_linker_id)"
+      - "C:/Program Files/CMake/share/cmake-4.4/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:5 (project)"
+    message: |
+      Running the C compiler's linker: "[1/2] C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/arm-none-eabi-gcc.exe" "-V"
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-4.4/Modules/Internal/CMakeDetermineLinkerId.cmake:41 (message)"
+      - "C:/Program Files/CMake/share/cmake-4.4/Modules/CMakeDetermineCompilerABI.cmake:337 (cmake_determine_linker_id)"
+      - "C:/Program Files/CMake/share/cmake-4.4/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:5 (project)"
+    message: |
+      Running the C compiler's linker: "[1/2] C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/arm-none-eabi-gcc.exe" "--version"
+      
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-4.4/Modules/CMakeDetermineCompilerABI.cmake:123 (try_compile)"
+      - "C:/Program Files/CMake/share/cmake-4.4/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:5 (project)"
+    checks:
+      - "Detecting CXX compiler ABI info"
+    directories:
+      source: "C:/Users/royma/SimplicityStudio/v6_workspace/Wombcare_PreFinal2/cmake_gcc/build/CMakeFiles/CMakeScratch/TryCompile-ucvepl"
+      binary: "C:/Users/royma/SimplicityStudio/v6_workspace/Wombcare_PreFinal2/cmake_gcc/build/CMakeFiles/CMakeScratch/TryCompile-ucvepl"
+    cmakeVariables:
+      CMAKE_CXX_FLAGS: ""
+      CMAKE_CXX_FLAGS_DEBUG: "-g"
+      CMAKE_CXX_SCAN_FOR_MODULES: "OFF"
+      CMAKE_CXX_STDLIB_MODULES_JSON: ""
+      CMAKE_EXE_LINKER_FLAGS: ""
+    buildResult:
+      variable: "CMAKE_CXX_ABI_COMPILED"
+      cached: false
+      stdout: |
+        Change Dir: 'C:/Users/royma/SimplicityStudio/v6_workspace/Wombcare_PreFinal2/cmake_gcc/build/CMakeFiles/CMakeScratch/TryCompile-ucvepl'
+        
+        Run Build Command(s): C:/Users/royma/.silabs/slt/installs/conan/p/ninja1a38fc85adcf7/p/ninja.exe -v cmTC_99aad
+        [1/2] C:\\Users\\royma\\.silabs\\slt\\installs\\conan\\p\\gcc-a999d2e027337f\\p\\bin\\arm-none-eabi-g++.exe @CMakeFiles\\cmTC_99aad.dir\\Debug\\CMakeCXXCompilerABI.cpp.obj.rsp -o CMakeFiles/cmTC_99aad.dir/Debug/CMakeCXXCompilerABI.cpp.obj -c "C:/Program Files/CMake/share/cmake-4.4/Modules/CMakeCXXCompilerABI.cpp"
+        Using built-in specs.
+        COLLECT_GCC=C:\\Users\\royma\\.silabs\\slt\\installs\\conan\\p\\gcc-a999d2e027337f\\p\\bin\\arm-none-eabi-g++.exe
+        Target: arm-none-eabi
+        Configured with: /opt/jenkins/jenkins-worker/workspace/test-build-armgcc-toolchain/armgcc-rebuild-i686/src/gcc/configure --target=arm-none-eabi --prefix=/opt/jenkins/jenkins-worker/workspace/test-build-armgcc-toolchain/armgcc-rebuild-i686/build-i686-arm-none-eabi/install --with-gmp=/opt/jenkins/jenkins-worker/workspace/test-build-armgcc-toolchain/armgcc-rebuild-i686/build-i686-arm-none-eabi/host-tools --with-mpfr=/opt/jenkins/jenkins-worker/workspace/test-build-armgcc-toolchain/armgcc-rebuild-i686/build-i686-arm-none-eabi/host-tools --with-mpc=/opt/jenkins/jenkins-worker/workspace/test-build-armgcc-toolchain/armgcc-rebuild-i686/build-i686-arm-none-eabi/host-tools --with-isl=/opt/jenkins/jenkins-worker/workspace/test-build-armgcc-toolchain/armgcc-rebuild-i686/build-i686-arm-none-eabi/host-tools --disable-shared --disable-nls --disable-threads --disable-tls --enable-checking=release --enable-languages=c,c++,fortran --with-newlib --with-gnu-as --with-headers=yes --with-gnu-ld --with-native-system-header-dir=/include --with-sysroot=/opt/jenkins/jenkins-worker/workspace/test-build-armgcc-toolchain/armgcc-rebuild-i686/build-i686-arm-none-eabi/install/arm-none-eabi --with-multilib-list=aprofile,rmprofile --with-zstd --with-libiconv-prefix=/opt/jenkins/jenkins-worker/workspace/test-build-armgcc-toolchain/armgcc-rebuild-i686/build-i686-arm-none-eabi/host-tools --with-libiconv-prefix=/opt/jenkins/jenkins-worker/workspace/test-build-armgcc-toolchain/armgcc-rebuild-i686/build-i686-arm-none-eabi/host-tools --enable-mingw-wildcard --host=i686-w64-mingw32 --with-pkgversion='Arm GNU Toolchain 14.2.rel1 (Build silabs-14.2.rel1-b66)'
+        Thread model: single
+        Supported LTO compression algorithms: zlib zstd
+        gcc version 14.2.1 20241119 (Arm GNU Toolchain 14.2.rel1 (Build silabs-14.2.rel1-b66)) 
+        COLLECT_GCC_OPTIONS='-D' 'CMAKE_INTDIR="Debug"' '-g' '-v' '-o' 'CMakeFiles/cmTC_99aad.dir/Debug/CMakeCXXCompilerABI.cpp.obj' '-c' '-mcpu=arm7tdmi' '-mfloat-abi=soft' '-marm' '-mlibarch=armv4t' '-march=armv4t' '-dumpdir' 'CMakeFiles/cmTC_99aad.dir/Debug/'
+         C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../libexec/gcc/arm-none-eabi/14.2.1/cc1plus.exe -quiet -v -iprefix C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../lib/gcc/arm-none-eabi/14.2.1/ -isysroot C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../arm-none-eabi -D__USES_INITFINI__ -D CMAKE_INTDIR="Debug" C:/Program Files/CMake/share/cmake-4.4/Modules/CMakeCXXCompilerABI.cpp -quiet -dumpdir CMakeFiles/cmTC_99aad.dir/Debug/ -dumpbase CMakeCXXCompilerABI.cpp.cpp -dumpbase-ext .cpp -mcpu=arm7tdmi -mfloat-abi=soft -marm -mlibarch=armv4t -march=armv4t -g -version -o C:\\Users\\royma\\AppData\\Local\\Temp\\ccqFrGcr.s
+        GNU C++17 (Arm GNU Toolchain 14.2.rel1 (Build silabs-14.2.rel1-b66)) version 14.2.1 20241119 (arm-none-eabi)
+        	compiled by GNU C version 9.3-win32 20200320, GMP version 6.2.1, MPFR version 3.1.6, MPC version 1.0.3, isl version isl-0.15-1-g835ea3a-GMP
+        
+        GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072
+        ignoring duplicate directory "C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/lib/gcc/../../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/include/c++/14.2.1"
+        ignoring duplicate directory "C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/lib/gcc/../../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/include/c++/14.2.1/arm-none-eabi"
+        ignoring duplicate directory "C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/lib/gcc/../../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/include/c++/14.2.1/backward"
+        ignoring duplicate directory "C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/lib/gcc/../../lib/gcc/arm-none-eabi/14.2.1/include"
+        ignoring nonexistent directory "C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../arm-none-eabi/opt/jenkins/jenkins-worker/workspace/test-build-armgcc-toolchain/armgcc-rebuild-i686/build-i686-arm-none-eabi/install/lib/gcc/arm-none-eabi/14.2.1/../../../../include"
+        ignoring duplicate directory "C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/lib/gcc/../../lib/gcc/arm-none-eabi/14.2.1/include-fixed"
+        ignoring duplicate directory "C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/lib/gcc/../../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/include"
+        ignoring duplicate directory "C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../arm-none-eabi/include"
+        #include "..." search starts here:
+        #include <...> search starts here:
+         C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/include/c++/14.2.1
+         C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/include/c++/14.2.1/arm-none-eabi
+         C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/include/c++/14.2.1/backward
+         C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../lib/gcc/arm-none-eabi/14.2.1/include
+         C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../lib/gcc/arm-none-eabi/14.2.1/include-fixed
+         C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/include
+        End of search list.
+        Compiler executable checksum: 8a0f9119f04f8ae7d54f8a44b35a1d69
+        COLLECT_GCC_OPTIONS='-D' 'CMAKE_INTDIR="Debug"' '-g' '-v' '-o' 'CMakeFiles/cmTC_99aad.dir/Debug/CMakeCXXCompilerABI.cpp.obj' '-c' '-mcpu=arm7tdmi' '-mfloat-abi=soft' '-marm' '-mlibarch=armv4t' '-march=armv4t' '-dumpdir' 'CMakeFiles/cmTC_99aad.dir/Debug/'
+         C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/bin/as.exe -v -march=armv4t -mfloat-abi=soft -meabi=5 -o CMakeFiles/cmTC_99aad.dir/Debug/CMakeCXXCompilerABI.cpp.obj C:\\Users\\royma\\AppData\\Local\\Temp\\ccqFrGcr.s
+        GNU assembler version 2.43.1 (arm-none-eabi) using BFD version (Arm GNU Toolchain 14.2.rel1 (Build silabs-14.2.rel1-b66)) 2.43.1.20241119
+        COMPILER_PATH=C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../libexec/gcc/arm-none-eabi/14.2.1/;C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../libexec/gcc/;C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/bin/
+        LIBRARY_PATH=C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../lib/gcc/arm-none-eabi/14.2.1/;C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../lib/gcc/;C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/lib/;C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../arm-none-eabi/lib/
+        COLLECT_GCC_OPTIONS='-D' 'CMAKE_INTDIR="Debug"' '-g' '-v' '-o' 'CMakeFiles/cmTC_99aad.dir/Debug/CMakeCXXCompilerABI.cpp.obj' '-c' '-mcpu=arm7tdmi' '-mfloat-abi=soft' '-marm' '-mlibarch=armv4t' '-march=armv4t' '-dumpdir' 'CMakeFiles/cmTC_99aad.dir/Debug/CMakeCXXCompilerABI.cpp.'\x0d
+        [2/2] C:\\WINDOWS\\system32\\cmd.exe /C "cd . && "C:\\Program Files\\CMake\\bin\\cmake.exe" -E rm -f Debug\\libcmTC_99aad.a && C:\\Users\\royma\\.silabs\\slt\\installs\\conan\\p\\gcc-a999d2e027337f\\p\\bin\\arm-none-eabi-ar.exe qc Debug\\libcmTC_99aad.a  @CMakeFiles\\cmTC_99aad.Debug.rsp && C:\\Users\\royma\\.silabs\\slt\\installs\\conan\\p\\gcc-a999d2e027337f\\p\\bin\\arm-none-eabi-gcc-ranlib.exe Debug\\libcmTC_99aad.a && cd ."
+        
+      exitCode: 0
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-4.4/Modules/CMakeDetermineCompilerABI.cmake:255 (message)"
+      - "C:/Program Files/CMake/share/cmake-4.4/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:5 (project)"
+    message: |
+      Parsed CXX implicit include dir info: rv=done
+        found start of include info
+        found start of implicit include info
+          add: [C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/include/c++/14.2.1]
+          add: [C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/include/c++/14.2.1/arm-none-eabi]
+          add: [C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/include/c++/14.2.1/backward]
+          add: [C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../lib/gcc/arm-none-eabi/14.2.1/include]
+          add: [C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../lib/gcc/arm-none-eabi/14.2.1/include-fixed]
+          add: [C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/include]
+        end of search list found
+        collapse include dir [C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/include/c++/14.2.1] ==> [C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/arm-none-eabi/include/c++/14.2.1]
+        collapse include dir [C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/include/c++/14.2.1/arm-none-eabi] ==> [C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/arm-none-eabi/include/c++/14.2.1/arm-none-eabi]
+        collapse include dir [C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/include/c++/14.2.1/backward] ==> [C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/arm-none-eabi/include/c++/14.2.1/backward]
+        collapse include dir [C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../lib/gcc/arm-none-eabi/14.2.1/include] ==> [C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/lib/gcc/arm-none-eabi/14.2.1/include]
+        collapse include dir [C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../lib/gcc/arm-none-eabi/14.2.1/include-fixed] ==> [C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/lib/gcc/arm-none-eabi/14.2.1/include-fixed]
+        collapse include dir [C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/include] ==> [C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/arm-none-eabi/include]
+        implicit include dirs: [C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/arm-none-eabi/include/c++/14.2.1;C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/arm-none-eabi/include/c++/14.2.1/arm-none-eabi;C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/arm-none-eabi/include/c++/14.2.1/backward;C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/lib/gcc/arm-none-eabi/14.2.1/include;C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/lib/gcc/arm-none-eabi/14.2.1/include-fixed;C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/arm-none-eabi/include]
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-4.4/Modules/CMakeDetermineCompilerABI.cmake:291 (message)"
+      - "C:/Program Files/CMake/share/cmake-4.4/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:5 (project)"
+    message: |
+      Parsed CXX implicit link information:
+        link line regex: [^( *|.*[/\\])(arm-none-eabi-gcc\\.exe|;ld[0-9]*(|\\.[a-rt-z][a-z]*|\\.s[a-np-z][a-z]*|\\.so[a-z]+)|wild|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\\]+-)?ld|collect2)[^/\\]*( |$)]
+        linker tool regex: [^[ 	]*(->|"|[0-9]+>[ 	-]*Build:[ 	0-9]+ ms[ 	]*)?[ 	]*(([^"]*[/\\])?(arm-none-eabi-gcc\\.exe|;ld[0-9]*(|\\.[a-rt-z][a-z]*|\\.s[a-np-z][a-z]*|\\.so[a-z]+)|wild))("|,| |$)]
+        ignore line: [Change Dir: 'C:/Users/royma/SimplicityStudio/v6_workspace/Wombcare_PreFinal2/cmake_gcc/build/CMakeFiles/CMakeScratch/TryCompile-ucvepl']
+        ignore line: []
+        ignore line: [Run Build Command(s): C:/Users/royma/.silabs/slt/installs/conan/p/ninja1a38fc85adcf7/p/ninja.exe -v cmTC_99aad]
+        ignore line: [[1/2] C:\\Users\\royma\\.silabs\\slt\\installs\\conan\\p\\gcc-a999d2e027337f\\p\\bin\\arm-none-eabi-g++.exe @CMakeFiles\\cmTC_99aad.dir\\Debug\\CMakeCXXCompilerABI.cpp.obj.rsp -o CMakeFiles/cmTC_99aad.dir/Debug/CMakeCXXCompilerABI.cpp.obj -c "C:/Program Files/CMake/share/cmake-4.4/Modules/CMakeCXXCompilerABI.cpp"]
+        ignore line: [Using built-in specs.]
+        ignore line: [COLLECT_GCC=C:\\Users\\royma\\.silabs\\slt\\installs\\conan\\p\\gcc-a999d2e027337f\\p\\bin\\arm-none-eabi-g++.exe]
+        ignore line: [Target: arm-none-eabi]
+        ignore line: [Configured with: /opt/jenkins/jenkins-worker/workspace/test-build-armgcc-toolchain/armgcc-rebuild-i686/src/gcc/configure --target=arm-none-eabi --prefix=/opt/jenkins/jenkins-worker/workspace/test-build-armgcc-toolchain/armgcc-rebuild-i686/build-i686-arm-none-eabi/install --with-gmp=/opt/jenkins/jenkins-worker/workspace/test-build-armgcc-toolchain/armgcc-rebuild-i686/build-i686-arm-none-eabi/host-tools --with-mpfr=/opt/jenkins/jenkins-worker/workspace/test-build-armgcc-toolchain/armgcc-rebuild-i686/build-i686-arm-none-eabi/host-tools --with-mpc=/opt/jenkins/jenkins-worker/workspace/test-build-armgcc-toolchain/armgcc-rebuild-i686/build-i686-arm-none-eabi/host-tools --with-isl=/opt/jenkins/jenkins-worker/workspace/test-build-armgcc-toolchain/armgcc-rebuild-i686/build-i686-arm-none-eabi/host-tools --disable-shared --disable-nls --disable-threads --disable-tls --enable-checking=release --enable-languages=c,c++,fortran --with-newlib --with-gnu-as --with-headers=yes --with-gnu-ld --with-native-system-header-dir=/include --with-sysroot=/opt/jenkins/jenkins-worker/workspace/test-build-armgcc-toolchain/armgcc-rebuild-i686/build-i686-arm-none-eabi/install/arm-none-eabi --with-multilib-list=aprofile,rmprofile --with-zstd --with-libiconv-prefix=/opt/jenkins/jenkins-worker/workspace/test-build-armgcc-toolchain/armgcc-rebuild-i686/build-i686-arm-none-eabi/host-tools --with-libiconv-prefix=/opt/jenkins/jenkins-worker/workspace/test-build-armgcc-toolchain/armgcc-rebuild-i686/build-i686-arm-none-eabi/host-tools --enable-mingw-wildcard --host=i686-w64-mingw32 --with-pkgversion='Arm GNU Toolchain 14.2.rel1 (Build silabs-14.2.rel1-b66)']
+        ignore line: [Thread model: single]
+        ignore line: [Supported LTO compression algorithms: zlib zstd]
+        ignore line: [gcc version 14.2.1 20241119 (Arm GNU Toolchain 14.2.rel1 (Build silabs-14.2.rel1-b66)) ]
+        ignore line: [COLLECT_GCC_OPTIONS='-D' 'CMAKE_INTDIR="Debug"' '-g' '-v' '-o' 'CMakeFiles/cmTC_99aad.dir/Debug/CMakeCXXCompilerABI.cpp.obj' '-c' '-mcpu=arm7tdmi' '-mfloat-abi=soft' '-marm' '-mlibarch=armv4t' '-march=armv4t' '-dumpdir' 'CMakeFiles/cmTC_99aad.dir/Debug/']
+        ignore line: [ C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../libexec/gcc/arm-none-eabi/14.2.1/cc1plus.exe -quiet -v -iprefix C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../lib/gcc/arm-none-eabi/14.2.1/ -isysroot C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../arm-none-eabi -D__USES_INITFINI__ -D CMAKE_INTDIR="Debug" C:/Program Files/CMake/share/cmake-4.4/Modules/CMakeCXXCompilerABI.cpp -quiet -dumpdir CMakeFiles/cmTC_99aad.dir/Debug/ -dumpbase CMakeCXXCompilerABI.cpp.cpp -dumpbase-ext .cpp -mcpu=arm7tdmi -mfloat-abi=soft -marm -mlibarch=armv4t -march=armv4t -g -version -o C:\\Users\\royma\\AppData\\Local\\Temp\\ccqFrGcr.s]
+        ignore line: [GNU C++17 (Arm GNU Toolchain 14.2.rel1 (Build silabs-14.2.rel1-b66)) version 14.2.1 20241119 (arm-none-eabi)]
+        ignore line: [	compiled by GNU C version 9.3-win32 20200320  GMP version 6.2.1  MPFR version 3.1.6  MPC version 1.0.3  isl version isl-0.15-1-g835ea3a-GMP]
+        ignore line: []
+        ignore line: [GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072]
+        ignore line: [ignoring duplicate directory "C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/lib/gcc/../../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/include/c++/14.2.1"]
+        ignore line: [ignoring duplicate directory "C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/lib/gcc/../../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/include/c++/14.2.1/arm-none-eabi"]
+        ignore line: [ignoring duplicate directory "C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/lib/gcc/../../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/include/c++/14.2.1/backward"]
+        ignore line: [ignoring duplicate directory "C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/lib/gcc/../../lib/gcc/arm-none-eabi/14.2.1/include"]
+        ignore line: [ignoring nonexistent directory "C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../arm-none-eabi/opt/jenkins/jenkins-worker/workspace/test-build-armgcc-toolchain/armgcc-rebuild-i686/build-i686-arm-none-eabi/install/lib/gcc/arm-none-eabi/14.2.1/../../../../include"]
+        ignore line: [ignoring duplicate directory "C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/lib/gcc/../../lib/gcc/arm-none-eabi/14.2.1/include-fixed"]
+        ignore line: [ignoring duplicate directory "C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/lib/gcc/../../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/include"]
+        ignore line: [ignoring duplicate directory "C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../arm-none-eabi/include"]
+        ignore line: [#include "..." search starts here:]
+        ignore line: [#include <...> search starts here:]
+        ignore line: [ C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/include/c++/14.2.1]
+        ignore line: [ C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/include/c++/14.2.1/arm-none-eabi]
+        ignore line: [ C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/include/c++/14.2.1/backward]
+        ignore line: [ C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../lib/gcc/arm-none-eabi/14.2.1/include]
+        ignore line: [ C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../lib/gcc/arm-none-eabi/14.2.1/include-fixed]
+        ignore line: [ C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/include]
+        ignore line: [End of search list.]
+        ignore line: [Compiler executable checksum: 8a0f9119f04f8ae7d54f8a44b35a1d69]
+        ignore line: [COLLECT_GCC_OPTIONS='-D' 'CMAKE_INTDIR="Debug"' '-g' '-v' '-o' 'CMakeFiles/cmTC_99aad.dir/Debug/CMakeCXXCompilerABI.cpp.obj' '-c' '-mcpu=arm7tdmi' '-mfloat-abi=soft' '-marm' '-mlibarch=armv4t' '-march=armv4t' '-dumpdir' 'CMakeFiles/cmTC_99aad.dir/Debug/']
+        ignore line: [ C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/bin/as.exe -v -march=armv4t -mfloat-abi=soft -meabi=5 -o CMakeFiles/cmTC_99aad.dir/Debug/CMakeCXXCompilerABI.cpp.obj C:\\Users\\royma\\AppData\\Local\\Temp\\ccqFrGcr.s]
+        ignore line: [GNU assembler version 2.43.1 (arm-none-eabi) using BFD version (Arm GNU Toolchain 14.2.rel1 (Build silabs-14.2.rel1-b66)) 2.43.1.20241119]
+        ignore line: [COMPILER_PATH=C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../libexec/gcc/arm-none-eabi/14.2.1/]
+        ignore line: [C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../libexec/gcc/]
+        ignore line: [C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/bin/]
+        ignore line: [LIBRARY_PATH=C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../lib/gcc/arm-none-eabi/14.2.1/]
+        ignore line: [C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../lib/gcc/]
+        ignore line: [C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/lib/]
+        ignore line: [C:/Users/royma/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p/bin/../arm-none-eabi/lib/]
+        ignore line: [COLLECT_GCC_OPTIONS='-D' 'CMAKE_INTDIR="Debug"' '-g' '-v' '-o' 'CMakeFiles/cmTC_99aad.dir/Debug/CMakeCXXCompilerABI.cpp.obj' '-c' '-mcpu=arm7tdmi' '-mfloat-abi=soft' '-marm' '-mlibarch=armv4t' '-march=armv4t' '-dumpdir' 'CMakeFiles/cmTC_99aad.dir/Debug/CMakeCXXCompilerABI.cpp.'\x0d]
+        ignore line: [[2/2] C:\\WINDOWS\\system32\\cmd.exe /C "cd . && "C:\\Program Files\\CMake\\bin\\cmake.exe" -E rm -f Debug\\libcmTC_99aad.a && C:\\Users\\royma\\.silabs\\slt\\installs\\conan\\p\\gcc-a999d2e027337f\\p\\bin\\arm-none-eabi-ar.exe qc Debug\\libcmTC_99aad.a  @CMakeFiles\\cmTC_99aad.Debug.rsp && C:\\Users\\royma\\.silabs\\slt\\installs\\conan\\p\\gcc-a999d2e027337f\\p\\bin\\arm-none-eabi-gcc-ranlib.exe Debug\\libcmTC_99aad.a && cd ."]
+        ignore line: []
+        ignore line: []
+        implicit libs: []
+        implicit objs: []
+        implicit dirs: []
+        implicit fwks: []
+      
+      
+...
