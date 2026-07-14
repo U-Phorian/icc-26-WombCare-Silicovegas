@@ -1,0 +1,4 @@
+C:/Users/royma/SimplicityStudio/v6_workspace/Wombcare_PreFinal/cmake_gcc/build/CMakeFiles/slc.dir
+C:/Users/royma/SimplicityStudio/v6_workspace/Wombcare_PreFinal/cmake_gcc/build/CMakeFiles/Wombcare_PreFinal.dir
+C:/Users/royma/SimplicityStudio/v6_workspace/Wombcare_PreFinal/cmake_gcc/build/CMakeFiles/edit_cache.dir
+C:/Users/royma/SimplicityStudio/v6_workspace/Wombcare_PreFinal/cmake_gcc/build/CMakeFiles/rebuild_cache.dir
