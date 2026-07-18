@@ -8,13 +8,16 @@
  */
 
 #include "wombcare_ble.h"
-
 #include <string.h>
 
 /* Silicon Labs Bluetooth stack + generated GATT database. */
 #include <sl_bluetooth.h>
 #include <sl_bt_api.h>
 #include <gatt_db.h>            /* provides gattdb_clinical_update after config */
+
+#include "wombcare_imu.h"
+#include "app_log.h"
+#include "app_assert.h"
 
 /* --------------------------------------------------------------------------
  * Connection / subscription state
@@ -66,6 +69,8 @@ void wombcare_ble_send_clinical_update(WombCareNSP_t nsp,
     p.flags      = 0u;
     if (nsp == WOMBCARE_PATHOLOGIC) p.flags |= WOMBCARE_FLAG_ALERT;
     /* >>> TODO: set WOMBCARE_FLAG_SIGNAL_LOW / _ACTIVE from IMU trust if desired */
+    if (current_system_state != SYSTEM_STATE_DATA_ACQ)
+        p.flags |= WOMBCARE_FLAG_ACTIVE;
     p.timestamp  = s_tick_minutes++;
 
     s_last_payload = p;
@@ -88,6 +93,7 @@ void wombcare_ble_send_clinical_update(WombCareNSP_t nsp,
  * ------------------------------------------------------------------------ */
 void sl_bt_on_event(sl_bt_msg_t *evt)
 {
+    sl_status_t sc;
     switch (SL_BT_MSG_ID(evt->header))
     {
         /* ---- Stack booted: set up + start advertising -------------------- */
@@ -96,6 +102,12 @@ void sl_bt_on_event(sl_bt_msg_t *evt)
             wombcare_ble_init();
 
             // >>> TODO(O2): create advertiser set + set timing, then start.
+            sc = sl_bt_sm_configure(0x0F, sl_bt_sm_io_capability_noinputnooutput);
+            app_assert_status(sc);
+
+            sc = sl_bt_sm_set_bondable_mode(1);
+            app_assert_status(sc);
+            
             sc = sl_bt_advertiser_create_set(&s_advertiser);
             app_assert_status(sc);
 
@@ -149,14 +161,6 @@ void sl_bt_on_event(sl_bt_msg_t *evt)
         case sl_bt_evt_gatt_server_characteristic_status_id:
         {
             // >>> TODO: verify this is our characteristic + a CCCD change, then:
-            // if (evt->data.evt_gatt_server_characteristic_status.characteristic
-            //         == gattdb_clinical_update &&
-            //     evt->data.evt_gatt_server_characteristic_status.status_flags
-            //         == sl_bt_gatt_server_client_config) {
-            //     uint16_t cfg = evt->data.evt_gatt_server_characteristic_status
-            //                        .client_config_flags;
-            //     s_notifications_on = (cfg & sl_bt_gatt_notification);
-            // }
             if (evt->data.evt_gatt_server_characteristic_status.characteristic
                     == gattdb_clinical_update &&
                 evt->data.evt_gatt_server_characteristic_status.status_flags
@@ -181,6 +185,33 @@ void sl_bt_on_event(sl_bt_msg_t *evt)
             break;
         }
 
+        case sl_bt_evt_sm_bonding_confirm_id:
+            sl_bt_sm_bonding_confirm(
+                evt->data.evt_sm_bonding_confirm.connection, 1);
+            break;
+
+        case sl_bt_evt_sm_confirm_passkey_id:
+            sl_bt_sm_passkey_confirm(
+                evt->data.evt_sm_confirm_passkey.connection, 1);
+            break;
+
+        case sl_bt_evt_sm_bonded_id:
+            app_log_info("BLE: bonded and encrypted" APP_LOG_NL);
+            break;
+
+        case sl_bt_evt_sm_bonding_failed_id:
+            app_log_warning("BLE: bonding failed 0x%04x, closing connection"
+                            APP_LOG_NL,
+                            evt->data.evt_sm_bonding_failed.reason);
+            sl_bt_connection_close(
+                evt->data.evt_sm_bonding_failed.connection);
+            break;
+
+        default:
+            break;
+    }
+}
+        
         default:
             break;
     }
