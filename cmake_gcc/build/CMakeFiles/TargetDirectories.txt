@@ -1,0 +1,4 @@
+C:/IoT challemge 2026-WombCare/Wombcare_7PreFinal/Wombcare_7PreFinal/cmake_gcc/build/CMakeFiles/slc.dir
+C:/IoT challemge 2026-WombCare/Wombcare_7PreFinal/Wombcare_7PreFinal/cmake_gcc/build/CMakeFiles/Wombcare_PreFinal.dir
+C:/IoT challemge 2026-WombCare/Wombcare_7PreFinal/Wombcare_7PreFinal/cmake_gcc/build/CMakeFiles/edit_cache.dir
+C:/IoT challemge 2026-WombCare/Wombcare_7PreFinal/Wombcare_7PreFinal/cmake_gcc/build/CMakeFiles/rebuild_cache.dir

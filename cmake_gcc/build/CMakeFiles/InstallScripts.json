@@ -1,0 +1,11 @@
+{
+	"Configs" : 
+	[
+		"base"
+	],
+	"InstallScripts" : 
+	[
+		"C:/IoT challemge 2026-WombCare/Wombcare_4PreFinal/Wombcare_Pre/Wombcare_6PreFinal/cmake_gcc/build/cmake_install.cmake"
+	],
+	"Parallel" : false
+}
