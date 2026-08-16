@@ -1,0 +1,6 @@
+#eyJzdGF0ZSI6eyJidWlsZFByZXNldHMiOnsiZGVmYXVsdF9jb25maWciOnsibmFtZSI6ImRlZmF1bHRfY29uZmlnIiwiY29uZmlndXJhdGlvbiI6ImJhc2UiLCJhZGRpdGlvbmFsRGVmaW5pdGlvbnMiOltdLCJyZW1vdmVkRGVmaW5pdGlvbnMiOltdLCJyZW1vdmVkRmxhZ3MiOnsiQyI6W10sIkNYWCI6W10sIkFTTSI6W119LCJhZGRpdGlvbmFsRmxhZ3MiOnsiQyI6W10sIkNYWCI6W10sIkFTTSI6W119fX0sImN1cnJlbnRDb25mSW5kZXgiOjB9LCJmb2xkZXJzIjpbXSwiZmlsZXMiOltdfQ==
+target_sources(Wombcare_PreFinal PRIVATE
+	"../scaler.c"
+	"../wombcare_ml.cc"
+	"../wombcare_battery.c"
+)
