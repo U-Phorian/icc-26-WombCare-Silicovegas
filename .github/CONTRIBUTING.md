@@ -1,4 +1,13 @@
 # Contributing Guideline
+
+> **Which document applies to you?**
+> This file covers **external contributors**, who fork the repository and follow the Silicon
+> Labs conventions below. If you are on Team SilicoVegas and have push access, the internal
+> working agreement in [docs/repository-guidelines.md](../docs/repository-guidelines.md)
+> applies instead — it uses trunk-based development with `feature/*` and `bugfix/*` branches
+> rather than the fork-and-issue-number flow described here. The CLA, commit signing and
+> review requirements below apply to everyone.
+
 As an open-source project, we welcome and encourage the community to submit patches directly to the project.  
 In our collaborative open-source environment, standards and methods for submitting changes help reduce  
 the chaos that can result from an active development community.
@@ -97,6 +106,11 @@ Please follow the official GitHub [guide](https://docs.github.com/en/get-started
 You can create your branch on your own forked repo now.
 
 ### Branch Naming Convention
+
+> Team members with push access use `feature/<short-task-name>` and `bugfix/fix-<XY>-issue`
+> instead — see [docs/repository-guidelines.md](../docs/repository-guidelines.md#1-branching-strategy).
+> The convention below is for forked contributions.
+
 Branch naming shall follow the following template: *IssueNumber-issue-title-goes-here*  
 Example branch name:
 ```
