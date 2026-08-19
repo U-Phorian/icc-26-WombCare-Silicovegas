@@ -16,7 +16,7 @@ agreement, and bump `spec_version`.
 ## 1. Canonical feature vector (order is fixed = TFLite input order)
 
 The model input is a length-8 `float32` vector in **exactly** this order (matches
-`WombCareFeatures_t` in [wombcare_dsp.h](wombcare_dsp.h)):
+`WombCareFeatures_t` in [wombcare_dsp.h](../inc/wombcare_dsp.h)):
 
 | # | Name | Unit | Source signal |
 |---|------|------|---------------|
@@ -48,7 +48,7 @@ Pan-Tompkins on the LMS *error* output (the fetal ECG), plus the PVDF array.
 
 **G3 — Analysis window `W`.** All features are computed over the most recent `W`
 seconds of FHR. **`W` is a shared constant.**
-- Firmware today: `W = 60 s` ([wombcare_buffer.h:11](wombcare_buffer.h#L11)).
+- Firmware today: `W = 60 s` ([wombcare_buffer.h:11](../inc/wombcare_buffer.h#L11)).
 - **Recommended: `W = 240 s`** (store the derived FHR/RR series — a few Hz, tiny —
   in a longer buffer; you do NOT need 4 min of raw 250 Hz ECG). Longer `W` makes
   the rate features (AC/DEC/FM) far more stable and closer to the UCI segment
@@ -85,7 +85,7 @@ The steady-state heart rate, excluding accel/decel excursions.
 Beat-to-beat variability.
 - **Formula:** `MSTV = mean( |FHR[i+1] − FHR[i]| )` over valid beats, in **bpm**.
 - **Training source:** UCI `MSTV`.
-- **Firmware fix:** currently computed in ms on RR ([dsp.c:106](wombcare_dsp.c#L106)) →
+- **Firmware fix:** currently computed in ms on RR ([dsp.c:106](../src/wombcare_dsp.c#L106)) →
   change to bpm on FHR.
 - **Parity confidence:** Medium → **requires §6 calibration + §5 validation.**
 
@@ -94,7 +94,7 @@ Minute-scale swing of the heart rate.
 - **Formula:** split `W` into consecutive **60 s** sub-blocks; per block compute
   `max(FHR) − min(FHR)`; `MLTV = mean` of those block ranges, in **bpm**.
 - **Training source:** UCI `MLTV`.
-- **Firmware fix:** currently hardcoded `0` ([dsp.c:132](wombcare_dsp.c#L132)) → implement.
+- **Firmware fix:** currently hardcoded `0` ([dsp.c:132](../src/wombcare_dsp.c#L132)) → implement.
 - **Parity confidence:** Medium → **requires §6 calibration + §5 validation.**
 
 ### 3. `AC_rate` — Accelerations per minute
@@ -103,7 +103,7 @@ Minute-scale swing of the heart rate.
 - **Training source:** `AC_rate = UCI.AC / dur_min`, where
   `dur_min = (e − b) / 4 / 60` (UCI CTG is 4 Hz).
 - **Firmware fix:** currently counts single beats, not ≥15 s episodes
-  ([dsp.c:111](wombcare_dsp.c#L111)) → add duration state-tracking.
+  ([dsp.c:111](../src/wombcare_dsp.c#L111)) → add duration state-tracking.
 - **Parity confidence:** High (once episode-based + per-minute).
 
 ### 4. `DEC_rate` — Decelerations per minute (DL + DS combined)
@@ -127,7 +127,7 @@ Minute-scale swing of the heart rate.
 ### 6. `MeanHR` — Mean Heart Rate (bpm)
 - **Formula:** `mean(FHR_valid)` over `W`, in **bpm**.
 - **Training source:** UCI `Mean`.
-- **Firmware fix:** currently set equal to `LB` ([dsp.c:94](wombcare_dsp.c#L94)) →
+- **Firmware fix:** currently set equal to `LB` ([dsp.c:94](../src/wombcare_dsp.c#L94)) →
   compute the true mean of instantaneous FHR.
 - **Parity confidence:** High.
 
@@ -136,7 +136,7 @@ Minute-scale swing of the heart rate.
   **FHR**, not RR intervals).
 - **Training source:** UCI `Variance`.
 - **Firmware fix:** currently RR-interval variance
-  ([dsp.c:99](wombcare_dsp.c#L99)) → change to FHR variance in bpm².
+  ([dsp.c:99](../src/wombcare_dsp.c#L99)) → change to FHR variance in bpm².
 - **Parity confidence:** Medium-High.
 
 ---

@@ -25,7 +25,7 @@ defines its own `WombCareResult_t {features, imu_confidence, ml_prediction}`,
 delete that — otherwise it collides.
 
 ## Verify (after merge)
-Build on SDK 2026.6.0 → run the golden self-test (`../golden_vectors.h`, snippet
-in `../PHASE4_ML_INTEGRATION.md`). All 6 cases must match.
+Build on SDK 2026.6.0 → run the golden self-test (`ml/artifacts/ctg/firmware/golden_vectors.h`, snippet
+in `phase4-ml-integration.md`). All 6 cases must match.
 
 > Note: `wombcare_dsp.c` was reviewed, not compiled here (no ARM toolchain).

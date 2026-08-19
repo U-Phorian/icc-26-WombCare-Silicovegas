@@ -1,7 +1,7 @@
 # Phase 3 — Firmware DSP Fixes (handoff to Malay)
 
 **Goal:** make `wombcare_dsp.c` compute the 8 features **exactly** as the model was
-trained (see [FEATURE_SPEC.md](FEATURE_SPEC.md)). The skeleton is good — these are
+trained (see [FEATURE_SPEC.md](../FEATURE_SPEC.md)). The skeleton is good — these are
 targeted fixes. Each item lists the file:line, the problem, and the fix.
 
 Model + scaler to link against: `ml/artifacts/ctg/firmware/`
@@ -10,7 +10,7 @@ Model + scaler to link against: `ml/artifacts/ctg/firmware/`
 ---
 
 ## 🐞 FIX 1 — Use the fetal signal (real bug)
-[wombcare_dsp.c:63,72](wombcare_dsp.c#L63)
+[wombcare_dsp.c:63,72](../../src/wombcare_dsp.c#L63)
 
 The LMS call is correct, but you consume the **wrong buffer**. In `arm_lms_norm_f32`:
 `pOut` = the *maternal estimate*, `pErr` = **fetal ECG (what you want)**.
@@ -27,7 +27,7 @@ Right now peaks are detected on the maternal estimate → everything downstream 
 ---
 
 ## FIX 2 — Real Pan-Tompkins R-peak detection
-[wombcare_dsp.c:70-84](wombcare_dsp.c#L70)
+[wombcare_dsp.c:70-84](../../src/wombcare_dsp.c#L70)
 
 Fixed threshold `0.5f` won't survive amplitude changes. Implement the standard chain
 (all CMSIS-DSP):
@@ -55,7 +55,7 @@ Compute an `fhr[]` array (bpm) from the valid RR intervals — most features use
 ---
 
 ## FIX 4 — MSTV in **bpm**, not ms
-[wombcare_dsp.c:106](wombcare_dsp.c#L106)
+[wombcare_dsp.c:106](../../src/wombcare_dsp.c#L106)
 
 **Why this matters:** the model was trained on variability in **bpm** (UCI MSTV ≈
 0.2–7). The current code computes `mean|ΔRR|` in **milliseconds** (tens of ms).
@@ -75,7 +75,7 @@ out->mstv = s/(n_beats-1);   // bpm
 > directly avoids this approximation entirely and is the recommended path.
 
 ## FIX 5 — MeanHR and Variance on FHR (bpm / bpm²)
-[wombcare_dsp.c:93-99](wombcare_dsp.c#L93)
+[wombcare_dsp.c:93-99](../../src/wombcare_dsp.c#L93)
 
 ```c
 arm_mean_f32(fhr, n_beats, &out->mean_hr_bpm);   // NOT equal to LB
@@ -84,7 +84,7 @@ arm_var_f32 (fhr, n_beats, &out->hr_variance);   // variance of FHR in bpm^2, NO
 ```
 
 ## FIX 6 — MLTV (currently hardcoded 0)
-[wombcare_dsp.c:132](wombcare_dsp.c#L132)
+[wombcare_dsp.c:132](../../src/wombcare_dsp.c#L132)
 
 ```c
 // split the window into 60 s blocks; per block range = max(fhr)-min(fhr); average
@@ -93,7 +93,7 @@ out->mltv = mean_over_blocks_of(maxFHR_block - minFHR_block);  // bpm
 ```
 
 ## FIX 7 — Accelerations / Decelerations = sustained episodes, per-minute
-[wombcare_dsp.c:111-116](wombcare_dsp.c#L111)
+[wombcare_dsp.c:111-116](../../src/wombcare_dsp.c#L111)
 
 Count **episodes** (≥15 bpm from LB for **≥15 s**), not single beats, then normalize:
 ```c
@@ -104,7 +104,7 @@ out->decel_rate = dec_ep / W_MIN;
 ```
 
 ## FIX 8 — FM per-minute
-[wombcare_dsp.c:119-128](wombcare_dsp.c#L119)
+[wombcare_dsp.c:119-128](../../src/wombcare_dsp.c#L119)
 
 Keep the RMS-threshold kick detector, but normalize and add the 3 Hz high-pass first:
 ```c
