@@ -28,6 +28,7 @@ RTE_Components.h
 
 # The whole cmake_gcc/ tree is `slc generate` output. Two of its files even say
 # "Automatically-generated file. Do not edit!" in their header. Regenerate with:
+#   cd projects/wombcare-firmware
 #   slc generate Wombcare_PreFinal2.slcp -d . --with <board-or-part>
 cmake_gcc/
 *.o
@@ -76,13 +77,16 @@ venv/
 
 #------------------------------------------------------------------------------
 # 6. Datasets — large and reproducible, fetched by script rather than stored.
-#    tools/dat/           -> python tools/download_data.py   (PhysioNet)
-#    tools/processed_dat/ -> python tools/waveform_processing.py
+#    projects/wombcare-ml/tools/dat/
+#        -> python projects/wombcare-ml/tools/download_data.py   (PhysioNet)
+#    projects/wombcare-ml/tools/processed_dat/
+#        -> python projects/wombcare-ml/tools/waveform_processing.py
+#
+#  Leading **/ matters: a pattern with an interior slash is anchored to this
+#  file's directory, so a bare `tools/dat/` would NOT match at project depth.
 #------------------------------------------------------------------------------
-tools/dat/
-tools/processed_dat/
-code/dat/
-code/processed_dat/
+**/tools/dat/
+**/tools/processed_dat/
 *.zip
 *.tar.gz
 *.7z
