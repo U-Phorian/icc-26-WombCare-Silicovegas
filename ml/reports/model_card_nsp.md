@@ -7,7 +7,7 @@
 
 ## Task
 - **Input:** 8 features computed on-device from the fetal FHR + PVDF (per
-  [FEATURE_SPEC.md](../../FEATURE_SPEC.md)): `LB, MSTV, MLTV, AC_rate, DEC_rate,
+  [FEATURE_SPEC.md](../../docs/FEATURE_SPEC.md)): `LB, MSTV, MLTV, AC_rate, DEC_rate,
   FM_rate, MeanHR, Variance`.
 - **Output:** 3-class **NSP** — Normal / Suspect / Pathologic — + confidence.
 
