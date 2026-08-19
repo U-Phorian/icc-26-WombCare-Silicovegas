@@ -36,28 +36,46 @@ plays a full simulated session (live charts, a real alert) through the productio
 
 ## Repository layout
 
+**This repository holds the wearable firmware.** The Android companion app is maintained
+separately and is not a subdirectory here; links to `wombcare-app/` below refer to that
+separate project.
+
 | Path | What it is | Language / toolchain |
 |---|---|---|
-| [Wombcare_8PreFinal/](Wombcare_8PreFinal/) | Wearable firmware — sensing, DSP, TinyML, BLE GATT server | C / C++ · Simplicity SDK 2026.6.0 · GCC 14.2 |
-| [wombcare-app/](wombcare-app/) | Android companion app (patient + doctor in one binary) | Kotlin · Jetpack Compose · Gradle 8.11.1 · JDK 17 |
-| [wombcare-app/docs/](wombcare-app/docs/) | Protocol, architecture, Firebase setup, demo runsheet | Markdown |
+| [src/](src/) | Firmware translation units — sensing, DSP, TinyML, BLE GATT server | C / C++ · Simplicity SDK 2026.6.0 · GCC 14.2 |
+| [inc/](inc/) | Firmware headers | C / C++ |
+| [config/](config/) | SLC board and component configuration | Generated once, then hand-tuned |
+| [ml/](ml/) | Training pipeline; `ml/artifacts/` holds the exported int8 model | Python · TensorFlow |
+| [tools/](tools/) | Dataset download and waveform pre-processing scripts | Python |
+| [docs/](docs/) | Feature spec, handover notes, repository guidelines | Markdown · Mermaid |
+| [Wombcare_PreFinal2.slcp](Wombcare_PreFinal2.slcp) | The single SLC project definition | Simplicity Studio 6 |
 
 Key firmware files:
 
 | File | Responsibility |
 |---|---|
-| [app.c](Wombcare_8PreFinal/app.c) | Super-loop: window scheduling, IMU cadence, battery cadence, confidence fusion, device-side alert state |
-| [wombcare_sensors.c](Wombcare_8PreFinal/wombcare_sensors.c) | IADC scan queue, LETIMER+PRS trigger, LDMA ping-pong, battery sense |
-| [wombcare_buffer.c](Wombcare_8PreFinal/wombcare_buffer.c) | Three 60-second ring buffers of raw ADC counts |
-| [wombcare_dsp.c](Wombcare_8PreFinal/wombcare_dsp.c) | LMS maternal-ECG cancellation, R-peak detection, CTG feature extraction |
-| [wombcare_imu.c](Wombcare_8PreFinal/wombcare_imu.c) | ICM-40627 over SPI, motion state, movement trust score |
-| [wombcare_ml.cc](Wombcare_8PreFinal/wombcare_ml.cc) | Scaler + int8 quantisation + TFLite-Micro inference + argmax |
-| [wombcare_ble.c](Wombcare_8PreFinal/wombcare_ble.c) | GATT server, advertising, bonding/passkey, payload v3 packing |
-| [wombcare_battery.c](Wombcare_8PreFinal/wombcare_battery.c) | AVDD/4 → percentage → BLE Battery Service |
+| [src/app.c](src/app.c) | Super-loop: window scheduling, IMU cadence, battery cadence, confidence fusion, device-side alert state |
+| [src/wombcare_sensors.c](src/wombcare_sensors.c) | IADC scan queue, LETIMER+PRS trigger, LDMA ping-pong, battery sense |
+| [src/wombcare_buffer.c](src/wombcare_buffer.c) | Three 60-second ring buffers of raw ADC counts |
+| [src/wombcare_dsp.c](src/wombcare_dsp.c) | LMS maternal-ECG cancellation, R-peak detection, CTG feature extraction |
+| [src/wombcare_imu.c](src/wombcare_imu.c) | ICM-40627 over SPI, motion state, movement trust score |
+| [src/wombcare_ml.cc](src/wombcare_ml.cc) | Scaler + int8 quantisation + TFLite-Micro inference + argmax |
+| [src/wombcare_ble.c](src/wombcare_ble.c) | GATT server, advertising, bonding/passkey, payload v3 packing |
 
-The device↔app protocol is specified **once**, in
-[wombcare-app/docs/BLE_CONTRACT.md](wombcare-app/docs/BLE_CONTRACT.md). Change that document
-before changing BLE code on either side.
+Two invariants hold the project together:
+
+1. **[docs/FEATURE_SPEC.md](docs/FEATURE_SPEC.md) governs the 8-feature vector.** `ml/` and
+   `src/wombcare_dsp.c` must compute it identically, or the model silently receives
+   out-of-distribution inputs and still returns a confident answer.
+2. **`ml/artifacts/ctg/firmware/` is the only copy of the exported model.** The `.slcp`
+   compiles `model_data.c` and `scaler.c` from there in place, so retraining cannot leave
+   the firmware linked against a model it was not exported for.
+
+The device↔app protocol is specified **once**, in the companion app's `docs/BLE_CONTRACT.md`.
+Change that document before changing BLE code on either side.
+
+How we branch, commit and review is in
+[docs/repository-guidelines.md](docs/repository-guidelines.md).
 
 ---
 
@@ -238,7 +256,7 @@ flowchart LR
         S["wombcare_sensors.c<br/>IADC · LETIMER · PRS · LDMA"]
         B["wombcare_buffer.c<br/>3 x 60 s rings"]
         I["wombcare_imu.c<br/>ICM-40627 · SPI"]
-        BAT["wombcare_battery.c<br/>AVDD/4 sense"]
+        BAT["wombcare_battery.c<br/>AVDD/4 sense<br/><i>not yet in this repo</i>"]
     end
     subgraph PROC["Processing"]
         D["wombcare_dsp.c<br/>CMSIS-DSP"]
@@ -374,14 +392,14 @@ flowchart LR
 | Property | Value |
 |---|---|
 | Framework | TensorFlow Lite for Microcontrollers, via the Silicon Labs `aiml` package |
-| Model file | [wombcare_nsp.tflite](Wombcare_8PreFinal/wombcare_nsp.tflite) — **1560 bytes** |
+| Model file | [wombcare_nsp.tflite](ml/artifacts/ctg/wombcare_nsp_int8.tflite) — **1560 bytes** |
 | Input | 8 float features → standardised → int8 |
 | Output | 3 classes: `WOMBCARE_NORMAL` / `WOMBCARE_SUSPECT` / `WOMBCARE_PATHOLOGIC` |
-| Quantisation | Full int8, scale/zero-point in [scaler.c](Wombcare_8PreFinal/scaler.c) |
+| Quantisation | Full int8, scale/zero-point in [scaler.c](ml/artifacts/ctg/firmware/scaler.c) |
 | Failure mode | `ok = false` → NSP wire value `3` → app shows **UNKNOWN**, not a guess |
-| Self-test | [golden_vectors.h](Wombcare_8PreFinal/golden_vectors.h) — reference vectors with expected classes, runnable on-device with no subject attached |
+| Self-test | [golden_vectors.h](ml/artifacts/ctg/firmware/golden_vectors.h) — reference vectors with expected classes, runnable on-device with no subject attached |
 
-`WOMBCARE_ENABLE_ML` in [app.c](Wombcare_8PreFinal/app.c) gates inference, so the sensing and BLE
+`WOMBCARE_ENABLE_ML` in [app.c](src/app.c) gates inference, so the sensing and BLE
 chain can be brought up independently of the model.
 
 ---
@@ -618,7 +636,7 @@ wire so it round-trips back to `null` rather than to `0`.
 | Account | Data outlives the account | "Delete my data" unwinds share code, link mirrors, patient node, consents, profile, then the auth user |
 
 Every rule above is covered by the 23 emulator security-rules tests. **Firmware follow-ups** for
-the BLE hop are tracked in [BLE_CONTRACT.md §7](wombcare-app/docs/BLE_CONTRACT.md): add the
+the BLE hop are tracked in `wombcare-app/docs/BLE_CONTRACT.md`: add the
 `bluetooth_feature_sm` component to the `.slcp`, and move from one shared build-time passkey to a
 per-unit passkey derived from the device serial before any real deployment.
 
@@ -628,24 +646,24 @@ per-unit passkey derived from the device serial before any real deployment.
 
 The firmware is developed and verified on **Windows**. The Android app builds on any platform that
 runs Android Studio. Tool versions in use are pinned in
-[Wombcare_8PreFinal/vscode.conf](Wombcare_8PreFinal/vscode.conf): Simplicity Studio 6.0.0,
+[vscode.conf](vscode.conf): Simplicity Studio 6.0.0,
 Commander 1.24.1, SEGGER 6.0.32, CMake 3.30.2, Arm GNU toolchain 14.2.rel1.
 
 ### Windows
 
-**Firmware — `Wombcare_8PreFinal/`**
+**Firmware — this repository**
 
 1. Install **Simplicity Studio 6** and, in the installer, select the **Simplicity SDK 2026.6.0**
    (Gecko / 32-bit MCU) package and the **AI/ML** extension — the project depends on the `aiml`
    package (`tensorflow_lite_micro`, `ml_model`).
 2. Install the **GNU Arm Embedded toolchain 14.2.rel1**, **CMake ≥ 3.25** and **Ninja**. Studio
    ships all three; only add them separately if you build from a plain terminal.
-3. Clone this repository and open `Wombcare_8PreFinal/Wombcare_PreFinal.slcp` in Simplicity Studio
+3. Clone this repository and open `Wombcare_PreFinal2.slcp` in Simplicity Studio
    (or in VS Code with the *Silicon Labs* extension). Opening the `.slcp` regenerates `autogen/`
    for your SDK location.
    > In VS Code, the folder containing the `.slcp` must itself be a workspace root, otherwise the
    > Silicon Labs extension does not activate. `iot-26.code-workspace` already does this.
-4. Build from the Project Configurator, or from a terminal in `Wombcare_8PreFinal/cmake_gcc/`:
+4. Build from the Project Configurator, or from a terminal in `cmake_gcc/`:
    ```
    cmake --workflow --preset project      # configure + build
    ```
@@ -683,7 +701,7 @@ Commander 1.24.1, SEGGER 6.0.32, CMake 3.30.2, Arm GNU toolchain 14.2.rel1.
 5. Optional — a signed release build: copy `keystore.properties.template` to
    `keystore.properties` and point it at a release keystore. Without it the release build stays
    unsigned; debug builds are never blocked. Setup detail:
-   [wombcare-app/docs/FIREBASE_SETUP.md](wombcare-app/docs/FIREBASE_SETUP.md).
+   `wombcare-app/docs/FIREBASE_SETUP.md`.
 
 ### Linux / macOS
 
@@ -734,8 +752,8 @@ environment for this project.
 - Firebase problems: check App Check first (register the debug token printed in logcat on first
   run), then run the emulator rules tests, which reproduce every access-control decision offline.
 - A four-minute two-phone runsheet for demos is in
-  [wombcare-app/docs/DEMO_SCRIPT.md](wombcare-app/docs/DEMO_SCRIPT.md); every screen is captured in
-  [docs/SCREENSHOTS.md](wombcare-app/docs/SCREENSHOTS.md).
+  `wombcare-app/docs/DEMO_SCRIPT.md`; every screen is captured in
+  `wombcare-app/docs/SCREENSHOTS.md`.
 
 ---
 

@@ -1,7 +1,7 @@
 # WombCare NSP model — firmware integration note
 
 The MG26 runs the int8 TFLite-Micro model `g_wombcare_nsp_model` (model_data.c),
-1.5 KB, on the MVP accelerator. Governed by [FEATURE_SPEC.md](../../../../FEATURE_SPEC.md).
+1.5 KB, on the MVP accelerator. Governed by [FEATURE_SPEC.md](../../../../docs/FEATURE_SPEC.md).
 
 ## Inference flow (in wombcare_ml.cc)
 ```c

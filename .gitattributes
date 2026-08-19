@@ -1,0 +1,36 @@
+# Normalise line endings so a Windows checkout and a Linux CI runner produce
+# identical diffs. Without this, git reports whole-file changes on every commit
+# made from a different OS.
+* text=auto eol=lf
+
+# Sources and docs are always text.
+*.c      text eol=lf
+*.cc     text eol=lf
+*.cpp    text eol=lf
+*.h      text eol=lf
+*.hpp    text eol=lf
+*.py     text eol=lf
+*.md     text eol=lf
+*.json   text eol=lf
+*.yml    text eol=lf
+*.yaml   text eol=lf
+*.cmake  text eol=lf
+*.ld     text eol=lf
+*.slcp   text eol=lf
+*.slps   text eol=lf
+
+# Windows-only tooling expects CRLF.
+*.bat    text eol=crlf
+*.cmd    text eol=crlf
+
+# Binary — never diff or line-ending-convert these.
+*.png    binary
+*.jpg    binary
+*.tflite binary
+*.npz    binary
+*.keras  binary
+*.a      binary
+*.bin    binary
+*.hex    binary
+*.s37    binary
+*.elf    binary
