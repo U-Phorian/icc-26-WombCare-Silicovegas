@@ -36,35 +36,44 @@ plays a full simulated session (live charts, a real alert) through the productio
 
 ## Repository layout
 
-**This repository holds the wearable firmware.** The Android companion app is maintained
-separately and is not a subdirectory here; links to `wombcare-app/` below refer to that
-separate project.
+Laid out to the [ICC-26 team repo template](https://github.com/IoT-Challenge-2026/icc-26-team-repo-template):
+software projects live under `projects/`, supporting material under `resources/`.
 
-| Path | What it is | Language / toolchain |
-|---|---|---|
-| [src/](src/) | Firmware translation units — sensing, DSP, TinyML, BLE GATT server | C / C++ · Simplicity SDK 2026.6.0 · GCC 14.2 |
-| [inc/](inc/) | Firmware headers | C / C++ |
-| [config/](config/) | SLC board and component configuration | Generated once, then hand-tuned |
-| [ml/](ml/) | Training pipeline; `ml/artifacts/` holds the exported int8 model | Python · TensorFlow |
-| [tools/](tools/) | Dataset download and waveform pre-processing scripts | Python |
-| [docs/](docs/) | Feature spec, handover notes, repository guidelines | Markdown · Mermaid |
-| [Wombcare_PreFinal2.slcp](Wombcare_PreFinal2.slcp) | The single SLC project definition | Simplicity Studio 6 |
+```
+.
+├── projects/
+│   ├── wombcare-firmware/   EFR32MG26 firmware — sensing, DSP, TinyML, BLE
+│   └── wombcare-ml/         training pipeline, exported model, data tools
+├── resources/
+│   └── docs/                feature spec, repository guidelines, handover notes
+├── .github/                 CODEOWNERS, PR template, workflows, branch ruleset
+├── CLA.md  CODE_OF_CONDUCT.md  LICENSE.md
+└── README.md
+```
 
-Key firmware files:
+| Project | What it is | Language / toolchain | Build |
+|---|---|---|---|
+| [wombcare-firmware](projects/wombcare-firmware/) | Wearable firmware — sensing, DSP, TinyML, BLE GATT server | C / C++ · Simplicity SDK 2026.6.0 · GCC 14.2 | [README](projects/wombcare-firmware/README.md) |
+| [wombcare-ml](projects/wombcare-ml/) | CTG training pipeline; `artifacts/` holds the exported int8 model | Python · TensorFlow | [README](projects/wombcare-ml/README.md) |
+
+**The Android companion app is maintained separately** and is not a subdirectory here;
+references to `wombcare-app/` below point at that separate project.
+
+Key firmware files, all under [projects/wombcare-firmware/](projects/wombcare-firmware/):
 
 | File | Responsibility |
 |---|---|
-| [src/app.c](src/app.c) | Super-loop: window scheduling, IMU cadence, battery cadence, confidence fusion, device-side alert state |
-| [src/wombcare_sensors.c](src/wombcare_sensors.c) | IADC scan queue, LETIMER+PRS trigger, LDMA ping-pong, battery sense |
-| [src/wombcare_buffer.c](src/wombcare_buffer.c) | Three 60-second ring buffers of raw ADC counts |
-| [src/wombcare_dsp.c](src/wombcare_dsp.c) | LMS maternal-ECG cancellation, R-peak detection, CTG feature extraction |
-| [src/wombcare_imu.c](src/wombcare_imu.c) | ICM-40627 over SPI, motion state, movement trust score |
-| [src/wombcare_ml.cc](src/wombcare_ml.cc) | Scaler + int8 quantisation + TFLite-Micro inference + argmax |
-| [src/wombcare_ble.c](src/wombcare_ble.c) | GATT server, advertising, bonding/passkey, payload v3 packing |
+| [src/app.c](projects/wombcare-firmware/src/app.c) | Super-loop: window scheduling, IMU cadence, battery cadence, confidence fusion, device-side alert state |
+| [src/wombcare_sensors.c](projects/wombcare-firmware/src/wombcare_sensors.c) | IADC scan queue, LETIMER+PRS trigger, LDMA ping-pong, battery sense |
+| [src/wombcare_buffer.c](projects/wombcare-firmware/src/wombcare_buffer.c) | Three 60-second ring buffers of raw ADC counts |
+| [src/wombcare_dsp.c](projects/wombcare-firmware/src/wombcare_dsp.c) | LMS maternal-ECG cancellation, R-peak detection, CTG feature extraction |
+| [src/wombcare_imu.c](projects/wombcare-firmware/src/wombcare_imu.c) | ICM-40627 over SPI, motion state, movement trust score |
+| [src/wombcare_ml.cc](projects/wombcare-firmware/src/wombcare_ml.cc) | Scaler + int8 quantisation + TFLite-Micro inference + argmax |
+| [src/wombcare_ble.c](projects/wombcare-firmware/src/wombcare_ble.c) | GATT server, advertising, bonding/passkey, payload v3 packing |
 
 Two invariants hold the project together:
 
-1. **[docs/FEATURE_SPEC.md](docs/FEATURE_SPEC.md) governs the 8-feature vector.** `ml/` and
+1. **[docs/FEATURE_SPEC.md](resources/docs/FEATURE_SPEC.md) governs the 8-feature vector.** `ml/` and
    `src/wombcare_dsp.c` must compute it identically, or the model silently receives
    out-of-distribution inputs and still returns a confident answer.
 2. **`ml/artifacts/ctg/firmware/` is the only copy of the exported model.** The `.slcp`
@@ -75,7 +84,7 @@ The device↔app protocol is specified **once**, in the companion app's `docs/BL
 Change that document before changing BLE code on either side.
 
 How we branch, commit and review is in
-[docs/repository-guidelines.md](docs/repository-guidelines.md).
+[docs/repository-guidelines.md](resources/docs/repository-guidelines.md).
 
 ---
 
@@ -392,14 +401,14 @@ flowchart LR
 | Property | Value |
 |---|---|
 | Framework | TensorFlow Lite for Microcontrollers, via the Silicon Labs `aiml` package |
-| Model file | [wombcare_nsp.tflite](ml/artifacts/ctg/wombcare_nsp_int8.tflite) — **1560 bytes** |
+| Model file | [wombcare_nsp.tflite](projects/wombcare-ml/artifacts/ctg/wombcare_nsp_int8.tflite) — **1560 bytes** |
 | Input | 8 float features → standardised → int8 |
 | Output | 3 classes: `WOMBCARE_NORMAL` / `WOMBCARE_SUSPECT` / `WOMBCARE_PATHOLOGIC` |
-| Quantisation | Full int8, scale/zero-point in [scaler.c](ml/artifacts/ctg/firmware/scaler.c) |
+| Quantisation | Full int8, scale/zero-point in [scaler.c](projects/wombcare-ml/artifacts/ctg/firmware/scaler.c) |
 | Failure mode | `ok = false` → NSP wire value `3` → app shows **UNKNOWN**, not a guess |
-| Self-test | [golden_vectors.h](ml/artifacts/ctg/firmware/golden_vectors.h) — reference vectors with expected classes, runnable on-device with no subject attached |
+| Self-test | [golden_vectors.h](projects/wombcare-ml/artifacts/ctg/firmware/golden_vectors.h) — reference vectors with expected classes, runnable on-device with no subject attached |
 
-`WOMBCARE_ENABLE_ML` in [app.c](src/app.c) gates inference, so the sensing and BLE
+`WOMBCARE_ENABLE_ML` in [app.c](projects/wombcare-firmware/src/app.c) gates inference, so the sensing and BLE
 chain can be brought up independently of the model.
 
 ---
@@ -646,7 +655,7 @@ per-unit passkey derived from the device serial before any real deployment.
 
 The firmware is developed and verified on **Windows**. The Android app builds on any platform that
 runs Android Studio. Tool versions in use are pinned in
-[vscode.conf](vscode.conf): Simplicity Studio 6.0.0,
+[vscode.conf](projects/wombcare-firmware/vscode.conf): Simplicity Studio 6.0.0,
 Commander 1.24.1, SEGGER 6.0.32, CMake 3.30.2, Arm GNU toolchain 14.2.rel1.
 
 ### Windows

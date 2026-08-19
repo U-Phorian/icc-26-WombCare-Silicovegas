@@ -1,3 +1,31 @@
-# TODO
+# Projects
 
-Projects folders shall be created under the projects folder.
+Software projects live here, one folder each, per the
+[ICC-26 team repo template](https://github.com/IoT-Challenge-2026/icc-26-team-repo-template).
+
+| Project | What it is | Build and clean |
+| --- | --- | --- |
+| [wombcare-firmware/](wombcare-firmware/) | EFR32MG26 wearable firmware — sensing, DSP, on-device TinyML, BLE GATT server | [README](wombcare-firmware/README.md) |
+| [wombcare-ml/](wombcare-ml/) | CTG training pipeline and the exported int8 model the firmware links against | [README](wombcare-ml/README.md) |
+
+Each project documents its own build and clean steps in its README.
+
+## How the two connect
+
+`wombcare-ml` exports the model, and `wombcare-firmware` compiles it **in place** —
+`Wombcare_PreFinal2.slcp` lists `../wombcare-ml/artifacts/ctg/firmware/model_data.c` and
+`scaler.c` in its `source:` block. There is no copy step, so retraining cannot leave the
+firmware linked against a model it was not exported for.
+
+The 8-feature vector both sides compute is pinned by
+[resources/docs/FEATURE_SPEC.md](../resources/docs/FEATURE_SPEC.md). If the firmware and the
+training pipeline disagree, the model receives out-of-distribution inputs and still returns a
+confident answer — the failure is silent. Change the spec first, by agreement, and bump
+`spec_version`.
+
+## Adding a project
+
+Create a folder here and give it a README covering what it is, its prerequisites, how to
+build it and how to clean it. Add any generated or vendored output to the root
+[.gitignore](../.gitignore) — see
+[resources/docs/repository-guidelines.md](../resources/docs/repository-guidelines.md).
