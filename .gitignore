@@ -25,7 +25,11 @@ RTE_Components.h
 # 3. Build outputs
 #------------------------------------------------------------------------------
 **/build/
-cmake_gcc/build/
+
+# The whole cmake_gcc/ tree is `slc generate` output. Two of its files even say
+# "Automatically-generated file. Do not edit!" in their header. Regenerate with:
+#   slc generate Wombcare_PreFinal2.slcp -d . --with <board-or-part>
+cmake_gcc/
 *.o
 *.d
 *.elf
