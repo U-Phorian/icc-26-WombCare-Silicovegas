@@ -28,6 +28,16 @@ version control by .gitignore.
     Copyright Arm Limited and contributors,
     licensed under Apache License 2.0.
 
+  Android companion app (projects/wombcare-app) builds against:
+    AndroidX, Jetpack Compose and Material 3
+      Copyright The Android Open Source Project,
+      licensed under Apache License 2.0.
+    Firebase Android SDK
+      Copyright Google LLC, licensed under Apache License 2.0.
+    Gradle wrapper (gradle/wrapper/gradle-wrapper.jar)
+      Copyright Gradle Inc., licensed under Apache License 2.0.
+      Committed deliberately: ./gradlew cannot bootstrap without it.
+
 The following files in this repository retain their original Silicon
 Laboratories copyright and licence headers, and are not covered by the
 Apache 2.0 header applied to the rest of the source:

@@ -44,7 +44,8 @@ software projects live under `projects/`, supporting material under `resources/`
 .
 ├── projects/
 │   ├── wombcare-firmware/   EFR32MG26 firmware — sensing, DSP, TinyML, BLE
-│   └── wombcare-ml/         training pipeline, exported model, data tools
+│   ├── wombcare-ml/         training pipeline, exported model, data tools
+│   └── wombcare-app/        Android app — patient + doctor roles, BLE, cloud
 ├── resources/
 │   └── docs/                feature spec, repository guidelines, handover notes
 ├── .github/                 CODEOWNERS, PR template, workflows, branch ruleset
@@ -56,9 +57,7 @@ software projects live under `projects/`, supporting material under `resources/`
 |---|---|---|---|
 | [wombcare-firmware](projects/wombcare-firmware/) | Wearable firmware — sensing, DSP, TinyML, BLE GATT server | C / C++ · Simplicity SDK 2026.6.0 · GCC 14.2 | [README](projects/wombcare-firmware/README.md) |
 | [wombcare-ml](projects/wombcare-ml/) | CTG training pipeline; `artifacts/` holds the exported int8 model | Python · TensorFlow | [README](projects/wombcare-ml/README.md) |
-
-**The Android companion app is maintained separately** and is not a subdirectory here;
-references to `wombcare-app/` below point at that separate project.
+| [wombcare-app](projects/wombcare-app/) | Android companion app — patient and doctor roles, BLE client, cloud sync | Kotlin · Compose · Firebase | [README](projects/wombcare-app/README.md) |
 
 Key firmware files, all under [projects/wombcare-firmware/](projects/wombcare-firmware/):
 
@@ -82,7 +81,7 @@ Two invariants hold the project together:
    compiles `model_data.c` and `scaler.c` from there in place, so retraining cannot leave
    the firmware linked against a model it was not exported for.
 
-The device↔app protocol is specified **once**, in the companion app's `docs/BLE_CONTRACT.md`.
+The device↔app protocol is specified **once**, in [projects/wombcare-app/docs/BLE_CONTRACT.md](projects/wombcare-app/docs/BLE_CONTRACT.md).
 Change that document before changing BLE code on either side.
 
 How we branch, commit and review is in
@@ -648,7 +647,7 @@ wire so it round-trips back to `null` rather than to `0`.
 | Account | Data outlives the account | "Delete my data" unwinds share code, link mirrors, patient node, consents, profile, then the auth user |
 
 Every rule above is covered by the 23 emulator security-rules tests. **Firmware follow-ups** for
-the BLE hop are tracked in `wombcare-app/docs/BLE_CONTRACT.md`: add the
+the BLE hop are tracked in [projects/wombcare-app/docs/BLE_CONTRACT.md](projects/wombcare-app/docs/BLE_CONTRACT.md): add the
 `bluetooth_feature_sm` component to the `.slcp`, and move from one shared build-time passkey to a
 per-unit passkey derived from the device serial before any real deployment.
 
@@ -691,14 +690,14 @@ Commander 1.24.1, SEGGER 6.0.32, CMake 3.30.2, Arm GNU toolchain 14.2.rel1.
    commander flash projects/wombcare-firmware/cmake_gcc/build/base/Wombcare_PreFinal2.hex --device EFR32MG26BxxxF3200
    ```
 
-**Android app — `wombcare-app/`**
+**Android app — [projects/wombcare-app/](projects/wombcare-app/)**
 
 1. Install **Android Studio** (Ladybug or newer) and **JDK 17**; the app targets `compileSdk 35`,
    `targetSdk 35`, `minSdk 26`.
 2. Add the two machine-local files that are deliberately not in the repository:
-   - `wombcare-app/app/google-services.json` — download from the Firebase console for project
+   - `projects/wombcare-app/app/google-services.json` — download from the Firebase console for project
      `wombcare-icc26`, app `com.silicovegas.wombcare`.
-   - `wombcare-app/local.properties` — `sdk.dir=C:\\path\\to\\Android\\Sdk` (Android Studio writes
+   - `projects/wombcare-app/local.properties` — `sdk.dir=C:\\path\\to\\Android\\Sdk` (Android Studio writes
      it on first open).
 3. Build, test and install:
    ```
@@ -713,7 +712,7 @@ Commander 1.24.1, SEGGER 6.0.32, CMake 3.30.2, Arm GNU toolchain 14.2.rel1.
 5. Optional — a signed release build: copy `keystore.properties.template` to
    `keystore.properties` and point it at a release keystore. Without it the release build stays
    unsigned; debug builds are never blocked. Setup detail:
-   `wombcare-app/docs/FIREBASE_SETUP.md`.
+   [projects/wombcare-app/docs/FIREBASE_SETUP.md](projects/wombcare-app/docs/FIREBASE_SETUP.md).
 
 ### Linux / macOS
 
@@ -763,8 +762,8 @@ environment for this project.
 - Firebase problems: check App Check first (register the debug token printed in logcat on first
   run), then run the emulator rules tests, which reproduce every access-control decision offline.
 - A four-minute two-phone runsheet for demos is in
-  `wombcare-app/docs/DEMO_SCRIPT.md`; every screen is captured in
-  `wombcare-app/docs/SCREENSHOTS.md`.
+  [projects/wombcare-app/docs/DEMO_SCRIPT.md](projects/wombcare-app/docs/DEMO_SCRIPT.md); every screen is captured in
+  [projects/wombcare-app/docs/SCREENSHOTS.md](projects/wombcare-app/docs/SCREENSHOTS.md).
 
 ---
 
