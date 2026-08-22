@@ -28,9 +28,10 @@ plays a full simulated session (live charts, a real alert) through the productio
 10. [Security model](#security-model)
 11. [Build environment setup](#build-environment-setup)
 12. [Debug environment](#debug-environment)
-13. [Testing and verification status](#testing-and-verification-status)
-14. [Contributing](#contributing)
-15. [License](#license)
+13. [Performance, memory and power](#performance-memory-and-power)
+14. [Testing and verification status](#testing-and-verification-status)
+15. [Contributing](#contributing)
+16. [License](#license)
 
 ---
 
@@ -43,7 +44,8 @@ software projects live under `projects/`, supporting material under `resources/`
 .
 ├── projects/
 │   ├── wombcare-firmware/   EFR32MG26 firmware — sensing, DSP, TinyML, BLE
-│   └── wombcare-ml/         training pipeline, exported model, data tools
+│   ├── wombcare-ml/         training pipeline, exported model, data tools
+│   └── wombcare-app/        Android app — patient + doctor roles, BLE, cloud
 ├── resources/
 │   └── docs/                feature spec, repository guidelines, handover notes
 ├── .github/                 CODEOWNERS, PR template, workflows, branch ruleset
@@ -55,9 +57,7 @@ software projects live under `projects/`, supporting material under `resources/`
 |---|---|---|---|
 | [wombcare-firmware](projects/wombcare-firmware/) | Wearable firmware — sensing, DSP, TinyML, BLE GATT server | C / C++ · Simplicity SDK 2026.6.0 · GCC 14.2 | [README](projects/wombcare-firmware/README.md) |
 | [wombcare-ml](projects/wombcare-ml/) | CTG training pipeline; `artifacts/` holds the exported int8 model | Python · TensorFlow | [README](projects/wombcare-ml/README.md) |
-
-**The Android companion app is maintained separately** and is not a subdirectory here;
-references to `wombcare-app/` below point at that separate project.
+| [wombcare-app](projects/wombcare-app/) | Android companion app — patient and doctor roles, BLE client, cloud sync | Kotlin · Compose · Firebase | [README](projects/wombcare-app/README.md) |
 
 Key firmware files, all under [projects/wombcare-firmware/](projects/wombcare-firmware/):
 
@@ -73,18 +73,19 @@ Key firmware files, all under [projects/wombcare-firmware/](projects/wombcare-fi
 
 Two invariants hold the project together:
 
-1. **[docs/FEATURE_SPEC.md](resources/docs/FEATURE_SPEC.md) governs the 8-feature vector.** `ml/` and
-   `src/wombcare_dsp.c` must compute it identically, or the model silently receives
+1. **[resources/docs/FEATURE_SPEC.md](resources/docs/FEATURE_SPEC.md) governs the 8-feature
+   vector.** `projects/wombcare-ml/` and `projects/wombcare-firmware/src/wombcare_dsp.c` must
+   compute it identically, or the model silently receives
    out-of-distribution inputs and still returns a confident answer.
-2. **`ml/artifacts/ctg/firmware/` is the only copy of the exported model.** The `.slcp`
+2. **`projects/wombcare-ml/artifacts/ctg/firmware/` is the only copy of the exported model.** The `.slcp`
    compiles `model_data.c` and `scaler.c` from there in place, so retraining cannot leave
    the firmware linked against a model it was not exported for.
 
-The device↔app protocol is specified **once**, in the companion app's `docs/BLE_CONTRACT.md`.
+The device↔app protocol is specified **once**, in [projects/wombcare-app/docs/BLE_CONTRACT.md](projects/wombcare-app/docs/BLE_CONTRACT.md).
 Change that document before changing BLE code on either side.
 
 How we branch, commit and review is in
-[docs/repository-guidelines.md](resources/docs/repository-guidelines.md).
+[resources/docs/repository-guidelines.md](resources/docs/repository-guidelines.md).
 
 ---
 
@@ -408,8 +409,9 @@ flowchart LR
 | Failure mode | `ok = false` → NSP wire value `3` → app shows **UNKNOWN**, not a guess |
 | Self-test | [golden_vectors.h](projects/wombcare-ml/artifacts/ctg/firmware/golden_vectors.h) — reference vectors with expected classes, runnable on-device with no subject attached |
 
-`WOMBCARE_ENABLE_ML` in [app.c](projects/wombcare-firmware/src/app.c) gates inference, so the sensing and BLE
-chain can be brought up independently of the model.
+Inference is called unconditionally from [app.c](projects/wombcare-firmware/src/app.c); there is
+no compile-time gate for it today. To bring the sensing and BLE chain up independently of the
+model, comment out the `wombcare_ml_run()` call or add a guard around it.
 
 ---
 
@@ -645,7 +647,7 @@ wire so it round-trips back to `null` rather than to `0`.
 | Account | Data outlives the account | "Delete my data" unwinds share code, link mirrors, patient node, consents, profile, then the auth user |
 
 Every rule above is covered by the 23 emulator security-rules tests. **Firmware follow-ups** for
-the BLE hop are tracked in `wombcare-app/docs/BLE_CONTRACT.md`: add the
+the BLE hop are tracked in [projects/wombcare-app/docs/BLE_CONTRACT.md](projects/wombcare-app/docs/BLE_CONTRACT.md): add the
 `bluetooth_feature_sm` component to the `.slcp`, and move from one shared build-time passkey to a
 per-unit passkey derived from the device serial before any real deployment.
 
@@ -667,35 +669,35 @@ Commander 1.24.1, SEGGER 6.0.32, CMake 3.30.2, Arm GNU toolchain 14.2.rel1.
    package (`tensorflow_lite_micro`, `ml_model`).
 2. Install the **GNU Arm Embedded toolchain 14.2.rel1**, **CMake ≥ 3.25** and **Ninja**. Studio
    ships all three; only add them separately if you build from a plain terminal.
-3. Clone this repository and open `Wombcare_PreFinal2.slcp` in Simplicity Studio
+3. Clone this repository and open `projects/wombcare-firmware/Wombcare_PreFinal2.slcp` in Simplicity Studio
    (or in VS Code with the *Silicon Labs* extension). Opening the `.slcp` regenerates `autogen/`
    for your SDK location.
-   > In VS Code, the folder containing the `.slcp` must itself be a workspace root, otherwise the
-   > Silicon Labs extension does not activate. `iot-26.code-workspace` already does this.
-4. Build from the Project Configurator, or from a terminal in `cmake_gcc/`:
+   > In VS Code, the folder containing the `.slcp` — `projects/wombcare-firmware/` — must itself be a
+   > workspace root, otherwise the Silicon Labs extension does not activate.
+4. Build from the Project Configurator, or from a terminal in `projects/wombcare-firmware/cmake_gcc/`:
    ```
    cmake --workflow --preset project      # configure + build
    ```
-   The image lands in `cmake_gcc/build/base/`.
+   The image lands in `projects/wombcare-firmware/cmake_gcc/build/base/`.
 5. Clean:
    ```
    cmake --build build --config base --target clean     # object files only
    ```
-   or delete `cmake_gcc/build/` for a full clean. Regenerated `autogen/` content is rebuilt from
+   or delete `projects/wombcare-firmware/cmake_gcc/build/` for a full clean. Regenerated `autogen/` content is rebuilt from
    the `.slcp` and can be deleted safely.
 6. Flash with Simplicity Commander or the Studio launcher:
    ```
-   commander flash cmake_gcc/build/base/Wombcare_PreFinal.hex --device EFR32MG26BxxxF3200
+   commander flash projects/wombcare-firmware/cmake_gcc/build/base/Wombcare_PreFinal2.hex --device EFR32MG26BxxxF3200
    ```
 
-**Android app — `wombcare-app/`**
+**Android app — [projects/wombcare-app/](projects/wombcare-app/)**
 
 1. Install **Android Studio** (Ladybug or newer) and **JDK 17**; the app targets `compileSdk 35`,
    `targetSdk 35`, `minSdk 26`.
 2. Add the two machine-local files that are deliberately not in the repository:
-   - `wombcare-app/app/google-services.json` — download from the Firebase console for project
+   - `projects/wombcare-app/app/google-services.json` — download from the Firebase console for project
      `wombcare-icc26`, app `com.silicovegas.wombcare`.
-   - `wombcare-app/local.properties` — `sdk.dir=C:\\path\\to\\Android\\Sdk` (Android Studio writes
+   - `projects/wombcare-app/local.properties` — `sdk.dir=C:\\path\\to\\Android\\Sdk` (Android Studio writes
      it on first open).
 3. Build, test and install:
    ```
@@ -710,13 +712,13 @@ Commander 1.24.1, SEGGER 6.0.32, CMake 3.30.2, Arm GNU toolchain 14.2.rel1.
 5. Optional — a signed release build: copy `keystore.properties.template` to
    `keystore.properties` and point it at a release keystore. Without it the release build stays
    unsigned; debug builds are never blocked. Setup detail:
-   `wombcare-app/docs/FIREBASE_SETUP.md`.
+   [projects/wombcare-app/docs/FIREBASE_SETUP.md](projects/wombcare-app/docs/FIREBASE_SETUP.md).
 
 ### Linux / macOS
 
 Both toolchains are cross-platform and the steps above apply unchanged apart from paths and the
 wrapper (`./gradlew` instead of `gradlew.bat`). Simplicity Studio 6 and the Simplicity SDK ship
-for Linux and macOS, and the CMake/Ninja build in `cmake_gcc/` is host-independent.
+for Linux and macOS, and the CMake/Ninja build in `projects/wombcare-firmware/cmake_gcc/` is host-independent.
 **We have not verified the firmware build on either platform** — Windows is the reference
 environment for this project.
 
@@ -726,28 +728,27 @@ environment for this project.
 
 ### Firmware
 
-- **Serial log.** VCOM rides the same USB-C connection (`sl_iostream_eusart_vcom`). Open it at
-  115200 8N1 in Simplicity Studio's console or any terminal to read `app_log` output. The
-  once-per-window line is the fastest health check:
-  ```
-  WINDOW: ok=1 nsp=0 conf=87 fhr=142 kicks=3 flags=0x02 batt=94%
-  ```
-  `wombcare_debug.h` holds the log-level switches; raise them for per-sample tracing.
+- **Serial log — not currently wired up.** The design intent is `app_log` over VCOM
+  (`sl_iostream_eusart_vcom`) at 115200 8N1, giving one line per analysis window. **Neither
+  component is selected in `Wombcare_PreFinal2.slcp` today**, and `src/wombcare_ble.c` includes
+  `app_log.h` without it, which is one of the open build blockers. To enable logging, add the
+  `iostream_eusart` (instance `vcom`) and `app_log` components, then read the port in Simplicity
+  Studio's console or any terminal.
 - **On-chip debug.** The onboard J-Link supports normal breakpoint debugging from Simplicity
   Studio or VS Code (arm-none-eabi-gdb 6.0.32, debug part `EFR32MG26BxxxF3200`). Useful
   breakpoints, in the order the data flows: the LDMA completion callback in `wombcare_sensors.c`,
   `wombcare_dsp_run_pipeline()`, `wombcare_ml_run()`, and `sl_bt_on_event()` in `wombcare_ble.c`.
+  With no serial log, breakpoints and the debugger's variable view are the primary tools.
 - **Bisecting a bad reading.** Work outward from the middle: run the **golden vectors** first — if
   the classifier reproduces its expected classes, the model and the scaler are fine and the fault
   is upstream in sensing or feature extraction; if it doesn't, stop looking at electrodes.
-  `WOMBCARE_ENABLE_ML` and `WOMBCARE_ENABLE_BLE` in `app.c` let you isolate the chain further.
 - **BLE.** Use **Simplicity Connect** (iOS/Android) to scan, bond and subscribe to *Clinical
   Update*. Because the characteristic requires a bonded, encrypted, passkey-authenticated link, an
   unbonded client is refused notifications **by design** — that refusal is the security feature
   working, not a bug. The passkey is displayed by the device during pairing.
 - **Nothing arriving after a successful subscribe?** The device sends only after a *full* 60-second
-  window and only while monitoring is on (BTN0) — check the VCOM `WINDOW:` line before suspecting
-  the subscription.
+  window and only while monitoring is on (BTN0), so allow a full minute before suspecting the
+  subscription.
 - **Energy.** The Energy Profiler shows the expected EM1/EM2 pattern: the device should sit in EM2
   between one-second acquisition blocks. A device stuck in EM1 usually means an EM1 requirement
   was taken and not released.
@@ -761,8 +762,77 @@ environment for this project.
 - Firebase problems: check App Check first (register the debug token printed in logcat on first
   run), then run the emulator rules tests, which reproduce every access-control decision offline.
 - A four-minute two-phone runsheet for demos is in
-  `wombcare-app/docs/DEMO_SCRIPT.md`; every screen is captured in
-  `wombcare-app/docs/SCREENSHOTS.md`.
+  [projects/wombcare-app/docs/DEMO_SCRIPT.md](projects/wombcare-app/docs/DEMO_SCRIPT.md); every screen is captured in
+  [projects/wombcare-app/docs/SCREENSHOTS.md](projects/wombcare-app/docs/SCREENSHOTS.md).
+
+---
+
+## Performance, memory and power
+
+Figures below are taken from the WombCare technical report (Rev. A), measured against firmware
+revision **`Wombcare_8PreFinal`**. Each carries the report's own tag so a reader knows how it was
+obtained: **MEASURED** — observed from a build or a run; **DERIVED** — computed exactly from the
+source; **ESTIMATE** — an analytical projection with the method stated, awaiting a bench figure.
+
+### Flash and RAM
+
+| Item | Size | Tag |
+|---|---|---|
+| Flash image, whole application | 284,536 B (278 KB) — 8.7 % of 3200 KB | MEASURED from the built `.hex` |
+| … of which the ML model | 1,560 B — 0.55 % of the image | MEASURED |
+| DSP scratch pool | 240,000 B — 4 × 15,000 float | DERIVED |
+| Ring buffers, 3 channels | 90,000 B — 3 × 15,000 `uint16` | DERIVED |
+| LMS state + coefficients | 60,252 B | DERIVED |
+| Beat arrays (RR, FHR) | 2,400 B — 2 × 300 float | DERIVED |
+| ADC ping-pong buffers | 3,000 B — 2 × 750 `uint16` | DERIVED |
+| **Signal-chain static RAM** | **395,652 B (386 KB) — ~75 % of 512 KB** | DERIVED, before stack, heap and the BLE stack |
+
+**RAM, not flash or compute, is the binding constraint.** It is dominated by holding four
+full-length float scratch buffers; a block-wise LMS with streaming feature extraction would cut
+the scratch pool roughly 4× and is the first optimisation when moving off the dev kit.
+
+> ⚠️ **This budget assumes `uint16` ring buffers.** `inc/wombcare_buffer.h` in this repository
+> still declares them `float`, which adds 90,000 B and pushes the signal chain to **485,652 B
+> (474 KB, 92.6 % of 512 KB)** before stack, heap and the BLE stack — it will not fit. See
+> [known issues](projects/wombcare-firmware/README.md#known-issues).
+
+### Latency and duty cycle
+
+| Stage | Cost per window | Tag |
+|---|---|---|
+| Unwrap 3 rings + unit conversion | 0.5 ms | ESTIMATE — 45,000 elements, few cycles each |
+| Normalised LMS, 32 taps × 15,000 samples | 33 ms | ESTIMATE — ~170 cycles/sample at 78 MHz |
+| RMS, peak detection, RR → bpm | 2 ms | ESTIMATE — single pass, ~10 cycles/sample |
+| Feature extraction over 300 beats | < 1 ms | ESTIMATE |
+| Model inference | < 0.1 ms | ESTIMATE — 24 MACs; TFLite-Micro invoke overhead dominates |
+| PVDF RMS + kick detection | 2 ms | ESTIMATE |
+| BLE notification | one 15-byte PDU | fits a single connection event |
+| **Total active time per 60 s** | **~40 ms — duty cycle ≈ 0.07 %** | ESTIMATE |
+| Sensor → mother's screen | 60 s + < 1 s | bounded by the window, not by processing |
+| Mother's screen → doctor's screen | typically < 2 s | ESTIMATE — RTDB listener latency |
+
+**Inference is ~0.25 % of per-window compute.** The expensive thing on this device is *cleaning*
+the signal, not classifying it — which is why a heavier model would buy nothing, and why a
+cloud-inference design would pay thousands of times the energy in radio time for the same answer.
+
+### Data volume
+
+| Quantity | Value (DERIVED) |
+|---|---|
+| Raw signal acquired per minute | 45,000 samples — 90 KB |
+| Transmitted per minute | **15 bytes** |
+| Compression achieved by on-device analysis | **6,000 ×** |
+| Per day of continuous monitoring | 21.6 KB |
+| Per pregnancy (90 days, continuous) | 1.9 MB |
+| Cloud footprint per mother per month | < 1 MB — comfortably inside a free tier |
+
+### Power
+
+Bench characterisation is not yet done. The architecture fixes the *shape* of the load: EM2 with
+IADC, LDMA and LETIMER running, interrupted by a ~40 ms EM1 burst and one small BLE PDU per
+minute — so energy is dominated by continuous analog acquisition and radio connection events, not
+by processing. Simplicity Studio's Energy Profiler is the intended instrument and that EM1/EM2
+pattern is the acceptance criterion.
 
 ---
 

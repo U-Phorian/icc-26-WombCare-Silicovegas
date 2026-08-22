@@ -33,7 +33,7 @@ import pandas as pd
 import config as C
 
 SPEC_PATH = C.ML_DIR / "feature_spec.json"
-ZIP_PATH = C.REPO_DIR / "cardiotocography.zip"
+ZIP_PATH = C.ML_DIR / "cardiotocography.zip"
 
 
 def load_spec() -> dict:

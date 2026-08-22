@@ -1,0 +1,64 @@
+WombCare — wearable fetal-wellness monitor
+Copyright 2026 Team SilicoVegas
+
+This product includes software developed by Team SilicoVegas for the
+FPT IoT Challenge 2026.
+
+Licensed under the Apache License, Version 2.0. See LICENSE.md for the
+full licence text.
+
+================================================================================
+Third-party components
+================================================================================
+
+This repository builds against, but does not redistribute, the following.
+They are supplied by the Simplicity Studio installation and are excluded from
+version control by .gitignore.
+
+  Simplicity SDK 2026.6.0
+    Copyright Silicon Laboratories Inc. (www.silabs.com)
+    Licensed under the Silicon Labs Master Software License Agreement.
+
+  Silicon Labs AI/ML SDK extension 3.0.0
+    Copyright Silicon Laboratories Inc.
+    Includes TensorFlow Lite for Microcontrollers,
+    Copyright The TensorFlow Authors, licensed under Apache License 2.0.
+
+  CMSIS and CMSIS-DSP
+    Copyright Arm Limited and contributors,
+    licensed under Apache License 2.0.
+
+  Android companion app (projects/wombcare-app) builds against:
+    AndroidX, Jetpack Compose and Material 3
+      Copyright The Android Open Source Project,
+      licensed under Apache License 2.0.
+    Firebase Android SDK
+      Copyright Google LLC, licensed under Apache License 2.0.
+    Gradle wrapper (gradle/wrapper/gradle-wrapper.jar)
+      Copyright Gradle Inc., licensed under Apache License 2.0.
+      Committed deliberately: ./gradlew cannot bootstrap without it.
+
+The following files in this repository retain their original Silicon
+Laboratories copyright and licence headers, and are not covered by the
+Apache 2.0 header applied to the rest of the source:
+
+  projects/wombcare-firmware/src/main.c
+  projects/wombcare-firmware/src/app_bm.c
+  projects/wombcare-firmware/src/app.c
+  projects/wombcare-firmware/src/sl_gatt_service_device_information_override.c
+  projects/wombcare-firmware/config/*
+
+================================================================================
+Data
+================================================================================
+
+The machine-learning pipeline trains on third-party datasets that are fetched
+at build time and are not redistributed here:
+
+  CTU-CHB Intrapartum Cardiotocography Database, PhysioNet
+    Chudacek V. et al., licensed under the Open Data Commons
+    Attribution License v1.0. Retrieved by
+    projects/wombcare-ml/tools/download_data.py
+
+  Cardiotocography Data Set, UCI Machine Learning Repository
+    Ayres-de-Campos D. et al., licensed under CC BY 4.0.
