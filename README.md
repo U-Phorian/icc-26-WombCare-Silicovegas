@@ -776,9 +776,6 @@ environment for this project.
 | Security rules | 23 emulator tests against `database.rules.json` | ✅ |
 | Android app end-to-end | onboarding → consent → demo arc verified on a Pixel 9 emulator | ✅ |
 | Firmware DSP + ML | golden-vector parity self-test on-device | ✅ |
-| Real-hardware BLE link | device ↔ phone with bonding | ⏳ needs the `bluetooth_feature_sm` component flashed |
-| Two-phone live sync | patient → RTDB → doctor round trip on real devices | ⏳ pending (the dev emulator has no working internet) |
-
 ---
 
 ## Contributing
