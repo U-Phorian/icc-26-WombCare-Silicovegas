@@ -23,6 +23,7 @@ source:
 - path: wombcare_sensors.c
 - path: wombcare_buffer.c
 - path: wombcare_dsp.c
+- path: wombcare_trend.c
 - path: wombcare_imu.c
 - path: wombcare_ble.c
 tag:

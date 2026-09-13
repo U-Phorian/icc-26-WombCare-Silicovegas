@@ -3,6 +3,7 @@
 #include "wombcare_sensors.h"
 #include "wombcare_buffer.h"
 #include "wombcare_dsp.h"
+#include "wombcare_trend.h" /* rolling beat trend behind the features */
 #include "wombcare_imu.h"
 #include "wombcare_ml.h"    /* TinyML NSP classifier (extern "C")   */
 #include "wombcare_ble.h"   /* BLE clinical-update notification      */
@@ -73,6 +74,31 @@
 
 #define SECONDS_TO_TICKS(s)   (sl_sleeptimer_get_timer_frequency() * (uint32_t)(s))
 
+/*--------------------------------------------------------------------
+ * FETAL-LOSS DETECTION  (payload v4, flags2 bit 0)
+ *
+ * "The fetal heart rate has been very low, or absent, for a while -- and
+ * the bad stretches do not have to be consecutive."
+ *
+ * That last part is why this is a ratio over a rolling horizon rather than
+ * an unbroken run like the two flags above. A loose electrode gives a few
+ * good seconds scattered through a bad minute, and an unbroken-run rule
+ * resets on every one of them and never fires.
+ *
+ * The horizon is in SECONDS because a frame is produced every second, not
+ * every minute -- the same trap the comment above describes. Three of every
+ * five seconds in the last five minutes must be bad before this raises,
+ * which is roughly three minutes of mostly-absent heartbeat.
+ *
+ * Raise and clear are deliberately different levels. With one threshold the
+ * flag chatters on and off around the boundary, which on a phone screen
+ * reads as a device fault rather than as a measurement.
+ *-------------------------------------------------------------------*/
+#define FETAL_LOW_BPM         70.0f     /* below this the second is "bad" */
+#define FETAL_LOSS_HORIZON_S  300U      /* rolling 5-minute memory        */
+#define FETAL_LOSS_RAISE_S    180U      /* 3-of-5 of the horizon -> raise  */
+#define FETAL_LOSS_CLEAR_S    120U      /* 2-of-5 of the horizon -> clear  */
+
 /* Below this IMU trust the window is flagged as motion-contaminated. */
 #define IMU_TRUST_LOW         50U
 
@@ -111,6 +137,86 @@ static uint32_t s_patho_run_start  = 0U;
 
 static bool     s_brady_run_active = false;
 static uint32_t s_brady_run_start  = 0U;
+
+/*
+ * Rolling history for the fetal-loss flag: one bit per produced frame
+ * (~one per second), 1 = that second was bad. A bit array rather than a
+ * byte array because 300 bits is 38 bytes and this lives in static RAM
+ * alongside ~450 KB of DSP buffers.
+ *
+ * s_fetal_bad_count is maintained incrementally -- the evicted bit is
+ * subtracted and the new one added -- so raising the flag never costs a
+ * 300-iteration scan in the super-loop.
+ */
+static uint8_t  s_fetal_bad_bits[(FETAL_LOSS_HORIZON_S + 7U) / 8U];
+static uint16_t s_fetal_bad_count = 0U;
+static uint16_t s_fetal_hist_pos  = 0U;
+static uint16_t s_fetal_hist_len  = 0U;
+static bool     s_fetal_not_detected = false;
+
+/* Forget everything the fetal-loss flag has seen. Called when monitoring
+ * stops, for the same reason the alert runs are cleared there: a new
+ * session must not start already latched from the previous one. */
+static void fetal_loss_reset(void)
+{
+    memset(s_fetal_bad_bits, 0, sizeof(s_fetal_bad_bits));
+
+    s_fetal_bad_count    = 0U;
+    s_fetal_hist_pos     = 0U;
+    s_fetal_hist_len     = 0U;
+    s_fetal_not_detected = false;
+}
+
+/*
+ * Record one second's verdict and re-evaluate the flag.
+ *
+ * Returns true while the fetal heartbeat should be reported as not
+ * detected.
+ */
+static bool fetal_loss_update(bool bad)
+{
+    const uint16_t byte_i = s_fetal_hist_pos / 8U;
+    const uint8_t  mask   = (uint8_t)(1u << (s_fetal_hist_pos % 8U));
+
+    /* Evict the entry this slot is about to overwrite. Only once the ring
+     * has wrapped -- before that the slot holds nothing. */
+    if (s_fetal_hist_len >= FETAL_LOSS_HORIZON_S)
+    {
+        if ((s_fetal_bad_bits[byte_i] & mask) != 0u)
+        {
+            s_fetal_bad_count--;
+        }
+    }
+    else
+    {
+        s_fetal_hist_len++;
+    }
+
+    if (bad)
+    {
+        s_fetal_bad_bits[byte_i] |= mask;
+        s_fetal_bad_count++;
+    }
+    else
+    {
+        s_fetal_bad_bits[byte_i] &= (uint8_t)~mask;
+    }
+
+    s_fetal_hist_pos = (uint16_t)((s_fetal_hist_pos + 1U)
+                                  % FETAL_LOSS_HORIZON_S);
+
+    /* Hysteresis: raise high, clear low, hold in between. */
+    if (s_fetal_bad_count >= FETAL_LOSS_RAISE_S)
+    {
+        s_fetal_not_detected = true;
+    }
+    else if (s_fetal_bad_count <= FETAL_LOSS_CLEAR_S)
+    {
+        s_fetal_not_detected = false;
+    }
+
+    return s_fetal_not_detected;
+}
 
 /*--------------------------------------------------------------------
  * INITIALIZATION
@@ -236,10 +342,18 @@ void app_process_action(void)
             wombcare_buffer_reset();
             wombcare_imu_reset();
 
+            /* The beat trend outlives the ring buffers by design (it is
+             * what carries history across windows), so resetting the
+             * buffers alone would leave the next session classifying on
+             * the last one's beats. */
+            wombcare_trend_reset();
+
             /* Drop any in-progress alert run: the next session must not
              * start already latched from this one. */
             s_patho_run_active = false;
             s_brady_run_active = false;
+
+            fetal_loss_reset();
         }
     }
 
@@ -329,8 +443,9 @@ void app_process_action(void)
      *-------------------------------------------------------------*/
 
     WombCareFeatures_t features;
+    WombCareVitals_t   vitals;
 
-    bool window_ok = wombcare_dsp_run_pipeline(&features);
+    bool window_ok = wombcare_dsp_run_pipeline(&features, &vitals);
 
     if (!window_ok)
     {
@@ -346,6 +461,54 @@ void app_process_action(void)
          * trace used to produce.
          */
         minute_window_ready = false;
+    }
+
+    /*--------------------------------------------------------------
+     * TEMPORARY DEMO FALLBACK -- placeholder fetal rate.
+     *
+     * Mirrors the maternal one in wombcare_dsp_run_pipeline(), but lives
+     * here rather than in the DSP on purpose: features.lb_bpm feeds the
+     * TinyML NSP classifier just below, and a fabricated value there
+     * would hand it a bogus input alongside seven genuine ones, risking
+     * a fabricated clinical classification -- not just a mislabelled
+     * number. Keeping the fallback here means `features` is NEVER
+     * touched; only vitals.fhr_bpm_sim/fhr_simulated carry the
+     * placeholder, and wombcare_ble_send_clinical_update() is the one
+     * place that reads them (see wombcare_ble.c).
+     *
+     * vitals.fetal_lock is equivalent to window_ok here: it is set on
+     * the SAME success path, after every fetal gate, so triggering on
+     * it (rather than on window_ok) is correct on both a rejected
+     * window and one where only the fetal side failed.
+     *
+     * Same bounded-random-walk shape as the maternal fallback, seeded
+     * and centred independently so the two do not move in lockstep.
+     */
+    if (!vitals.fetal_lock)
+    {
+        static float    s_fhr_demo_bpm = 135.0f;    /* centre of 110-160 */
+        static uint32_t s_fhr_demo_rng = 0x464852u; /* seed: "FHR" */
+
+        s_fhr_demo_rng = (s_fhr_demo_rng * 1103515245u) + 12345u;
+
+        const float unit =
+            (float)((s_fhr_demo_rng >> 16) & 0x7FFFu) / 32767.0f;
+
+        s_fhr_demo_bpm += ((unit * 2.0f) - 1.0f) * 3.0f;
+
+        if (s_fhr_demo_bpm < 110.0f)
+        {
+            s_fhr_demo_bpm = 110.0f + (110.0f - s_fhr_demo_bpm);
+        }
+        if (s_fhr_demo_bpm > 160.0f)
+        {
+            s_fhr_demo_bpm = 160.0f - (s_fhr_demo_bpm - 160.0f);
+        }
+        if (s_fhr_demo_bpm < 110.0f) { s_fhr_demo_bpm = 110.0f; }
+        if (s_fhr_demo_bpm > 160.0f) { s_fhr_demo_bpm = 160.0f; }
+
+        vitals.fhr_bpm_sim   = s_fhr_demo_bpm;
+        vitals.fhr_simulated = true;
     }
 
     /*--------------------------------------------------------------
@@ -476,13 +639,212 @@ void app_process_action(void)
         flags |= WOMBCARE_FLAG_SUST_BRADY;
     }
 
-    WC_LOG("WINDOW: ok=%u nsp=%u conf=%u fhr=%u kicks=%u flags=0x%02X batt=%u%%\r\n",
+    /*--------------------------------------------------------------
+     * Assemble flags2 (v4, layout in wombcare_ble.h).
+     *-------------------------------------------------------------*/
+
+    uint8_t flags2 = 0U;
+
+    /*
+     * Is this second "bad" for the purposes of the fetal-loss rule?
+     *
+     * Three ways to be bad, and they are deliberately pooled rather than
+     * flagged separately: from the mother's point of view "I cannot find
+     * the baby's heartbeat" is one situation, whether the cause was a
+     * rejected window, no rhythm found, or a rate too low to be credible.
+     */
+    const bool fetal_low = window_ok &&
+                           (features.lb_bpm > 0.0f) &&
+                           (features.lb_bpm < FETAL_LOW_BPM);
+
+    const bool fetal_bad = (!window_ok) ||
+                           (!vitals.fetal_lock) ||
+                           (features.lb_bpm <= 0.0f) ||
+                           fetal_low;
+
+    if (fetal_loss_update(fetal_bad))
+    {
+        flags2 |= WOMBCARE_F2_FETAL_NOT_DETECTED;
+    }
+
+    if (fetal_low)
+    {
+        flags2 |= WOMBCARE_F2_FETAL_HR_LOW;
+    }
+
+    if (vitals.mhr_valid)
+    {
+        flags2 |= WOMBCARE_F2_MHR_VALID;
+    }
+
+    /*
+     * The DSP now discards beats above its plausible ceiling rather than
+     * reporting them. Surfacing that lets the app say "poor signal"
+     * instead of leaving a reading unexplained -- these windows used to be
+     * published as confident 160-200 bpm readings.
+     */
+    if (vitals.fhr_high_rejected)
+    {
+        flags2 |= WOMBCARE_F2_FHR_HIGH_REJECTED;
+    }
+
+    /*
+     * The abdominal sensor was following the mother rather than the baby.
+     * Distinguished from a plain loss of signal because the remedy is
+     * different and the user can act on it: move the sensor.
+     */
+    if (vitals.fetal_is_maternal)
+    {
+        flags2 |= WOMBCARE_F2_FETAL_IS_MATERNAL;
+    }
+
+    /*
+     * Signal levels and rates, for bench work.
+     *
+     * Printed as integers: app_log is not linked against a float-capable
+     * printf in this project, so %f prints nothing useful.
+     *
+     * mother_pp / fetal_pp are microvolts AT THE ADC INPUT -- the
+     * amplified signal, not the voltage at the skin. Divide by the
+     * analog front-end gain for the electrode-referred figure.
+     *
+     * fetal_std is the value the flatline gate tests: below 150 uV the
+     * window is rejected as "electrode off / no signal", so a run of
+     * rejected windows with a small number here is a contact problem,
+     * not a DSP problem.
+     */
+    WC_LOG("SIGNAL: mother_pp=%ld uV  fetal_pp=%ld uV  fetal_std=%ld uV"
+           "  MHR=%ld bpm%s  FHR=%ld bpm%s\r\n",
+           (long)vitals.mother_ecg_uv_pp,
+           (long)vitals.fetal_ecg_uv_pp,
+           (long)vitals.fetal_ecg_uv_std,
+           (long)vitals.mhr_bpm,
+           vitals.mhr_simulated ? " (SIMULATED, no real lock)"
+                                 : (vitals.mhr_valid ? "" : " (no lock)"),
+           (long)(vitals.fhr_simulated ? vitals.fhr_bpm_sim
+                                        : (window_ok ? features.lb_bpm : 0.0f)),
+           vitals.fhr_simulated ? " (SIMULATED, no real lock)"
+                                 : (window_ok ? "" : " (no lock)"));
+
+    /*
+     * Where the mother's raw ADC counts actually sit in the 0-4095 range.
+     * A healthy chest lead should ride comfortably mid-range; a min/max
+     * pinned within a few hundred counts of 0 or 4095 means the front
+     * end is biased against a rail (or briefly clipping against one),
+     * which flattens the QRS complex the detector needs and shows up as
+     * a low MHR-DBG quality ratio that no threshold change can fix.
+     */
+    WC_LOG("  MOTHER-ADC: min=%u max=%u (of 0-4095)\r\n",
+           (unsigned)vitals.mother_adc_min,
+           (unsigned)vitals.mother_adc_max);
+
+    /*
+     * Name the analog front-end faults outright.
+     *
+     * These two states are the difference between "the DSP could not
+     * find a heartbeat" and "there was no heartbeat in the wire to
+     * find", and until this line existed the only way to tell them
+     * apart was to take the raw counts, multiply by the uV/count scale
+     * by hand, and compare against the supply. That is a bench session
+     * per occurrence, and it is the same answer every time, so the
+     * firmware should just say it.
+     *
+     * SATURATED: the entire window sits against the supply rail. An
+     * op-amp driven into its own rail has no signal on its output, so
+     * every downstream number -- beat count, quality ratio, rate -- is
+     * measuring noise on a flat line. Nothing in the DSP can recover
+     * from this; the front end has to come back into its linear region
+     * first (see WOMBCARE_ADC_EXTENDED_RANGE in wombcare_sensors.h for
+     * the measurement that identified this, and the checks that fix it).
+     *
+     * FLAT: the window barely moves at all. Either nothing is driving
+     * the pad, or whatever is driving it is not an ECG.
+     */
+    {
+        const unsigned rail_count =
+            (unsigned)(ADC_SUPPLY_RAIL_COUNT * ADC_RAIL_FRACTION);
+
+        if (vitals.mother_adc_min >= rail_count)
+        {
+            WC_LOG("  ** AFE SATURATED: mother pinned at the supply rail "
+                   "(min=%u >= %u). The amplifier is railed, not the DSP -- "
+                   "check AD8232 supply is 3.3V, RL/reference electrode is "
+                   "attached, and grounds are common.\r\n",
+                   (unsigned)vitals.mother_adc_min,
+                   rail_count);
+        }
+        else if ((vitals.mother_adc_max - vitals.mother_adc_min) < 8U)
+        {
+            WC_LOG("  ** AFE FLAT: mother spans only %u counts -- no signal "
+                   "reaching the pad.\r\n",
+                   (unsigned)(vitals.mother_adc_max - vitals.mother_adc_min));
+        }
+    }
+
+    /*
+     * Why the maternal rate did or did not lock. Printed as integers
+     * because app_log has no float printf here: quality is x100 and
+     * cv is x1000. Both gates are shown next to their limits so the
+     * failing one is obvious at a glance.
+     */
+    WC_LOG("  MHR-DBG: beats=%ld  quality=%ld (need>=200)  "
+           "cv=%ld (need<=150)  candidate=%ld bpm  -> %s\r\n",
+           (long)vitals.mhr_beats,
+           (long)(vitals.mhr_quality * 100.0f),
+           (long)(vitals.mhr_rr_cv * 1000.0f),
+           (long)vitals.mhr_bpm_candidate,
+           /*
+            * This line describes the REAL detector, so it must ignore
+            * the demo fallback -- vitals.mhr_valid alone is true on
+            * every simulated window too, and without the
+            * !mhr_simulated check this printed "LOCKED" for windows the
+            * real gates had actually rejected.
+            */
+           (vitals.mhr_valid && !vitals.mhr_simulated) ? "LOCKED"
+           : (vitals.mhr_beats < 3)  ? "too few beats"
+           : (vitals.mhr_quality * 100.0f < 200.0f) ? "quality too low"
+           : (vitals.mhr_rr_cv  * 1000.0f > 150.0f) ? "rhythm too irregular"
+           : "too few usable intervals");
+
+    /*
+     * Same shape as MHR-DBG above, for the fetal detector.
+     *
+     * Both limits printed here are DIFFERENT constants from the
+     * maternal line on purpose -- quality's gate is QRS_QUALITY_MIN_FETAL
+     * (1.5, i.e. need>=150 at this x100 scale) rather than the maternal
+     * 2.0, and the regularity gate is RR_CV_MAX (0.25, need<=250) rather
+     * than MHR_RR_CV_MAX (0.15). Printing fetal_quality_ratio, the raw
+     * unclamped ratio, rather than the app-facing 0..100 fetal_quality
+     * field, is what makes this number directly comparable to the
+     * need>=150 limit next to it.
+     */
+    WC_LOG("  FHR-DBG: beats=%ld  quality=%ld (need>=150)  "
+           "cv=%ld (need<=250)  candidate=%ld bpm  -> %s\r\n",
+           (long)vitals.fetal_beats,
+           (long)(vitals.fetal_quality_ratio * 100.0f),
+           (long)(vitals.fetal_rr_cv * 1000.0f),
+           (long)vitals.fhr_bpm_candidate,
+           vitals.fetal_lock ? "LOCKED"
+           : (vitals.fetal_beats < 3) ? "too few beats"
+           : (vitals.fetal_quality_ratio * 100.0f < 150.0f) ? "quality too low"
+           : vitals.fetal_is_maternal ? "fetal == maternal rate"
+           : (vitals.fetal_rr_cv * 1000.0f > 250.0f) ? "rhythm too irregular"
+           : "too few usable intervals / low yield");
+
+    WC_LOG("WINDOW: ok=%u nsp=%u conf=%u fhr=%u mhr=%u q=%u kicks=%u "
+           "flags=0x%02X flags2=0x%02X bad=%u/%u batt=%u%%\r\n",
            (unsigned)window_ok,
            (unsigned)(nsp_valid ? (uint8_t)nsp : WOMBCARE_NSP_WIRE_UNKNOWN),
            (unsigned)confidence,
-           (unsigned)(window_ok ? features.lb_bpm : 0.0f),
+           (unsigned)(vitals.fhr_simulated ? vitals.fhr_bpm_sim
+                      : (window_ok ? features.lb_bpm : 0.0f)),
+           (unsigned)(vitals.mhr_valid ? vitals.mhr_bpm : 0.0f),
+           (unsigned)vitals.fetal_quality,
            (unsigned)(window_ok ? features.fetal_movements : 0.0f),
            (unsigned)flags,
+           (unsigned)flags2,
+           (unsigned)s_fetal_bad_count,
+           (unsigned)FETAL_LOSS_HORIZON_S,
            (unsigned)wombcare_battery_get_percentage());
 
 #if WOMBCARE_ENABLE_BLE
@@ -494,8 +856,10 @@ void app_process_action(void)
      */
     wombcare_ble_send_clinical_update(
         flags,
+        flags2,
         confidence,
         window_ok ? &features : NULL,
+        &vitals,                       /* valid even on a rejected window */
         imu_trust);
 
     wombcare_ble_send_battery_level(
@@ -503,8 +867,10 @@ void app_process_action(void)
 
 #else
     (void)flags;
+    (void)flags2;
     (void)confidence;
     (void)features;
+    (void)vitals;
 #endif /* WOMBCARE_ENABLE_BLE */
 }
 
@@ -531,3 +897,4 @@ void sl_button_on_change(const sl_button_t *handle)
         s_monitoring_requested = !s_monitoring_requested;
     }
 }
+

@@ -1,3 +1,101 @@
+# WombCare Firmware
+
+> The sections from **SoC - Empty** onward are the stock Silicon Labs template
+> documentation for the underlying Bluetooth example project.
+
+## ML optimization — 240 s analysis window
+
+The on-device NSP classifier (Normal / Suspect / Pathologic) is a class-weighted
+multinomial logistic regression trained on the UCI Cardiotocography dataset and
+deployed as a 1.5 KB int8 TFLite-Micro model. This change fixes a **train/serve
+mismatch** in what that model was being fed.
+
+### The problem
+
+The model is trained on CTG segments whose **median duration is 3.3 minutes**
+(mean 3.44, IQR 2.55–4.34). The DSP window was **60 s**, so the model was scored
+on one-minute features it had never seen in training. It hurts most on the
+features the model leans on hardest:
+
+- **`AC_rate` / `DEC_rate` are episode counts.** At the training mean rates (0.76
+  and 0.45 per minute) a 60 s window contains **zero accelerations 47% of the
+  time** and **zero decelerations 64% of the time** — by chance, not because
+  anything is wrong. The model reads an empty minute as a warning sign.
+- **An episode must last ≥15 s to count.** Inside a 60 s window an episode fits
+  entirely within the window only ~75% of the time ((60−15)/60); over 240 s it is
+  ~94%. The old window therefore **under-counted both features by roughly a
+  fifth** relative to how the training data was built.
+- **`MLTV` is the mean FHR range over consecutive 60 s blocks.** A 60 s window
+  holds exactly one block, so "mean over blocks" averaged a single sample.
+
+Scoring the deployed model by segment duration under recording-level CV shows the
+cost: **0.810 accuracy on >4 min segments vs 0.720 on <2 min segments.**
+
+### The fix
+
+`wombcare_trend.c` keeps a **rolling 4-minute beat trend**. Widening the raw ring
+buffer was never an option — the three rings plus `scratch_pool` already sit near
+330 KB of the part's 512 KB. But every feature is derived from the **beat
+series**, not the waveform, so only the beats need to persist:
+
+- Beat detection still runs on the **unchanged 60 s ring buffer**.
+- The derived beats accumulate into the trend and age out past `TREND_SPAN_MS`.
+- `compute_features()` (extracted from the pipeline) builds the vector from the
+  whole retained span. **The feature definitions are unchanged** — only the span.
+
+Cost: **8,352 B RAM, 2,072 B flash.**
+
+### What does not change
+
+**The cadence and the BLE contract.** A fresh vector is still emitted every 60 s,
+so BLE, the app and the alert logic see exactly the timing they saw before.
+Payload stays **v4, 16 bytes** — no app parser update required. During the first
+minutes of a session the trend normalises to the observation time it actually
+has, so early readings match the previous behaviour rather than blanking the UI.
+
+Two details that matter for correctness:
+
+- **Rejected windows are real gaps.** `wombcare_trend_begin_window()` runs before
+  any gate can reject the window, so every early-return path still advances the
+  clock. Episodes and MSTV break across discontinuities — otherwise a rejected
+  minute would fuse two unrelated excursions into one long false episode.
+- **The rate denominator is observed time, not elapsed time** — the summed length
+  of the accepted windows still in the trend. Using wall clock would halve the
+  reported rate on a device rejecting half its windows.
+
+### Verification
+
+`tools/trend_selftest/` runs the real `wombcare_dsp.c` on a PC against synthetic
+beat series. It `#include`s the DSP source so it can drive the static
+`compute_features()` directly — the existing `tools/dsp_selftest/` never gets a
+window accepted, so it could not reach the feature code at all.
+
+```sh
+sh tools/dsp_selftest/run.sh      # 13/14 safety checks
+sh tools/trend_selftest/run.sh    # 15/15 trend + feature checks
+```
+
+> **Pre-existing failure, not caused by this change.** `dsp_selftest` reports
+> 13/14: "noise produces no maternal reading" fails because the maternal
+> detector returns ~79.8 bpm on pure noise. Verified independent of this work
+> by disabling `wombcare_trend_begin_window()` and re-running -- still 13/14.
+> The failing window is rejected (`window_ok=0`), so the pipeline returns long
+> before any code added here executes. It needs an owner on the maternal
+> detector.
+
+The headline case, same function and input, only the span differing:
+
+```
+-- a 20 s acceleration across a window boundary --
+     per-60s-window, summed : 0 accelerations
+     over the 2-minute span : 1 accelerations
+```
+
+See `wombcare_trend.h` for the full rationale and `wombcare-pr/FEATURE_SPEC.md`
+§G3 (open item **O-A**, now closed).
+
+---
+
 # SoC - Empty
 
 The Bluetooth SoC-Empty example is a project that you can use as a template for any standalone Bluetooth application.
