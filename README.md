@@ -2,7 +2,7 @@
 
 WombCare is a wearable fetal-wellness monitor built on the Silicon Labs EFR32MG26: a belt-worn
 device samples maternal ECG, fetal ECG and a PVDF kick sensor, runs the full DSP and a TinyML
-classifier **on-device**, and pushes one 15-byte clinical summary per minute over Bluetooth LE to
+classifier **on-device**, and pushes one 16-byte clinical summary per minute over Bluetooth LE to
 an Android companion app that a mother and her doctor share.
 
 > **WombCare is a home wellness-awareness / early-warning aid, not a diagnostic device.** It
